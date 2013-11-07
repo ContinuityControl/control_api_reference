@@ -25,9 +25,9 @@ end
 #
 #     {"description":"up"}
 #
-# Fields:
+# Response fields:
 #
-#   * `description`: a text description of the API state
+#   * `description`: A text description of the API state.
 #
 get '/' do
   status = ControlAPI.get('/v1/status')
@@ -36,20 +36,36 @@ end
 
 # ## POST /v1/distributed_to_dos
 #
-# TODO
+# **Asynchronously** distribute a ToDo to the given assignees.
 #
-# Request:
+# Example request:
 #
-#   * TODO
+#     POST /v1/distributed_to_dos
+#     template_to_do_uuid=12345678-1234-5678-1234-567812345678
+#     assignee_emails=bobama@example.com,gwbush@example.com,bclinton@example.com
+#     content={"field1":"value1"}
+#
+# Request fields:
+#
+#   * `template_to_do_uuid`: The UUID for the TemplateToDo that will be distributed.  This can be found in settings.
+#   * `assignee_emails`: A comma separated list of emails of Users that will receive the DistributedToDos.
+#   * `content`: JSON text of values to pre-fill in the DistributedToDo
 #
 # Example response:
 #
-#     TODO
+#   {"transaction_id":"f81d4fae-7dec-11d0-a765-00a0c91e6bf6"}
 #
-# Fields:
+# Response fields:
 #
-#   * TODO
+#   * `transaction_id`: The UUID assigned to this request. Useful for troubleshooting.  Please include it in any bug reports to Continuity.
 #
+get '/distributed_to_dos/new' do
+  # TODO: render form
+end
+
+post '/distributed_to_dos' do
+  # TODO: receive POST from form and distribute as requested
+end
 
 # ## GET /v1/distributed_to_dos
 #
@@ -59,7 +75,7 @@ end
 #
 #     TODO
 #
-# Fields:
+# Response fields:
 #
 #   * TODO
 #
@@ -72,7 +88,7 @@ end
 #
 #     TODO
 #
-# Fields:
+# Response fields:
 #
 #   * TODO
 #
