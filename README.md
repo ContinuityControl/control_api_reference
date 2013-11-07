@@ -40,3 +40,7 @@ If you do not see `API status: up`, there are several possible causes:
   * The configured API is unreachable
 
 (This list is not exhaustive.)
+
+## API documentation
+
+The API documentation is inline with examples in [app.rb](app.rb).
