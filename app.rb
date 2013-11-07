@@ -49,7 +49,7 @@ end
 #
 #   * `template_to_do_uuid`: The UUID for the TemplateToDo that will be distributed.  This can be found in settings.
 #   * `assignee_emails`: A comma separated list of emails of Users that will receive the DistributedToDos.
-#   * `content`: JSON text of values to pre-fill in the DistributedToDo
+#   * `content`: JSON text of values to pre-fill in the DistributedToDo.  Field names are available under "Settings".
 #
 # Example response:
 #
