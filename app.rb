@@ -61,7 +61,7 @@ end
 #
 # ### Example responses
 #
-# #### HTTP 201 Accepted
+# #### HTTP 202 Accepted
 #
 #   {"id":"123","path":"/v1/distributed_to_dos/123"}
 #
