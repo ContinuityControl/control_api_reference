@@ -1,6 +1,13 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'httparty'
+require 'dotenv'
+Dotenv.load
+
+puts
+puts 'Environment'
+puts "CONTROL_API_BASE_URI=#{ENV['CONTROL_API_BASE_URI']}"
+puts
 
 class ControlAPI
   include HTTParty
