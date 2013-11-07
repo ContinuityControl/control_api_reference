@@ -63,13 +63,13 @@ end
 #
 # #### HTTP 202 Accepted
 #
-#   {"id":"123","path":"/v1/distributed_to_dos/123"}
+#     {"id":"123","path":"/v1/distributed_to_dos/123"}
 #
 # TODO: modify DistributedToDo so that it can provide the ID as above.
 #
 # #### HTTP 422 Unprocessable Entity
 #
-#   {"errors": {"assignee_emails": ["has invalid email address alice@example.com", "has invalid email address bob@example.com"]}}
+#     {"errors": {"assignee_emails": ["has invalid email address alice@example.com", "has invalid email address bob@example.com"]}}
 #
 # TODO: check what ActiveModel generates
 #
