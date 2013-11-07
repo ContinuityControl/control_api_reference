@@ -63,13 +63,21 @@ end
 #
 # #### HTTP 202 Accepted
 #
-#     {"id":"123","path":"/v1/distributed_to_dos/123"}
-#
-# TODO: modify DistributedToDo so that it can provide the ID as above.
+#     {
+#       "transaction_id":"f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+#       "path":"/v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
+#     }
 #
 # #### HTTP 422 Unprocessable Entity
 #
-#     {"errors": {"assignee_emails": ["has invalid email address alice@example.com", "has invalid email address bob@example.com"]}}
+#     {
+#       "errors": {
+#         "assignee_emails": [
+#           "has invalid email address alice@example.com",
+#           "has invalid email address bob@example.com"
+#         ]
+#       }
+#     }
 #
 # TODO: check what ActiveModel generates
 #
@@ -77,8 +85,9 @@ end
 #
 # ### Response fields
 #
-#   * `id`: The ID for the DistributedToDo that will be created asynchronously. Please include it in any bug reports to Continuity.
+#   * `transaction_id`: A UUID for the transaction that will create the DistributedToDo asynchronously. Please include it in any bug reports to Continuity.
 #   * `path`: The path where the DistributedToDo will be available.
+#   * `errors`: TODO
 #
 get '/distributed_to_dos/new' do
   # TODO: render form
@@ -90,11 +99,17 @@ end
 
 # ## /v1/distributed_to_dos/:id
 #
-# Get the current state of a distributed_to_do with the ID `:id`
+# Get the current state of a distributed_to_do as found by an `id` or an `transaction_id`
 #
-# ### Example request
+# ### Example requests
+#
+# By `id`:
 #
 #     GET /v1/distributed_to_dos/4567
+#
+# By `transaction_id`:
+#
+#     GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 #
 # ### Example response
 #
@@ -102,6 +117,7 @@ end
 #
 #     {
 #       "id": "4567",
+#       "transaction_id": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
 #       "created_at": "2013-11-02T12:34:46Z",
 #       "completed_at": "2013-11-07T12:34:56Z",
 #       "assignments": [
@@ -121,6 +137,7 @@ end
 # ### Response fields
 #
 #   * `id`: Unique ID for this DistributedToDo. Not guaranteed to be numeric.
+#   * `transaction_id`: Transaction ID of the request that created this DistributedToDo.  Only present for DistributedToDos created via the API.
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
 #   * `completed_at`: ISO8601 date of when the DistributedToDo was completed, in UTC.
 #   * `assignments`: Array
