@@ -57,16 +57,14 @@ end
 #
 #     POST /v1/distributed_to_dos
 #     template_to_do_api_id=12345678-1234-5678-1234-567812345678
-#     assignee_emails=bobama@example.com,gwbush@example.com,bclinton@example.com,gbush@example.com,rreagan@example.com,jcarter@example.com,gford@example.com,rnixon@example.com
+#     assignee_emails=["bobama@example.com","gwbush@example.com","bclinton@example.com","gbush@example.com","rreagan@example.com","jcarter@example.com","gford@example.com","rnixon@example.com"]
 #     content={"field1":"value1"}
 #
 # ### Request fields
 #
 #   * `template_to_do_api_id`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in settings.
-#   * `assignee_emails`: **Required**.  A comma separated list of emails of Users that will receive the DistributedToDos.
+#   * `assignee_emails`: **Required**.  A JSON Array of email addresses of Users that will receive the DistributedToDos.
 #   * `content`: JSON text of values to pre-fill in the DistributedToDo.  Field names are available under "Settings".
-#
-# TODO: `assignee_emails` should be whatever gets parsed into an Array natively (e.g. `assignee_emails[]`)
 #
 # ### Example responses
 #
