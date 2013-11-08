@@ -61,6 +61,8 @@ end
 #   * `assignee_emails`: **Required**.  A comma separated list of emails of Users that will receive the DistributedToDos.
 #   * `content`: JSON text of values to pre-fill in the DistributedToDo.  Field names are available under "Settings".
 #
+# TODO: `assignee_emails` should be whatever gets parsed into an Array natively (e.g. `assignee_emails[]`)
+#
 # ### Example responses
 #
 # #### HTTP 202 Accepted
