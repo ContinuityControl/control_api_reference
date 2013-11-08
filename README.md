@@ -43,4 +43,4 @@ If you do not see `API status: up`, there are several possible causes:
 
 ## API documentation
 
-The API documentation is inline with examples in [app.rb](app.rb).
+The API documentation is inline with examples in [app.rb](app.rb).  There is also a [documentation website generated from the contents of that file](http://continuitycontrol.github.io/control_api_reference/).
