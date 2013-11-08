@@ -6,6 +6,7 @@
 #
 # TODO: diagram and explanation of User, TemplateToDo, DistributedToDo, and Assignment
 
+# This is a [Sinatra](http://www.sinatrarb.com/) application.  Sinatra is a small Ruby web application framework that provides a DSL (domain specific language) for handling HTTP requests like `get` and `post`.  It should be easy to read even if you don't read its documentation.
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'httparty'
@@ -19,6 +20,8 @@ puts "CONTROL_API_BASE_URI=#{ENV['CONTROL_API_BASE_URI']}"
 puts
 
 # This class uses a library called `HTTParty` to connect to the Control API.  In general, all API responses are JSON.  `HTTParty` automatically detects this and parses into a Ruby object.
+#
+# For more information, see the [HTTParty](http://johnnunemaker.com/httparty/) website.
 class ControlAPI
   include HTTParty
   base_uri ENV['CONTROL_API_BASE_URI']
