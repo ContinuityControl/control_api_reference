@@ -185,7 +185,7 @@ end
 #
 # ### Response fields
 #
-#   * `distributed_to_dos`: an Array of DistributedToDos
+#   * `distributed_to_dos`: an Array of DistributedToDos, or an empty array `[]` if none match the given criteria
 #
 get '/distributed_to_dos' do
   # TODO: render a page with links to each distributed_to_do
