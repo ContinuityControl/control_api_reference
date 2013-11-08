@@ -106,7 +106,7 @@ post '/distributed_to_dos' do
   # TODO: receive POST from form and distribute as requested
 end
 
-# ## /v1/distributed_to_dos/:id
+# ## GET /v1/distributed_to_dos/:id
 #
 # Get the current state of a distributed_to_do as found by an `id`.
 #

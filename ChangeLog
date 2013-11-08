@@ -1,0 +1,13 @@
+control_api (1.0.0.beta) unstable; urgency=low
+
+  * (work in progress)
+  * First public API documentation release
+  * First public API availability
+  * New utility method:
+    * GET  /v1/status
+  * New DistributedToDo methods:
+    * POST /v1/distributed_to_dos
+    * GET  /v1/distributed_to_dos
+    * GET  /v1/distributed_to_dos/:id
+
+ -- Continuity Control Developers <dev@continuity.net>  TODO release date
