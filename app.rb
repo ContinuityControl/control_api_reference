@@ -132,6 +132,10 @@ end
 #       ]
 #     }
 #
+# #### HTTP 404 Not Found
+#
+# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos` that gives a `202`, `/v1/distributed_to_dos/:id` would return a `404` until the resource is **asynchronously** created.
+#
 # #### HTTP 500 Server Error
 #
 # ### Response fields
