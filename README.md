@@ -27,10 +27,10 @@ To get started:
 
 The default port is `4567`, so you can test your connection like so:
 
-    curl http://localhost:4567/
+    curl http://localhost:4567/status
     # => API status: up
 
-You can also visit [http://localhost:4567/](http://localhost:4567/) in your web browser.
+You can also visit [http://localhost:4567/status](http://localhost:4567/status) in your web browser.
 
 If you do not see `API status: up`, there are several possible causes:
 

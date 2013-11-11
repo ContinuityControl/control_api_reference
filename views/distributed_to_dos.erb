@@ -1,0 +1,22 @@
+<h2>DistributedToDos</h2>
+
+<a href="/distributed_to_dos/new">New DistributedToDo</a>
+
+<table>
+  <thead>
+    <th>ID</th>
+    <th>Completed at</th>
+    <th>Due on</th>
+    <th>Assignment count</th>
+  </thead>
+  </tbody>
+    <% for distributed_to_do in distributed_to_dos %>
+      <tr>
+        <td><a href="/distributed_to_dos/<%= distributed_to_do['id'] %>"><%= distributed_to_do['id'] %></a></td>
+        <td><%= distributed_to_do['completed_at'] %></td>
+        <td><%= distributed_to_do['due_on'] %></td>
+        <td><%= distributed_to_do['assignments'].count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

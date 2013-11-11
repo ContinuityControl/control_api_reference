@@ -27,6 +27,11 @@ class ControlAPI
   base_uri ENV['CONTROL_API_BASE_URI']
 end
 
+# The root path in this application simply provides navigation.
+get '/' do
+  erb :root
+end
+
 # ## GET /v1/status
 #
 # Check the API status.  Useful for testing authentication without knowing other information.
@@ -47,8 +52,8 @@ end
 #
 #   * `description`: A text description of the API state.
 #
-get '/' do
-  status = ControlAPI.get('/v1/status')
+get '/status' do
+  status = ControlAPI.get('/v1/status').parsed_response
   "API status: #{status['description']}"
 end
 
@@ -101,11 +106,20 @@ end
 #   * `errors`: An object with one key per request field and an array of all the validation errors that apply to that field.
 #
 get '/distributed_to_dos/new' do
-  'TODO: render form'
+  erb :distributed_to_dos_new
 end
 
 post '/distributed_to_dos' do
-  'TODO: receive POST from form and distribute as requested'
+  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos', params)
+
+  case distributed_to_do.response.code
+  when '202'
+    [200, erb(:distributed_to_dos_post, :locals => distributed_to_do)]
+  when '422'
+    [422, erb(:distributed_to_dos_errors, :locals => distributed_to_do)]
+  else 
+    [500, 'There was an error while processing your request']
+  end
 end
 
 # ## GET /v1/distributed_to_dos/:id
@@ -156,7 +170,16 @@ end
 # TODO: make sure all DistributedToDos have a UUID-style `id`.
 #
 get '/distributed_to_dos/:id' do
-  'TODO: render a page with the information in the response'
+  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:id]}")
+
+  case distributed_to_do.response.code
+  when '200'
+    erb :distributed_to_do, :locals => distributed_to_do
+  when '404'
+    [404, 'Not found']
+  else 
+    [500, 'There was an error while processing your request']
+  end
 end
 
 # ## GET /v1/distributed_to_dos
@@ -197,5 +220,6 @@ end
 #   * `distributed_to_dos`: an Array of DistributedToDos, or an empty array `[]` if none match the given criteria
 #
 get '/distributed_to_dos' do
-  'TODO: render a page with links to each distributed_to_do'
+  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos')
+  erb :distributed_to_dos, :locals => distributed_to_dos
 end

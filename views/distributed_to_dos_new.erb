@@ -1,0 +1,18 @@
+<h2>New DistributedToDo</h2>
+
+<form method="post" action="/distributed_to_dos">
+  <!-- TODO: nest fields within `distributed_to_do`? -->
+  <label for="template_to_do_api_id">TemplateToDo API ID</label>
+  <input name="template_to_do_api_id" type="text" />
+  <br />
+
+  <label for="assignee_emails">Assignee Emails (JSON Array)</label>
+  <input name="assignee_emails" type="text" />
+  <br />
+
+  <label for="content">Content (JSON object)</label>
+  <input name="content" type="text" />
+  <br />
+
+  <input type="submit" value="Submit" />
+</form>

@@ -1,0 +1,39 @@
+<h2><a href="/distributed_to_dos">DistributedToDos</a> &gt; DistributedToDo <%= id %></h2>
+
+<table>
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <td><%= id %></td>
+    </tr>
+    <tr>
+      <th>Created at</th>
+      <td><%= created_at %></td>
+    </tr>
+    <tr>
+      <th>Completed at</th>
+      <td><%= completed_at %></td>
+    </tr>
+    <tr>
+      <th>Due on</th>
+      <td><%= due_on %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Assignments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Finished on</th>
+    </tr>
+    <% for assignment in assignments %>
+      <tr>
+        <td><%= assignment['email'] %></td>
+        <td><%= assignment['finished_on'] %></td>
+      </tr>
+    <% end %>
+  </thead>
+</table>
