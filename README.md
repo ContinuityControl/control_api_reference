@@ -4,6 +4,12 @@ An example of integrating with the Continuity Control API using Sinatra + HTTPar
 
 This guide assumes you have a Continuity Control API key.  Please log into [Control](https://control.continuity.net) to request an API key.
 
+## Quick links
+
+* [API documentation](http://continuitycontrol.github.io/control_api_reference/)
+* [Control](https://control.continuity.net)
+* [Sample application](http://control-api-reference.herokuapp.com/) (this code)
+
 ## Running this code
 
 You'll need Ruby 2.0.0 installed.  Please see [the Ruby installation guide for more information](https://www.ruby-lang.org/en/downloads/).
