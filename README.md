@@ -23,7 +23,7 @@ For production, `.env` would be:
 To get started:
 
     bundle
-    ruby app.rb
+    rackup
 
 The default port is `4567`, so you can test your connection like so:
 
