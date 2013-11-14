@@ -10,7 +10,7 @@
     <th>Assignment count</th>
   </thead>
   </tbody>
-    <% for distributed_to_do in distributed_to_dos %>
+    <% distributed_to_dos.each do |distributed_to_do| %>
       <tr>
         <td><a href="/distributed_to_dos/<%= distributed_to_do['id'] %>"><%= distributed_to_do['id'] %></a></td>
         <td><%= distributed_to_do['completed_at'] %></td>

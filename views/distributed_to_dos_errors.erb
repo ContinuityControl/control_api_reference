@@ -1,10 +1,10 @@
 The following errors prevented your request from completing:
 
-<% for field, error_messages in errors %>
+<% errors.each do |field, error_messages| %>
   <h4><%= field %></h4>
 
   <ul>
-    <% for error_message in error_messages %>
+    <% error_messages.each do |error_message| %>
       <li><%= error_message %></li>
     <% end %>
   </ul>
