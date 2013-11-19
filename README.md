@@ -28,8 +28,9 @@ For production, `.env` would be:
 
 To get started:
 
+    gem install bundler
     bundle
-    rackup
+    bundle exec rackup
 
 The default port is `4567`, so you can test your connection like so:
 
