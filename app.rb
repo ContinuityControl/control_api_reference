@@ -13,7 +13,7 @@ require 'httparty'
 require 'dotenv'
 Dotenv.load
 
-# This class uses a library called HTTParty to connect to the Control API.  In general, all API responses are JSON.  `HTTParty` automatically detects this and parses into a Ruby object.
+# This class uses a library called HTTParty to connect to the Control API.  All API responses are JSON.  `HTTParty` automatically detects this and parses into a Ruby object.
 #
 # For more information, see the [HTTParty](http://johnnunemaker.com/httparty/) website.
 class ControlAPI
@@ -31,13 +31,13 @@ get '/' do
   erb :root
 end
 
-# ## GET /v1/status
+# ## GET /v1/status.json
 #
 # Check the API status.  Useful for testing authentication without knowing other information.
 #
 # ### Example request
 #
-#     GET /v1/status
+#     GET /v1/status.json
 #
 # ### Example response
 #
@@ -56,17 +56,17 @@ end
 #   * `description`: A text description of the API state.
 #
 get '/status' do
-  status = ControlAPI.get('/v1/status').parsed_response
+  status = ControlAPI.get('/v1/status.json').parsed_response
   "API status: #{status['description']}"
 end
 
-# ## POST /v1/distributed_to_dos
+# ## POST /v1/distributed_to_dos.json
 #
 # **Asynchronously** distribute a ToDo to the given assignees.  (The work happens in a job queue.)
 #
 # ### Example request
 #
-#     POST /v1/distributed_to_dos
+#     POST /v1/distributed_to_dos.json
 #     distributed_to_do[template_to_do_api_id]=12345678-1234-5678-1234-567812345678
 #     distributed_to_do[assignee_emails]=["bobama@example.com","gwbush@example.com","bclinton@example.com","gbush@example.com","rreagan@example.com","jcarter@example.com","gford@example.com","rnixon@example.com"]
 #     distributed_to_do[content]={"field1":"value1"}
@@ -123,7 +123,7 @@ get '/distributed_to_dos/new' do
 end
 
 post '/distributed_to_dos' do
-  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos', params)
+  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos.json', params)
 
   case distributed_to_do.response.code
   when '202'
@@ -135,13 +135,13 @@ post '/distributed_to_dos' do
   end
 end
 
-# ## GET /v1/distributed_to_dos/:id
+# ## GET /v1/distributed_to_dos/:id.json
 #
 # Get the current state of a distributed_to_do as found by an `id`.
 #
 # ### Example requests
 #
-#     GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+#     GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6.json
 #
 # ### Example response
 #
@@ -170,7 +170,7 @@ end
 #
 # #### HTTP 404 Not Found
 #
-# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos` that gives a `202`, `/v1/distributed_to_dos/:id` would return a `404` until the resource is **asynchronously** created.
+# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos.json` that gives a `202`, `/v1/distributed_to_dos/:id.json` would return a `404` until the resource is **asynchronously** created.
 #
 # #### HTTP 500 Server Error
 #
@@ -187,7 +187,7 @@ end
 # TODO: make sure all DistributedToDos have a UUID-style `id`.
 #
 get '/distributed_to_dos/:id' do
-  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:id]}")
+  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:id]}.json")
 
   case distributed_to_do.response.code
   when '200'
@@ -199,19 +199,19 @@ get '/distributed_to_dos/:id' do
   end
 end
 
-# ## GET /v1/distributed_to_dos
+# ## GET /v1/distributed_to_dos.json
 #
 # Get all the DistributedToDos for your organization.  Each DistributedToDo in this "collection" GET request is in the same format as the "member" GET request.
 #
 # ### Example requests
 #
-#     GET /v1/distributed_to_dos
-#     GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z
-#     GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z&created_finish_at=2013-11-07T12:34:46Z
-#     GET /v1/distributed_to_dos?created_finish_at=2013-11-07T12:34:46Z
-#     GET /v1/distributed_to_dos?late=true
-#     GET /v1/distributed_to_dos?complete=true
-#     GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z&created_finish_at=2013-11-07T12:34:46Z&late=true&complete=false
+#     GET /v1/distributed_to_dos.json
+#     GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z
+#     GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&created_finish_at=2013-11-07T12:34:46Z
+#     GET /v1/distributed_to_dos.json?created_finish_at=2013-11-07T12:34:46Z
+#     GET /v1/distributed_to_dos.json?late=true
+#     GET /v1/distributed_to_dos.json?complete=true
+#     GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&created_finish_at=2013-11-07T12:34:46Z&late=true&complete=false
 #
 # ### Request fields
 #
@@ -237,6 +237,6 @@ end
 #   * `distributed_to_dos`: an Array of DistributedToDos, or an empty array `[]` if none match the given criteria
 #
 get '/distributed_to_dos' do
-  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos')
+  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos.json')
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
