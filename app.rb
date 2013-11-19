@@ -20,7 +20,7 @@ class ControlAPI
   include HTTParty
   base_uri ENV['CONTROL_API_BASE_URI']
 
-  # TODO: add authentication code
+  basic_auth ENV['CONTROL_API_KEY'], ENV['CONTROL_API_SECRET']
 end
 
 # The root path in this application simply provides navigation.

@@ -19,12 +19,14 @@ You need to configure an ignored file called `.env` that points to the API serve
 For testing, `.env` would be:
 
     CONTROL_API_BASE_URI=https://sandbox.continuity.net/
-    CONTROL_API_KEY='YOUR-TOKEN'
+    CONTROL_API_KEY='YOUR-API-KEY'
+    CONTROL_API_SECRET='YOUR-API-SECRET'
 
 For production, `.env` would be:
 
     CONTROL_API_BASE_URI=https://api.continuity.net/
-    CONTROL_API_KEY='YOUR-TOKEN'
+    CONTROL_API_KEY='YOUR-API-KEY'
+    CONTROL_API_SECRET='YOUR-API-SECRET'
 
 To get started:
 
