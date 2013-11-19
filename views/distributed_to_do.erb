@@ -29,11 +29,13 @@
       <th>Email</th>
       <th>Finished on</th>
     </tr>
+  </thead>
+  <tbody>
     <% assignments.each do |assignment| %>
       <tr>
         <td><%= assignment['email'] %></td>
         <td><%= assignment['finished_on'] %></td>
       </tr>
     <% end %>
-  </thead>
+  </tbody>
 </table>
