@@ -56,14 +56,17 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Log configuration for debugging purposes.</p>
+              <p>This class uses a library called HTTParty to connect to the Control API.  All API responses are JSON.  <code>HTTParty</code> automatically detects this and parses into a Ruby object.</p>
+<p>For more information, see the <a href="http://johnnunemaker.com/httparty/">HTTParty</a> website.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>puts
-puts <span class="string">'Environment'</span>
-puts <span class="string">"CONTROL_API_BASE_URI=<span class="subst">#{<span class="constant">ENV</span>[<span class="string">'CONTROL_API_BASE_URI'</span>]}</span>"</span>
-puts</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">ControlAPI</span></span>
+  <span class="keyword">include</span> <span class="constant">HTTParty</span>
+  base_uri <span class="constant">ENV</span>[<span class="string">'CONTROL_API_BASE_URI'</span>]
+
+  basic_auth <span class="constant">ENV</span>[<span class="string">'CONTROL_API_KEY'</span>], <span class="constant">ENV</span>[<span class="string">'CONTROL_API_SECRET'</span>]
+<span class="keyword">end</span></pre></div></div>
             
         </li>
         
@@ -74,15 +77,11 @@ puts</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>This class uses a library called <code>HTTParty</code> to connect to the Control API.  In general, all API responses are JSON.  <code>HTTParty</code> automatically detects this and parses into a Ruby object.</p>
-<p>For more information, see the <a href="http://johnnunemaker.com/httparty/">HTTParty</a> website.</p>
+              <p>The root path in this application simply provides navigation.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="class"><span class="keyword">class</span> <span class="title">ControlAPI</span></span>
-  <span class="keyword">include</span> <span class="constant">HTTParty</span>
-  base_uri <span class="constant">ENV</span>[<span class="string">'CONTROL_API_BASE_URI'</span>]
-<span class="keyword">end</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/'</span> <span class="keyword">do</span></pre></div></div>
             
         </li>
         
@@ -93,24 +92,12 @@ puts</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <h2 id="get-v1-status">GET /v1/status</h2>
-<p>Check the API status.  Useful for testing authentication without knowing other information.</p>
-<h3 id="example-request">Example request</h3>
-<pre><code>GET /v1/status</code></pre>
-<h3 id="example-response">Example response</h3>
-<h4 id="http-200-ok">HTTP 200 OK</h4>
-<pre><code>{&quot;description&quot;:&quot;up&quot;}</code></pre>
-<h4 id="http-500-server-error">HTTP 500 Server Error</h4>
-<h3 id="response-fields">Response fields</h3>
-<ul>
-<li><code>description</code>: A text description of the API state.</li>
-</ul>
+              <p><code>erb :view_name</code> renders the file in <code>views/view_name.erb</code>.</p>
+<p>For example, this will end up rendering <code>views/root.erb</code>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>get <span class="string">'/'</span> <span class="keyword">do</span>
-  status = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/status'</span>)
-  <span class="string">"API status: <span class="subst">#{status[<span class="string">'description'</span>]}</span>"</span>
+            <div class="content"><div class='highlight'><pre>  erb <span class="symbol">:root</span>
 <span class="keyword">end</span></pre></div></div>
             
         </li>
@@ -122,52 +109,26 @@ puts</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h2 id="post-v1-distributed_to_dos">POST /v1/distributed_to_dos</h2>
-<p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.</p>
+              <h2 id="get-v1-status-json">GET /v1/status.json</h2>
+<p>Check the API status.  Useful for testing authentication without knowing other information.</p>
 <h3 id="example-request">Example request</h3>
-<pre><code>POST /v1/distributed_to_dos
-template_to_do_api_id=12345678-1234-5678-1234-567812345678
-assignee_emails=[&quot;bobama@example.com&quot;,&quot;gwbush@example.com&quot;,&quot;bclinton@example.com&quot;,&quot;gbush@example.com&quot;,&quot;rreagan@example.com&quot;,&quot;jcarter@example.com&quot;,&quot;gford@example.com&quot;,&quot;rnixon@example.com&quot;]
-content={&quot;field1&quot;:&quot;value1&quot;}</code></pre>
-<h3 id="request-fields">Request fields</h3>
-<ul>
-<li><code>template_to_do_api_id</code>: <strong>Required</strong>.  The UUID for the TemplateToDo that will be distributed.  This can be found in settings.</li>
-<li><code>assignee_emails</code>: <strong>Required</strong>.  A JSON Array of email addresses of Users that will receive the DistributedToDos.</li>
-<li><code>content</code>: JSON text of values to pre-fill in the DistributedToDo.  Field names are available under &quot;Settings&quot;.</li>
-</ul>
-<h3 id="example-responses">Example responses</h3>
-<h4 id="http-202-accepted">HTTP 202 Accepted</h4>
-<pre><code>{
-  &quot;id&quot;:&quot;f81d4fae-7dec-11d0-a765-00a0c91e6bf6&quot;,
-  &quot;path&quot;:&quot;/v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6&quot;
-}</code></pre>
-<h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
-<pre><code>{
-  &quot;errors&quot;: {
-    &quot;assignee_emails&quot;: [
-      &quot;has invalid email address alice@example.com&quot;,
-      &quot;has invalid email address bob@example.com&quot;
-    ]
-  }
-}</code></pre>
-<p>TODO: check what ActiveModel generates
-TODO: Create users if they don&#39;t exist?</p>
+<pre><code>GET /v1/status.json</code></pre>
+<h3 id="example-response">Example response</h3>
+<h4 id="http-200-ok">HTTP 200 OK</h4>
+<pre><code>{&quot;description&quot;:&quot;up&quot;}</code></pre>
+<h4 id="http-401-unauthorized">HTTP 401 Unauthorized</h4>
+<p>The request was not properly authenticated.</p>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h3 id="response-fields">Response fields</h3>
 <ul>
-<li><code>id</code>: An ID for the DistributedToDo which will be created asynchronously. Please include it in any bug reports to Continuity.</li>
-<li><code>path</code>: The path where the DistributedToDo will be available.</li>
-<li><code>errors</code>: An object with one key per request field and an array of all the validation errors that apply to that field.</li>
+<li><code>description</code>: A text description of the API state.</li>
 </ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos/new'</span> <span class="keyword">do</span>
-  <span class="string">'TODO: render form'</span>
-<span class="keyword">end</span>
-
-post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span>
-  <span class="string">'TODO: receive POST from form and distribute as requested'</span>
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/status'</span> <span class="keyword">do</span>
+  status = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/status.json'</span>).parsed_response
+  <span class="string">"API status: <span class="subst">#{status[<span class="string">'description'</span>]}</span>"</span>
 <span class="keyword">end</span></pre></div></div>
             
         </li>
@@ -179,10 +140,84 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <h2 id="get-v1-distributed_to_dos-id">GET /v1/distributed_to_dos/:id</h2>
+              <h2 id="post-v1-distributed_to_dos-json">POST /v1/distributed_to_dos.json</h2>
+<p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.  (The work happens in a job queue.)</p>
+<h3 id="example-request">Example request</h3>
+<pre><code>POST /v1/distributed_to_dos.json
+distributed_to_do[template_to_do_id]=12345678-1234-5678-1234-567812345678
+distributed_to_do[assignee_emails]=[&quot;bobama@example.com&quot;,&quot;gwbush@example.com&quot;,&quot;bclinton@example.com&quot;,&quot;gbush@example.com&quot;,&quot;rreagan@example.com&quot;,&quot;jcarter@example.com&quot;,&quot;gford@example.com&quot;,&quot;rnixon@example.com&quot;]
+distributed_to_do[content]={&quot;field1&quot;:&quot;value1&quot;}</code></pre>
+<h3 id="request-fields">Request fields</h3>
+<ul>
+<li><code>distributed_to_do[template_to_do_id]</code>: <strong>Required</strong>.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under &quot;Settings&quot;.</li>
+<li><code>distributed_to_do[assignee_emails]</code>: <strong>Required</strong>.  A JSON Array of email addresses of Users that will receive the DistributedToDos.</li>
+<li><code>distributed_to_do[content]</code>: JSON text of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under &quot;Settings&quot;.</li>
+</ul>
+<h3 id="example-responses">Example responses</h3>
+<h4 id="http-202-accepted">HTTP 202 Accepted</h4>
+<pre><code>{
+  &quot;id&quot;:&quot;f81d4fae-7dec-11d0-a765-00a0c91e6bf6&quot;,
+  &quot;path&quot;:&quot;/v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6&quot;
+}</code></pre>
+<h4 id="http-401-unauthorized">HTTP 401 Unauthorized</h4>
+<p>The request was not properly authenticated.</p>
+<h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
+<pre><code>{
+  &quot;errors&quot;: {
+    &quot;template_to_do_id&quot;: [
+      &quot;does not exist&quot;,
+    ],
+    &quot;assignee_emails&quot;: [
+      &quot;has email alice@example.com which does not exist for this organization&quot;,
+      &quot;has email bob@example.com which does not exist for this organization&quot;
+    ],
+    &quot;content&quot;: [
+      &quot;is not valid JSON&quot;
+    ]
+  }
+}</code></pre>
+<p>TODO: check what ActiveModel generates
+TODO: Create users if they don&#39;t exist?</p>
+<h4 id="http-500-server-error">HTTP 500 Server Error</h4>
+<h3 id="response-fields">Response fields</h3>
+<ul>
+<li><code>id</code>: An ID for the DistributedToDo which will be created asynchronously. Please include it in any bug reports to Continuity.</li>
+<li><code>path</code>: The path where the DistributedToDo will be available once created.</li>
+<li><code>errors</code>: An object with one key per request field and an array of all the validation errors that apply to that field.  The exact text of the error messages <strong>is not</strong> guaranteed and may change without warning.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos/new'</span> <span class="keyword">do</span>
+  erb <span class="symbol">:distributed_to_dos_new</span>
+<span class="keyword">end</span>
+
+post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span>
+  distributed_to_do = <span class="constant">ControlAPI</span>.post(<span class="string">'/v1/distributed_to_dos.json'</span>, params)
+
+  <span class="keyword">case</span> distributed_to_do.response.code
+  <span class="keyword">when</span> <span class="string">'202'</span>
+    [<span class="number">200</span>, erb(<span class="symbol">:distributed_to_dos_post</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do)]
+  <span class="keyword">when</span> <span class="string">'422'</span>
+    [<span class="number">422</span>, erb(<span class="symbol">:distributed_to_dos_errors</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do)]
+  <span class="keyword">else</span>
+    [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="get-v1-distributed_to_dos-id-json">GET /v1/distributed_to_dos/:id.json</h2>
 <p>Get the current state of a distributed_to_do as found by an <code>id</code>.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6</code></pre>
+<pre><code>GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6.json</code></pre>
 <h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
@@ -201,18 +236,20 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
     }
   ]
 }</code></pre>
+<h4 id="http-401-unauthorized">HTTP 401 Unauthorized</h4>
+<p>The request was not properly authenticated.</p>
 <h4 id="http-404-not-found">HTTP 404 Not Found</h4>
-<p>Returned when the resource does not exist.  Note that after a <code>POST</code> to <code>/v1/distributed_to_dos</code> that gives a <code>202</code>, <code>/v1/distributed_to_dos/:id</code> would return a <code>404</code> until the resource is <strong>asynchronously</strong> created.</p>
+<p>Returned when the resource does not exist.  Note that after a <code>POST</code> to <code>/v1/distributed_to_dos.json</code> that gives a <code>202</code>, <code>/v1/distributed_to_dos/:id.json</code> would return a <code>404</code> until the resource is <strong>asynchronously</strong> created.</p>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h3 id="response-fields">Response fields</h3>
 <ul>
 <li><code>id</code>: Unique ID for this DistributedToDo.</li>
 <li><code>created_at</code>: ISO8601 datetime of the creation of this DistributedToDo, in UTC.</li>
-<li><code>completed_at</code>: ISO8601 date of when the DistributedToDo was completed, in UTC.</li>
+<li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>assignments</code>: Array<ul>
 <li><code>email</code>: User email of DistributedToDo assignment</li>
-<li><code>finished_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
+<li><code>completed_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
 </ul>
 </li>
 </ul>
@@ -221,28 +258,37 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos/:id'</span> <span class="keyword">do</span>
-  <span class="string">'TODO: render a page with the information in the response'</span>
+  distributed_to_do = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/distributed_to_dos/<span class="subst">#{params[<span class="symbol">:id</span>]}</span>.json"</span>)
+
+  <span class="keyword">case</span> distributed_to_do.response.code
+  <span class="keyword">when</span> <span class="string">'200'</span>
+    erb <span class="symbol">:distributed_to_do</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do
+  <span class="keyword">when</span> <span class="string">'404'</span>
+    [<span class="number">404</span>, <span class="string">'Not found'</span>]
+  <span class="keyword">else</span>
+    [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <h2 id="get-v1-distributed_to_dos">GET /v1/distributed_to_dos</h2>
+              <h2 id="get-v1-distributed_to_dos-json">GET /v1/distributed_to_dos.json</h2>
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/distributed_to_dos
-GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z
-GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z&amp;created_finish_at=2013-11-07T12:34:46Z
-GET /v1/distributed_to_dos?created_finish_at=2013-11-07T12:34:46Z
-GET /v1/distributed_to_dos?late=true
-GET /v1/distributed_to_dos?complete=true
-GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z&amp;created_finish_at=2013-11-07T12:34:46Z&amp;late=true&amp;complete=false</code></pre>
+<pre><code>GET /v1/distributed_to_dos.json
+GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z
+GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&amp;created_finish_at=2013-11-07T12:34:46Z
+GET /v1/distributed_to_dos.json?created_finish_at=2013-11-07T12:34:46Z
+GET /v1/distributed_to_dos.json?late=true
+GET /v1/distributed_to_dos.json?complete=true
+GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&amp;created_finish_at=2013-11-07T12:34:46Z&amp;late=true&amp;complete=false</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>created_start_at</code>: ISO8601 datetime (in UTC) of inclusive lower bound of <code>created_at</code> time.</li>
@@ -266,7 +312,8 @@ GET /v1/distributed_to_dos?created_start_at=2013-11-02T12:34:46Z&amp;created_fin
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span>
-  <span class="string">'TODO: render a page with links to each distributed_to_do'</span>
+  distributed_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/distributed_to_dos.json'</span>)
+  erb <span class="symbol">:distributed_to_dos</span>, <span class="symbol">:locals</span> =&gt; distributed_to_dos
 <span class="keyword">end</span></pre></div></div>
             
         </li>
