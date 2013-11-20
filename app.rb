@@ -72,7 +72,7 @@ end
 #
 #     {
 #       "distributed_to_dos": {
-#         "template_to_do_id": "12345678-1234-5678-1234-567812345678",
+#         "template_to_do_uuid": "12345678-1234-5678-1234-567812345678",
 #         "due_on": "2013-11-29",
 #         "assignee_emails": ["bobama@example.com", "gwbush@example.com", "bclinton@example.com"],
 #         "field_values": {"field1": "value1", "field2": "value2"}
@@ -82,7 +82,7 @@ end
 # ### Request fields
 #
 #   * `distributed_to_do`: **Required**.  Holds parameters for the DistributedToDo.
-#     * `template_to_do_id`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under "Settings".
+#     * `template_to_do_uuid`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under "Settings".
 #     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in UTC.
 #     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `field_values`: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
@@ -92,7 +92,7 @@ end
 # #### HTTP 202 Accepted
 #
 #     {
-#       "id":"f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+#       "uuid":"f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
 #       "path":"/v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
 #     }
 #
@@ -127,7 +127,7 @@ end
 #
 # ### Response fields
 #
-#   * `id`: An ID for the DistributedToDo which will be created asynchronously. Please include it in any bug reports to Continuity.
+#   * `uuid`: An UUID for the DistributedToDo which will be created asynchronously. Please include it in any bug reports to Continuity.
 #   * `path`: The path where the DistributedToDo will be available once created.
 #   * `errors`: An object with one key per request field and an array of all the validation errors that apply to that field.  The exact text of the error messages **is not** guaranteed and may change without warning.
 #
@@ -150,9 +150,9 @@ post '/distributed_to_dos' do
   end
 end
 
-# ## GET /v1/distributed_to_dos/:id.json
+# ## GET /v1/distributed_to_dos/:uuid.json
 #
-# Get the current state of a distributed_to_do as found by an `id`.
+# Get the current state of a distributed_to_do as found by an `uuid`.
 #
 # ### Example requests
 #
@@ -163,7 +163,7 @@ end
 # #### HTTP 200 OK
 #
 #     {
-#       "id": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+#       "uuid": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
 #       "created_at": "2013-11-02T12:34:46Z",
 #       "completed_at": "2013-11-07T12:34:56Z",
 #       "due_on": "2013-11-08",
@@ -185,13 +185,13 @@ end
 #
 # #### HTTP 404 Not Found
 #
-# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos.json` that gives a `202`, `/v1/distributed_to_dos/:id.json` would return a `404` until the resource is **asynchronously** created.
+# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos.json` that gives a `202`, `/v1/distributed_to_dos/:uuid.json` would return a `404` until the resource is **asynchronously** created.
 #
 # #### HTTP 500 Server Error
 #
 # ### Response fields
 #
-#   * `id`: Unique ID for this DistributedToDo.
+#   * `uuid`: UUID for this DistributedToDo.
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
 #   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.
 #   * `due_on`: ISO8601 date of when the DistributedToDo is due, in UTC.
@@ -199,10 +199,10 @@ end
 #     * `email`: User email of DistributedToDo assignment
 #     * `completed_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
 #
-# TODO: make sure all DistributedToDos have a UUID-style `id`.
+# TODO: make sure all DistributedToDos have a UUID-style `uuid`.
 #
-get '/distributed_to_dos/:id' do
-  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:id]}.json")
+get '/distributed_to_dos/:uuid' do
+  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:uuid]}.json")
 
   case distributed_to_do.response.code
   when '200'
@@ -241,7 +241,7 @@ end
 #
 #     {
 #       "distributed_to_dos": [
-#         // Content from GET /v1/distributed_to_dos/:id
+#         // Content from GET /v1/distributed_to_dos/:uuid
 #       ]
 #     }
 #
