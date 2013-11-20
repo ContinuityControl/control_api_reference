@@ -4,7 +4,7 @@
 
 <table>
   <thead>
-    <th>ID</th>
+    <th>UUID</th>
     <th>Completed at</th>
     <th>Due on</th>
     <th>Assignment count</th>
@@ -12,7 +12,7 @@
   </tbody>
     <% distributed_to_dos.each do |distributed_to_do| %>
       <tr>
-        <td><a href="/distributed_to_dos/<%= distributed_to_do['id'] %>"><%= distributed_to_do['id'] %></a></td>
+        <td><a href="/distributed_to_dos/<%= distributed_to_do['uuid'] %>"><%= distributed_to_do['uuid'] %></a></td>
         <td><%= distributed_to_do['completed_at'] %></td>
         <td><%= distributed_to_do['due_on'] %></td>
         <td><%= distributed_to_do['assignments'].count %></td>
