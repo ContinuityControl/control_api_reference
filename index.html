@@ -146,11 +146,13 @@
 <pre><code>POST /v1/distributed_to_dos.json
 distributed_to_do[template_to_do_id]=12345678-1234-5678-1234-567812345678
 distributed_to_do[assignee_emails]=[&quot;bobama@example.com&quot;,&quot;gwbush@example.com&quot;,&quot;bclinton@example.com&quot;,&quot;gbush@example.com&quot;,&quot;rreagan@example.com&quot;,&quot;jcarter@example.com&quot;,&quot;gford@example.com&quot;,&quot;rnixon@example.com&quot;]
+distributed_to_do[due_on]=&quot;2013-11-29&quot;
 distributed_to_do[field_values]={&quot;field1&quot;:&quot;value1&quot;}</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>distributed_to_do[template_to_do_id]</code>: <strong>Required</strong>.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under &quot;Settings&quot;.</li>
 <li><code>distributed_to_do[assignee_emails]</code>: <strong>Required</strong>.  A JSON Array of email addresses of Users that will receive the DistributedToDos.</li>
+<li><code>distributed_to_do[due_on]</code>: <strong>Required</strong>.  ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>distributed_to_do[field_values]</code>: JSON text of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under &quot;Settings&quot;.</li>
 </ul>
 <h3 id="example-responses">Example responses</h3>
@@ -170,6 +172,9 @@ distributed_to_do[field_values]={&quot;field1&quot;:&quot;value1&quot;}</code></
     &quot;assignee_emails&quot;: [
       &quot;has email alice@example.com which does not exist for this organization&quot;,
       &quot;has email bob@example.com which does not exist for this organization&quot;
+    ],
+    &quot;due_on&quot;: [
+      &quot;could not be parsed&quot;
     ],
     &quot;field_values&quot;: [
       &quot;is not valid JSON&quot;
