@@ -221,22 +221,37 @@ end
 # ### Example requests
 #
 #     GET /v1/distributed_to_dos.json
-#     GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z
-#     GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&created_finish_at=2013-11-07T12:34:46Z
-#     GET /v1/distributed_to_dos.json?created_finish_at=2013-11-07T12:34:46Z
+#     GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z
+#     GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&created_before=2013-11-07T12:34:46Z
+#     GET /v1/distributed_to_dos.json?created_before=2013-11-07T12:34:46Z
 #     GET /v1/distributed_to_dos.json?late=true
 #     GET /v1/distributed_to_dos.json?complete=true
-#     GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&created_finish_at=2013-11-07T12:34:46Z&late=true&complete=false
+#     GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&created_before=2013-11-07T12:34:46Z&late=true&complete=false
 #
 # ### Request fields
 #
-#   * `created_start_at`: ISO8601 datetime (in UTC) of inclusive lower bound of `created_at` time.
-#   * `created_finish_at`: ISO8601 datetime (in UTC) of inclusive upper bound of `created_at` time.
+#   * `created_after`: ISO8601 datetime (in UTC) of inclusive lower bound of `created_at` time.
+#   * `created_before`: ISO8601 datetime (in UTC) of inclusive upper bound of `created_at` time.
 #   * `late`: When `true`, respond with only "late" DistributedToDos.  When `false`, respond with only "on time" DistributedToDos.  When not present, do not filter on lateness.
 #   * `complete`: When `true`, respond with only "complete" DistributedToDos.  When `false`, respond with only "incomplete" DistributedToDos.  When not present, do not filter on completeness.
 #
-# ### Example response
+# `late` and `complete` can be combined to filter
+# `late=false&complete=false` # incomplete and on time
+# `late=false&complete=true`  # completed and on time
+# `late=true&complete=false`  # incomplete and late
+# `late=true&complete=true`   # completed and late
 #
+# This ultimately maps to the logic:
+#
+#           | complete       | incomplete
+# ----------+----------------+---------------------------
+# late      | finished_on >  | finished_on IS NULL AND
+#           |   due_date     |   current_date > due_date
+# ----------+----------------+---------------------------
+# no late   | finished_on >  | finished_on IS NULL AND
+#           |   due_date     |   current_date > due_date
+#
+# ### Example response
 # #### HTTP 200 OK
 #
 #     {
