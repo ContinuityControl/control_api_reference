@@ -1,8 +1,8 @@
 <h2>New DistributedToDo</h2>
 
 <form method="post" action="/distributed_to_dos">
-  <label for="template_to_do_api_id">TemplateToDo API ID</label>
-  <input name="distributed_to_do[template_to_do_api_id]" id="template_to_do_api_id" type="text" />
+  <label for="template_to_do_id">TemplateToDo ID</label>
+  <input name="distributed_to_do[template_to_do_id]" id="template_to_do_id" type="text" />
   <br />
 
   <label for="assignee_email_1">Assignee Email 1</label>
@@ -14,6 +14,7 @@
   <br />
 
   (A complete implementation would allow an arbitrary number of assignee_emails)
+  <br />
 
   <label for="field_values_field1">Content for field1</label>
   <input name="distributed_to_do[field_values][field1]" id="field_values_field1" type="text" />
@@ -24,6 +25,7 @@
   <br />
 
   (A complete implementation would allow arbitrary field values)
+  <br />
 
   <input type="submit" value="Submit" />
 </form>
