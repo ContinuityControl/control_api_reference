@@ -73,6 +73,7 @@ end
 #     {
 #       "distributed_to_dos": {
 #         "template_to_do_id": "12345678-1234-5678-1234-567812345678",
+#         "due_on": "2013-11-29",
 #         "assignee_emails": ["bobama@example.com", "gwbush@example.com", "bclinton@example.com"],
 #         "field_values": {"field1": "value1", "field2": "value2"}
 #       }
@@ -82,8 +83,8 @@ end
 #
 #   * `distributed_to_do`: **Required**.  Holds parameters for the DistributedToDo.
 #     * `template_to_do_id`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under "Settings".
-#     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in UTC.
+#     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `field_values`: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
 #
 # ### Example responses
