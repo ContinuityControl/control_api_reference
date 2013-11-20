@@ -67,13 +67,13 @@ end
 # ### Example request
 #
 #     POST /v1/distributed_to_dos.json
-#     distributed_to_do[template_to_do_api_id]=12345678-1234-5678-1234-567812345678
+#     distributed_to_do[template_to_do_id]=12345678-1234-5678-1234-567812345678
 #     distributed_to_do[assignee_emails]=["bobama@example.com","gwbush@example.com","bclinton@example.com","gbush@example.com","rreagan@example.com","jcarter@example.com","gford@example.com","rnixon@example.com"]
 #     distributed_to_do[content]={"field1":"value1"}
 #
 # ### Request fields
 #
-#   * `distributed_to_do[template_to_do_api_id]`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under "Settings".
+#   * `distributed_to_do[template_to_do_id]`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under "Settings".
 #   * `distributed_to_do[assignee_emails]`: **Required**.  A JSON Array of email addresses of Users that will receive the DistributedToDos.
 #   * `distributed_to_do[content]`: JSON text of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
 #
@@ -94,7 +94,7 @@ end
 #
 #     {
 #       "errors": {
-#         "template_to_do_api_id": [
+#         "template_to_do_id": [
 #           "does not exist",
 #         ],
 #         "assignee_emails": [
