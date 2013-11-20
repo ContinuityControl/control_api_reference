@@ -79,10 +79,13 @@
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>The root path in this application simply provides navigation.</p>
+<p><code>erb :view_name</code> renders the file in <code>views/view_name.erb</code>.  For example, this will end up rendering <code>views/root.erb</code>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>get <span class="string">'/'</span> <span class="keyword">do</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/'</span> <span class="keyword">do</span>
+  erb <span class="symbol">:root</span>
+<span class="keyword">end</span></pre></div></div>
             
         </li>
         
@@ -92,23 +95,6 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p><code>erb :view_name</code> renders the file in <code>views/view_name.erb</code>.</p>
-<p>For example, this will end up rendering <code>views/root.erb</code>.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  erb <span class="symbol">:root</span>
-<span class="keyword">end</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h2 id="get-v1-status-json">GET /v1/status.json</h2>
 <p>Check the API status.  Useful for testing authentication without knowing other information.</p>
@@ -135,11 +121,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h2 id="post-v1-distributed_to_dos-json">POST /v1/distributed_to_dos.json</h2>
 <p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.  (The work happens in a job queue.)</p>
@@ -225,11 +211,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-uuid-json">GET /v1/distributed_to_dos/:uuid.json</h2>
 <p>Get the current state of a distributed_to_do as found by an <code>uuid</code>.</p>
@@ -290,29 +276,42 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-json">GET /v1/distributed_to_dos.json</h2>
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/distributed_to_dos.json
-GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z
-GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&amp;created_finish_at=2013-11-07T12:34:46Z
-GET /v1/distributed_to_dos.json?created_finish_at=2013-11-07T12:34:46Z
+GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z
+GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&amp;created_before=2013-11-07T12:34:46Z
+GET /v1/distributed_to_dos.json?created_before=2013-11-07T12:34:46Z
 GET /v1/distributed_to_dos.json?late=true
 GET /v1/distributed_to_dos.json?complete=true
-GET /v1/distributed_to_dos.json?created_start_at=2013-11-02T12:34:46Z&amp;created_finish_at=2013-11-07T12:34:46Z&amp;late=true&amp;complete=false</code></pre>
+GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&amp;created_before=2013-11-07T12:34:46Z&amp;late=true&amp;complete=false</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
-<li><code>created_start_at</code>: ISO8601 datetime (in UTC) of inclusive lower bound of <code>created_at</code> time.</li>
-<li><code>created_finish_at</code>: ISO8601 datetime (in UTC) of inclusive upper bound of <code>created_at</code> time.</li>
+<li><code>created_after</code>: ISO8601 datetime (in UTC) of inclusive lower bound of <code>created_at</code> time.</li>
+<li><code>created_before</code>: ISO8601 datetime (in UTC) of inclusive upper bound of <code>created_at</code> time.</li>
 <li><code>late</code>: When <code>true</code>, respond with only &quot;late&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;on time&quot; DistributedToDos.  When not present, do not filter on lateness.</li>
 <li><code>complete</code>: When <code>true</code>, respond with only &quot;complete&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;incomplete&quot; DistributedToDos.  When not present, do not filter on completeness.</li>
 </ul>
+<p><code>late</code> and <code>complete</code> can be combined to filter
+<code>late=false&amp;complete=false</code> # incomplete and on time
+<code>late=false&amp;complete=true</code>  # completed and on time
+<code>late=true&amp;complete=false</code>  # incomplete and late
+<code>late=true&amp;complete=true</code>   # completed and late</p>
+<p>This ultimately maps to the logic:</p>
+<pre><code>      | complete       | incomplete</code></pre>
+<p>----------+----------------+---------------------------
+late      | finished_on &gt;  | finished_on IS NULL AND
+          |   due_date     |   current_date &gt; due_date
+----------+----------------+---------------------------
+no late   | finished_on &gt;  | finished_on IS NULL AND
+          |   due_date     |   current_date &gt; due_date</p>
 <h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
