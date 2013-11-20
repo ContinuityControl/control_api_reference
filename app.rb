@@ -25,10 +25,9 @@ class ControlAPI
 end
 
 # The root path in this application simply provides navigation.
+#
+# `erb :view_name` renders the file in `views/view_name.erb`.  For example, this will end up rendering `views/root.erb`.
 get '/' do
-  # `erb :view_name` renders the file in `views/view_name.erb`.
-  #
-  # For example, this will end up rendering `views/root.erb`.
   erb :root
 end
 
