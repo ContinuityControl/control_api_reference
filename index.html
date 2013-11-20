@@ -44,6 +44,7 @@
             <div class="content"><div class='highlight'><pre><span class="keyword">require</span> <span class="string">'sinatra'</span>
 <span class="keyword">require</span> <span class="string">'sinatra/reloader'</span> <span class="keyword">if</span> development?
 <span class="keyword">require</span> <span class="string">'httparty'</span>
+<span class="keyword">require</span> <span class="string">'json'</span>
 <span class="keyword">require</span> <span class="string">'dotenv'</span>
 <span class="constant">Dotenv</span>.load</pre></div></div>
             
@@ -206,7 +207,9 @@ TODO: Create users if they don&#39;t exist?</p>
 <span class="keyword">end</span>
 
 post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span>
-  distributed_to_do = <span class="constant">ControlAPI</span>.post(<span class="string">'/v1/distributed_to_dos.json'</span>, params)
+  distributed_to_do = <span class="constant">ControlAPI</span>.post(<span class="string">'/v1/distributed_to_dos.json'</span>,
+                                      <span class="symbol">:body</span> =&gt; params.to_json,
+                                      <span class="symbol">:headers</span> =&gt; { <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/json'</span> })
 
   <span class="keyword">case</span> distributed_to_do.response.code
   <span class="keyword">when</span> <span class="string">'202'</span>
