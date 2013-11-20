@@ -71,7 +71,7 @@ end
 #     Content-Type: application/json
 #
 #     {
-#       "distributed_to_dos": {
+#       "distributed_to_do": {
 #         "template_to_do_uuid": "12345678-1234-5678-1234-567812345678",
 #         "due_on": "2013-11-29",
 #         "assignee_emails": ["bobama@example.com", "gwbush@example.com", "bclinton@example.com"],
