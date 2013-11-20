@@ -10,6 +10,7 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'httparty'
+require 'json'
 require 'dotenv'
 Dotenv.load
 
@@ -134,7 +135,9 @@ get '/distributed_to_dos/new' do
 end
 
 post '/distributed_to_dos' do
-  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos.json', params)
+  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos.json',
+                                      :body => params.to_json,
+                                      :headers => { 'Content-Type' => 'application/json' })
 
   case distributed_to_do.response.code
   when '202'

@@ -5,13 +5,25 @@
   <input name="distributed_to_do[template_to_do_api_id]" id="template_to_do_api_id" type="text" />
   <br />
 
-  <label for="assignee_emails">Assignee Emails (JSON Array)</label>
-  <input name="distributed_to_do[assignee_emails]" id="assignee_emails" type="text" />
+  <label for="assignee_email_1">Assignee Email 1</label>
+  <input name="distributed_to_do[assignee_emails][]" id="assignee_email_1" type="text" />
   <br />
 
-  <label for="content">Content (JSON object)</label>
-  <input name="distributed_to_do[content]" id="content" type="text" />
+  <label for="assignee_email_2">Assignee Email 2</label>
+  <input name="distributed_to_do[assignee_emails][]" id="assignee_email_2" type="text" />
   <br />
+
+  (A complete implementation would allow an arbitrary number of assignee_emails)
+
+  <label for="field_values_field1">Content for field1</label>
+  <input name="distributed_to_do[field_values][field1]" id="field_values_field1" type="text" />
+  <br />
+
+  <label for="field_values_field1">Content for field2</label>
+  <input name="distributed_to_do[field_values][field2]" id="field_values_field2" type="text" />
+  <br />
+
+  (A complete implementation would allow arbitrary field values)
 
   <input type="submit" value="Submit" />
 </form>

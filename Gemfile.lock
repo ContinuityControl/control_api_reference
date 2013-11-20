@@ -36,6 +36,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   httparty
+  json
   rake
   sinatra
   sinatra-reloader
