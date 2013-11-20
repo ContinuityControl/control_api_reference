@@ -150,6 +150,7 @@ Content-Type: application/json
 {
   &quot;distributed_to_dos&quot;: {
     &quot;template_to_do_id&quot;: &quot;12345678-1234-5678-1234-567812345678&quot;,
+    &quot;due_on&quot;: &quot;2013-11-29&quot;,
     &quot;assignee_emails&quot;: [&quot;bobama@example.com&quot;, &quot;gwbush@example.com&quot;, &quot;bclinton@example.com&quot;],
     &quot;field_values&quot;: {&quot;field1&quot;: &quot;value1&quot;, &quot;field2&quot;: &quot;value2&quot;}
   }
@@ -158,8 +159,8 @@ Content-Type: application/json
 <ul>
 <li><code>distributed_to_do</code>: <strong>Required</strong>.  Holds parameters for the DistributedToDo.<ul>
 <li><code>template_to_do_id</code>: <strong>Required</strong>.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under &quot;Settings&quot;.</li>
-<li><code>assignee_emails</code>: <strong>Required</strong>.  An Array of email addresses of Users that will receive the DistributedToDos.</li>
 <li><code>due_on</code>: <strong>Required</strong>.  ISO8601 date of when the DistributedToDo is due, in UTC.</li>
+<li><code>assignee_emails</code>: <strong>Required</strong>.  An Array of email addresses of Users that will receive the DistributedToDos.</li>
 <li><code>field_values</code>: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under &quot;Settings&quot;.</li>
 </ul>
 </li>
