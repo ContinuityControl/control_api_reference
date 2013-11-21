@@ -253,6 +253,6 @@ end
 #   * `distributed_to_dos`: an Array of DistributedToDos, or an empty array `[]` if none match the given criteria
 #
 get '/distributed_to_dos' do
-  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos.json')
+  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos.json', :query => params)
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
