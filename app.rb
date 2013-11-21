@@ -234,23 +234,15 @@ end
 #   * `late`: When `true`, respond with only "late" DistributedToDos.  When `false`, respond with only "on time" DistributedToDos.  When not present, do not filter on lateness.
 #   * `complete`: When `true`, respond with only "complete" DistributedToDos.  When `false`, respond with only "incomplete" DistributedToDos.  When not present, do not filter on completeness.
 #
-# `late` and `complete` can be combined to filter
-# `late=false&complete=false` # incomplete and on time
-# `late=false&complete=true`  # completed and on time
-# `late=true&complete=false`  # incomplete and late
-# `late=true&complete=true`   # completed and late
+# `late` and `complete` can be combined to filter:
 #
-# This ultimately maps to the logic:
-#
-#           | complete       | incomplete
-# ----------+----------------+---------------------------
-# late      | finished_on >  | finished_on IS NULL AND
-#           |   due_date     |   current_date > due_date
-# ----------+----------------+---------------------------
-# no late   | finished_on >  | finished_on IS NULL AND
-#           |   due_date     |   current_date > due_date
+#     late=false&complete=false  # incomplete and on time
+#     late=false&complete=true   # completed and on time
+#     late=true&complete=false   # incomplete and late (what most users will want)
+#     late=true&complete=true    # completed and late
 #
 # ### Example response
+#
 # #### HTTP 200 OK
 #
 #     {
