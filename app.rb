@@ -119,9 +119,6 @@ end
 #       }
 #     }
 #
-# TODO: check what ActiveModel generates
-# TODO: Create users if they don't exist?
-#
 # #### HTTP 500 Server Error
 #
 # ### Response fields
@@ -197,8 +194,6 @@ end
 #   * `assignments`: Array
 #     * `email`: User email of DistributedToDo assignment
 #     * `completed_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
-#
-# TODO: make sure all DistributedToDos have a UUID-style `uuid`.
 #
 get '/distributed_to_dos/:uuid' do
   distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:uuid]}.json")
