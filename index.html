@@ -299,19 +299,11 @@ GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&amp;created_b
 <li><code>late</code>: When <code>true</code>, respond with only &quot;late&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;on time&quot; DistributedToDos.  When not present, do not filter on lateness.</li>
 <li><code>complete</code>: When <code>true</code>, respond with only &quot;complete&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;incomplete&quot; DistributedToDos.  When not present, do not filter on completeness.</li>
 </ul>
-<p><code>late</code> and <code>complete</code> can be combined to filter
-<code>late=false&amp;complete=false</code> # incomplete and on time
-<code>late=false&amp;complete=true</code>  # completed and on time
-<code>late=true&amp;complete=false</code>  # incomplete and late
-<code>late=true&amp;complete=true</code>   # completed and late</p>
-<p>This ultimately maps to the logic:</p>
-<pre><code>      | complete       | incomplete</code></pre>
-<p>----------+----------------+---------------------------
-late      | finished_on &gt;  | finished_on IS NULL AND
-          |   due_date     |   current_date &gt; due_date
-----------+----------------+---------------------------
-no late   | finished_on &gt;  | finished_on IS NULL AND
-          |   due_date     |   current_date &gt; due_date</p>
+<p><code>late</code> and <code>complete</code> can be combined to filter:</p>
+<pre><code>late=false&amp;complete=false  # incomplete and on time
+late=false&amp;complete=true   # completed and on time
+late=true&amp;complete=false   # incomplete and late (what most users will want)
+late=true&amp;complete=true    # completed and late</code></pre>
 <h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
