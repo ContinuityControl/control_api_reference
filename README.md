@@ -7,6 +7,7 @@ This guide assumes you have a Continuity Control API key.  The API is currently 
 ## Quick links
 
 * [API documentation](http://continuitycontrol.github.io/control_api_reference/)
+* [Change Log](ChangeLog)
 * [Control](https://control.continuity.net)
 * [Sample application](http://control-api-reference.herokuapp.com/) (this code)
 
