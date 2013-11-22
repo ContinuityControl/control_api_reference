@@ -30,12 +30,12 @@ To get started:
     bundle
     bundle exec rackup
 
-The default port is `4567`, so you can test your connection like so:
+The default port is `9292`, so you can test your connection like so:
 
-    curl http://localhost:4567/status
+    curl http://localhost:9292/status
     # => API status: up
 
-You can also visit [http://localhost:4567/status](http://localhost:4567/status) in your web browser.
+You can also visit [http://localhost:9292/status](http://localhost:9292/status) in your web browser.
 
 If you do not see `API status: up`, there are several possible causes:
 
