@@ -118,7 +118,7 @@ end
 #
 # ### Response fields
 #
-#   * `uuid`: An UUID for the DistributedToDo which will be created asynchronously. Please include it in any bug reports to Continuity.
+#   * `uuid`: A UUID for the DistributedToDo which will be created asynchronously. Please include it in any bug reports to Continuity.
 #   * `path`: The path where the DistributedToDo will be available once created.
 #   * `errors`: An object with one key per request field and an array of all the validation errors that apply to that field.  The exact text of the error messages **is not** guaranteed and may change without warning.
 #
