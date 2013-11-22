@@ -279,16 +279,16 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/distributed_to_dos.json
-GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z
-GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&amp;created_before=2013-11-07T12:34:46Z
-GET /v1/distributed_to_dos.json?created_before=2013-11-07T12:34:46Z
+GET /v1/distributed_to_dos.json?created_after=2013-11-02
+GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07
+GET /v1/distributed_to_dos.json?created_before=2013-11-07
 GET /v1/distributed_to_dos.json?late=true
 GET /v1/distributed_to_dos.json?complete=true
-GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&amp;created_before=2013-11-07T12:34:46Z&amp;late=true&amp;complete=false</code></pre>
+GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
-<li><code>created_after</code>: ISO8601 datetime (in UTC) of inclusive lower bound of <code>created_at</code> time.</li>
-<li><code>created_before</code>: ISO8601 datetime (in UTC) of inclusive upper bound of <code>created_at</code> time.</li>
+<li><code>created_after</code>: ISO8601 date of exclusive lower bound of <code>created_at</code> time.</li>
+<li><code>created_before</code>: ISO8601 date of exclusive upper bound of <code>created_at</code> time.</li>
 <li><code>late</code>: When <code>true</code>, respond with only &quot;late&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;on time&quot; DistributedToDos.  When not present, do not filter on lateness.</li>
 <li><code>complete</code>: When <code>true</code>, respond with only &quot;complete&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;incomplete&quot; DistributedToDos.  When not present, do not filter on completeness.</li>
 </ul>
@@ -312,8 +312,25 @@ late=true&amp;complete=true    # completed and late</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span>
-  distributed_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/distributed_to_dos.json'</span>, <span class="symbol">:query</span> =&gt; params)
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Filter to the last week by default</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  one_week_ago_params = { <span class="symbol">:created_after</span> =&gt; <span class="constant">Date</span>.today - <span class="number">7</span> }
+  filter_params = params.empty? ? one_week_ago_params <span class="symbol">:</span> params
+
+  distributed_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/distributed_to_dos.json'</span>, <span class="symbol">:query</span> =&gt; filter_params)
   erb <span class="symbol">:distributed_to_dos</span>, <span class="symbol">:locals</span> =&gt; distributed_to_dos
 <span class="keyword">end</span></pre></div></div>
             
