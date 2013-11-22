@@ -248,7 +248,6 @@ end
 #   * `distributed_to_dos`: an Array of DistributedToDos, or an empty array `[]` if none match the given criteria
 #
 get '/distributed_to_dos' do
-  # Filter to the last week by default
   one_week_ago_params = { :created_after => Date.today - 7 }
   filter_params = params.empty? ? one_week_ago_params : params
 
