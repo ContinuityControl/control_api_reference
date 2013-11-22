@@ -2,7 +2,7 @@
 
 An example of integrating with the Continuity Control API using Sinatra + HTTParty.
 
-This guide assumes you have a Continuity Control API key.  Please log into [Control](https://control.continuity.net) to request an API key.
+This guide assumes you have a Continuity Control API key.  The API is currently invite-only, but please get in touch if you'd like access.
 
 ## Quick links
 
@@ -14,19 +14,15 @@ This guide assumes you have a Continuity Control API key.  Please log into [Cont
 
 You'll need Ruby 2.0.0 installed.  Please see [the Ruby installation guide for more information](https://www.ruby-lang.org/en/downloads/).
 
-You need to configure an ignored file called `.env` that points to the API server you're using.
+You need to configure a git-ignored file called `.env` that points to the API server you're using.
 
-For testing, `.env` would be:
-
-    CONTROL_API_BASE_URI=https://sandbox.continuity.net/
-    CONTROL_API_KEY='YOUR-API-KEY'
-    CONTROL_API_SECRET='YOUR-API-SECRET'
-
-For production, `.env` would be:
+For example, `.env` would be:
 
     CONTROL_API_BASE_URI=https://api.continuity.net/
     CONTROL_API_KEY='YOUR-API-KEY'
     CONTROL_API_SECRET='YOUR-API-SECRET'
+
+If you would like separate credentials for testing in a "sandbox" organization, please contact us.
 
 To get started:
 

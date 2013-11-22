@@ -8,6 +8,6 @@ control_api (1.0.0.beta) unstable; urgency=low
   * New DistributedToDo methods:
     * POST /v1/distributed_to_dos
     * GET  /v1/distributed_to_dos
-    * GET  /v1/distributed_to_dos/:id
+    * GET  /v1/distributed_to_dos/:uuid
 
  -- Continuity Control Developers <dev@continuity.net>  TODO release date
