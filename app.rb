@@ -210,17 +210,17 @@ end
 # ### Example requests
 #
 #     GET /v1/distributed_to_dos.json
-#     GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z
-#     GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&created_before=2013-11-07T12:34:46Z
-#     GET /v1/distributed_to_dos.json?created_before=2013-11-07T12:34:46Z
+#     GET /v1/distributed_to_dos.json?created_after=2013-11-02
+#     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07
+#     GET /v1/distributed_to_dos.json?created_before=2013-11-07
 #     GET /v1/distributed_to_dos.json?late=true
 #     GET /v1/distributed_to_dos.json?complete=true
-#     GET /v1/distributed_to_dos.json?created_after=2013-11-02T12:34:46Z&created_before=2013-11-07T12:34:46Z&late=true&complete=false
+#     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07&late=true&complete=false
 #
 # ### Request fields
 #
-#   * `created_after`: ISO8601 datetime (in UTC) of inclusive lower bound of `created_at` time.
-#   * `created_before`: ISO8601 datetime (in UTC) of inclusive upper bound of `created_at` time.
+#   * `created_after`: ISO8601 date of exclusive lower bound of `created_at` time.
+#   * `created_before`: ISO8601 date of exclusive upper bound of `created_at` time.
 #   * `late`: When `true`, respond with only "late" DistributedToDos.  When `false`, respond with only "on time" DistributedToDos.  When not present, do not filter on lateness.
 #   * `complete`: When `true`, respond with only "complete" DistributedToDos.  When `false`, respond with only "incomplete" DistributedToDos.  When not present, do not filter on completeness.
 #
