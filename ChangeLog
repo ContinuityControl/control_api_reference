@@ -9,4 +9,4 @@ control_api (1.0.0) stable; urgency=low
     * GET  /v1/distributed_to_dos
     * GET  /v1/distributed_to_dos/:uuid
 
- -- Continuity Control Developers 2013-11-27
+ -- Continuity Control Developers  Wed, 27 Nov 2013 00:00:00 +0000
