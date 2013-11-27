@@ -14,7 +14,7 @@ An example of integrating with the Continuity Control API using Sinatra + HTTPar
 In order to use the Continuity Control API you will need to follow the steps below:
 
   1. Set up an API key on Control. To obtain an API key, please visit [API Access in Control](https://control.continuity.net/settings/api_users).
-  2. Make a request for the status of the API using your tool of choice. For example, `curl -u $CONTROL_API_KEY:$CONTROL_API_SECRET https://api.continuity.net/v1/status`
+  2. Make a request for the status of the API using your tool of choice. For example, `curl -u $CONTROL_API_KEY:$CONTROL_API_SECRET https://api.continuity.net/v1/status.json`
   3. Verify that you see a response that states the service is up
   4. Review this README and the [API documentation][api_docs] for more details on how to use all features of the API
   5. Grab a cup of coffee, you're done! :-)
