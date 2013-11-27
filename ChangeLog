@@ -1,4 +1,4 @@
-control_api (1.0.0) stable
+control_api (1.0.0) stable; urgency=low
 
   * First public API documentation release
   * First public API availability
