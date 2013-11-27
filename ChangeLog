@@ -1,6 +1,5 @@
-control_api (1.0.0.beta) unstable; urgency=low
+control_api (1.0.0) stable
 
-  * (work in progress)
   * First public API documentation release
   * First public API availability
   * New utility method:
@@ -10,4 +9,4 @@ control_api (1.0.0.beta) unstable; urgency=low
     * GET  /v1/distributed_to_dos
     * GET  /v1/distributed_to_dos/:uuid
 
- -- Continuity Control Developers <dev@continuity.net>  TODO release date
+ -- Continuity Control Developers 2013-11-27
