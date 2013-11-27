@@ -2,7 +2,7 @@
 
 An example of integrating with the Continuity Control API using Sinatra + HTTParty.
 
-This guide assumes you have a Continuity Control API key.  The API is currently invite-only, but please get in touch if you'd like access.
+This guide assumes you have a Continuity Control API key.  To obtain an API key, please log into Control and then go to Settings -> API Access -> Generate New Key Pair.
 
 ## Quick links
 
