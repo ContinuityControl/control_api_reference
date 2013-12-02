@@ -1,3 +1,13 @@
+control_api (1.1.0) unstable; urgency=low
+
+  * (Work in progress)
+  * GET /v1/distributed_to_dos
+    * Added "name" to the DistributedToDo objects
+  * GET /v1/distributed_to_dos/:uuid
+    * Added "name" to the DistributedToDo object
+
+ -- Continuity Control Engineering  TODO
+
 control_api (1.0.0) stable; urgency=low
 
   * First public API documentation release

@@ -155,6 +155,7 @@ end
 #
 #     {
 #       "uuid": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
+#       "name": "Review server logs",
 #       "created_at": "2013-11-02T12:34:46Z",
 #       "completed_at": "2013-11-07T12:34:56Z",
 #       "due_on": "2013-11-08",
@@ -183,6 +184,7 @@ end
 # ### Response fields
 #
 #   * `uuid`: UUID for this DistributedToDo.
+#   * `name`: The human-readable name for this ToDo.
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
 #   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.
 #   * `due_on`: ISO8601 date of when the DistributedToDo is due, in UTC.

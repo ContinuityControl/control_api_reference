@@ -11,7 +11,7 @@ Filter:
 
 <table>
   <thead>
-    <th>UUID</th>
+    <th>Name</th>
     <th>Completed at</th>
     <th>Due on</th>
     <th>Assignment count</th>
@@ -19,7 +19,7 @@ Filter:
   </tbody>
     <% distributed_to_dos.each do |distributed_to_do| %>
       <tr>
-        <td><a href="/distributed_to_dos/<%= distributed_to_do['uuid'] %>"><%= distributed_to_do['uuid'] %></a></td>
+        <td><a href="/distributed_to_dos/<%= distributed_to_do['uuid'] %>"><%= distributed_to_do['name'] %></a></td>
         <td><%= distributed_to_do['completed_at'] %></td>
         <td><%= distributed_to_do['due_on'] %></td>
         <td><%= distributed_to_do['assignments'].count %></td>
