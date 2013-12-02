@@ -219,6 +219,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
   &quot;uuid&quot;: &quot;f81d4fae-7dec-11d0-a765-00a0c91e6bf6&quot;,
+  &quot;name&quot;: &quot;Review server logs&quot;,
   &quot;created_at&quot;: &quot;2013-11-02T12:34:46Z&quot;,
   &quot;completed_at&quot;: &quot;2013-11-07T12:34:56Z&quot;,
   &quot;due_on&quot;: &quot;2013-11-08&quot;,
@@ -241,6 +242,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <h3 id="response-fields">Response fields</h3>
 <ul>
 <li><code>uuid</code>: UUID for this DistributedToDo.</li>
+<li><code>name</code>: The human-readable name for this ToDo.</li>
 <li><code>created_at</code>: ISO8601 datetime of the creation of this DistributedToDo, in UTC.</li>
 <li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in UTC.</li>
