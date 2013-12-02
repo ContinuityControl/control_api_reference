@@ -1,6 +1,8 @@
 control_api (1.1.0) unstable; urgency=low
 
   * (Work in progress)
+  * POST /v1/distributed_to_dos
+    * Fix an intermittent issue when parsing "due_on"
   * GET /v1/distributed_to_dos
     * Added "name" to the DistributedToDo objects
   * GET /v1/distributed_to_dos/:uuid
