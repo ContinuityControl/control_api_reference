@@ -7,7 +7,7 @@ An example of integrating with the Continuity Control API using Sinatra + HTTPar
 * [API documentation][api_docs]
 * [Change Log](ChangeLog)
 * [Control](https://control.continuity.net)
-* [Sample application](http://control-api-reference.herokuapp.com/) (reference implementation)
+* [Sample application](https://control-api-reference.herokuapp.com/) (reference implementation)
 
 ## Quick Start
 
