@@ -7,7 +7,7 @@ control_api (1.1.0) stable; urgency=low
   * GET /v1/distributed_to_dos/:uuid
     * Added "name" to the DistributedToDo object
 
- -- Continuity Control Engineering  Fri, 6 Dec 2013 00:00:00 +0000
+ -- Continuity Control Engineering  Fri, 6 Dec 2013 18:00:00 +0000
 
 control_api (1.0.0) stable; urgency=low
 
