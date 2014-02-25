@@ -101,7 +101,8 @@ end
 #     * `tags`: The tags for each TemplateToDo, as an array of strings. If there are no tags, it will be an empty array.
 #
 get '/template_to_dos' do
-  # TODO
+  template_to_dos = ControlAPI.get("/v1/template_to_dos.json", :query => params)
+  erb :template_to_dos, :locals => template_to_dos
 end
 
 # ## POST /v1/distributed_to_dos.json

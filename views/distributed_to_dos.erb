@@ -7,6 +7,8 @@ Filter:
 <a href="/distributed_to_dos?late=true">Late</a>
 <a href="/distributed_to_dos?complete=false">Incomplete</a>
 <a href="/distributed_to_dos?complete=false&amp;late=true">Late and Incomplete</a>
+<a href="/distributed_to_dos?tags[]=security">Tagged "security"</a>
+<a href="/distributed_to_dos?tags[]=security&tags[]=annual">Tagged "security" and "annual"</a>
 </p>
 
 <table>
@@ -15,6 +17,7 @@ Filter:
     <th>Completed at</th>
     <th>Due on</th>
     <th>Assignment count</th>
+    <th>Tags</th>
   </thead>
   </tbody>
     <% distributed_to_dos.each do |distributed_to_do| %>
@@ -23,6 +26,7 @@ Filter:
         <td><%= distributed_to_do['completed_at'] %></td>
         <td><%= distributed_to_do['due_on'] %></td>
         <td><%= distributed_to_do['assignments'].count %></td>
+        <td><%= distributed_to_do['tags'].join(', ') %></td>
       </tr>
     <% end %>
   </tbody>

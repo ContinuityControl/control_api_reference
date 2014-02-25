@@ -1,0 +1,24 @@
+<h2>TemplateToDos</h2>
+
+<p>
+Filter:
+<a href="/template_to_dos?tags[]=security">Tagged "security"</a>
+<a href="/template_to_dos?tags[]=security&tags[]=annual">Tagged "security" and "annual"</a>
+</p>
+
+<table>
+  <thead>
+    <th>UUID</th>
+    <th>Name</th>
+    <th>Tags</th>
+  </thead>
+  </tbody>
+    <% template_to_dos.each do |template_to_do| %>
+      <tr>
+        <td><%= template_to_do['uuid'] %></td>
+        <td><%= template_to_do['name'] %></td>
+        <td><%= template_to_do['tags'].join(', ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
