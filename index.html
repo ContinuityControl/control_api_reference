@@ -108,13 +108,19 @@
 <h3 id="response-fields">Response fields</h3>
 <ul>
 <li><code>description</code>: A text description of the API state.</li>
+<li><code>error</code>: A text description of any error in the API call.</li>
 </ul>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="string">'/status'</span> <span class="keyword">do</span>
   status = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/status.json'</span>).parsed_response
-  <span class="string">"API status: <span class="subst">#{status[<span class="string">'description'</span>]}</span>"</span>
+
+  <span class="keyword">if</span> status[<span class="string">'error'</span>]
+    <span class="string">"API error: <span class="subst">#{status[<span class="string">'error'</span>]}</span>"</span>
+  <span class="keyword">else</span>
+    <span class="string">"API status: <span class="subst">#{status[<span class="string">'description'</span>]}</span>"</span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre></div></div>
             
         </li>
@@ -125,6 +131,65 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
+<p>Get all the TemplateToDos for your organization.</p>
+<h3 id="example-requests">Example requests</h3>
+<pre><code>GET /v1/template_to_dos.json
+GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
+<h3 id="request-fields">Request fields</h3>
+<ul>
+<li><code>tags</code>: Only return DistributedToDos that are tagged with all of the specified tags.</li>
+</ul>
+<h3 id="example-response">Example response</h3>
+<h4 id="http-200-ok">HTTP 200 OK</h4>
+<pre><code>{
+  &quot;template_to_dos&quot;: [
+    {
+      &quot;uuid&quot;: &quot;12345678-1234-5678-1234-567812345678&quot;,
+      &quot;name&quot;: &quot;Review server logs&quot;,
+      &quot;tags&quot;: [&quot;security&quot;, &quot;annual&quot;, &quot;training&quot;]
+    }
+  ]
+}</code></pre>
+<h4 id="http-500-server-error">HTTP 500 Server Error</h4>
+<h3 id="response-fields">Response fields</h3>
+<ul>
+<li><code>template_to_dos</code>: an Array of TemplateToDos, or an empty array <code>[]</code> if none match the given criteria<ul>
+<li><code>uuid</code>: UUID for each TemplateToDo.</li>
+<li><code>name</code>: The human-readable name for each ToDo.</li>
+<li><code>tags</code>: The tags for each TemplateToDo, as an array of strings. If there are no tags, it will be an empty array.</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/template_to_dos'</span> <span class="keyword">do</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>TODO</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <h2 id="post-v1-distributed_to_dos-json">POST /v1/distributed_to_dos.json</h2>
 <p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.  (The work happens in a job queue.)</p>
@@ -143,7 +208,7 @@ Content-Type: application/json
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>distributed_to_do</code>: <strong>Required</strong>.  Holds parameters for the DistributedToDo.<ul>
-<li><code>template_to_do_uuid</code>: <strong>Required</strong>.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under &quot;Settings&quot;.</li>
+<li><code>template_to_do_uuid</code>: <strong>Required</strong>.  The UUID for the TemplateToDo that will be distributed.  This can be found via <code>GET /v1/template_to_dos</code>, or in Continuity Control under &quot;Settings&quot;.</li>
 <li><code>due_on</code>: <strong>Required</strong>.  ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>assignee_emails</code>: <strong>Required</strong>.  An Array of email addresses of Users that will receive the DistributedToDos.</li>
 <li><code>field_values</code>: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under &quot;Settings&quot;.</li>
@@ -205,11 +270,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-uuid-json">GET /v1/distributed_to_dos/:uuid.json</h2>
 <p>Get the current state of a distributed_to_do as found by an <code>uuid</code>.</p>
@@ -223,6 +288,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
   &quot;created_at&quot;: &quot;2013-11-02T12:34:46Z&quot;,
   &quot;completed_at&quot;: &quot;2013-11-07T12:34:56Z&quot;,
   &quot;due_on&quot;: &quot;2013-11-08&quot;,
+  &quot;tags&quot;: [&quot;security&quot;, &quot;annual&quot;, &quot;training&quot;],
   &quot;assignments&quot;: [
     {
       &quot;email&quot;: &quot;bobama@example.com&quot;,
@@ -246,6 +312,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <li><code>created_at</code>: ISO8601 datetime of the creation of this DistributedToDo, in UTC.</li>
 <li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in UTC.</li>
+<li><code>tags</code>: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.</li>
 <li><code>assignments</code>: Array<ul>
 <li><code>email</code>: User email of DistributedToDo assignment</li>
 <li><code>completed_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
@@ -271,11 +338,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-8">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-json">GET /v1/distributed_to_dos.json</h2>
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
@@ -286,13 +353,15 @@ GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013
 GET /v1/distributed_to_dos.json?created_before=2013-11-07
 GET /v1/distributed_to_dos.json?late=true
 GET /v1/distributed_to_dos.json?complete=true
-GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false</code></pre>
+GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false
+GET /v1/distributed_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>created_after</code>: ISO8601 date of exclusive lower bound of <code>created_at</code> time.</li>
 <li><code>created_before</code>: ISO8601 date of exclusive upper bound of <code>created_at</code> time.</li>
 <li><code>late</code>: When <code>true</code>, respond with only &quot;late&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;on time&quot; DistributedToDos.  When not present, do not filter on lateness.</li>
 <li><code>complete</code>: When <code>true</code>, respond with only &quot;complete&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;incomplete&quot; DistributedToDos.  When not present, do not filter on completeness.</li>
+<li><code>tags</code>: Only return DistributedToDos that are tagged with all of the specified tags.</li>
 </ul>
 <p><code>late</code> and <code>complete</code> can be combined to filter:</p>
 <pre><code>late=false&amp;complete=false  # incomplete and on time
