@@ -52,10 +52,16 @@ end
 # ### Response fields
 #
 #   * `description`: A text description of the API state.
+#   * `error`: A text description of any error in the API call.
 #
 get '/status' do
   status = ControlAPI.get('/v1/status.json').parsed_response
-  "API status: #{status['description']}"
+
+  if status['error']
+    "API error: #{status['error']}"
+  else
+    "API status: #{status['description']}"
+  end
 end
 
 # ## POST /v1/distributed_to_dos.json
