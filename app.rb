@@ -64,6 +64,46 @@ get '/status' do
   end
 end
 
+# ## GET /v1/template_to_dos.json
+#
+# Get all the TemplateToDos for your organization.
+#
+# ### Example requests
+#
+#     GET /v1/template_to_dos.json
+#     GET /v1/template_to_dos.json?tags[]=annual&tags[]=security
+#
+# ### Request fields
+#
+#   * `tags`: Only return DistributedToDos that are tagged with all of the specified tags.
+#
+# ### Example response
+#
+# #### HTTP 200 OK
+#
+#     {
+#       "template_to_dos": [
+#         {
+#           "uuid": "12345678-1234-5678-1234-567812345678",
+#           "name": "Review server logs",
+#           "tags": ["security", "annual", "training"]
+#         }
+#       ]
+#     }
+#
+# #### HTTP 500 Server Error
+#
+# ### Response fields
+#
+#   * `template_to_dos`: an Array of TemplateToDos, or an empty array `[]` if none match the given criteria
+#     * `uuid`: UUID for each TemplateToDo.
+#     * `name`: The human-readable name for each ToDo.
+#     * `tags`: The tags for each TemplateToDo, as an array of strings. If there are no tags, it will be an empty array.
+#
+get '/template_to_dos' do
+  # TODO
+end
+
 # ## POST /v1/distributed_to_dos.json
 #
 # **Asynchronously** distribute a ToDo to the given assignees.  (The work happens in a job queue.)
@@ -85,7 +125,7 @@ end
 # ### Request fields
 #
 #   * `distributed_to_do`: **Required**.  Holds parameters for the DistributedToDo.
-#     * `template_to_do_uuid`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found in Continuity Control under "Settings".
+#     * `template_to_do_uuid`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found via `GET /v1/template_to_dos`, or in Continuity Control under "Settings".
 #     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in UTC.
 #     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `field_values`: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
@@ -165,6 +205,7 @@ end
 #       "created_at": "2013-11-02T12:34:46Z",
 #       "completed_at": "2013-11-07T12:34:56Z",
 #       "due_on": "2013-11-08",
+#       "tags": ["security", "annual", "training"],
 #       "assignments": [
 #         {
 #           "email": "bobama@example.com",
@@ -194,6 +235,7 @@ end
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
 #   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.
 #   * `due_on`: ISO8601 date of when the DistributedToDo is due, in UTC.
+#   * `tags`: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.
 #   * `assignments`: Array
 #     * `email`: User email of DistributedToDo assignment
 #     * `completed_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
@@ -224,6 +266,7 @@ end
 #     GET /v1/distributed_to_dos.json?late=true
 #     GET /v1/distributed_to_dos.json?complete=true
 #     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07&late=true&complete=false
+#     GET /v1/distributed_to_dos.json?tags[]=annual&tags[]=security
 #
 # ### Request fields
 #
@@ -231,6 +274,7 @@ end
 #   * `created_before`: ISO8601 date of exclusive upper bound of `created_at` time.
 #   * `late`: When `true`, respond with only "late" DistributedToDos.  When `false`, respond with only "on time" DistributedToDos.  When not present, do not filter on lateness.
 #   * `complete`: When `true`, respond with only "complete" DistributedToDos.  When `false`, respond with only "incomplete" DistributedToDos.  When not present, do not filter on completeness.
+#   * `tags`: Only return DistributedToDos that are tagged with all of the specified tags.
 #
 # `late` and `complete` can be combined to filter:
 #
