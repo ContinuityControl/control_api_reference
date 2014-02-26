@@ -165,7 +165,10 @@ GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>get <span class="string">'/template_to_dos'</span> <span class="keyword">do</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/template_to_dos'</span> <span class="keyword">do</span>
+  template_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/template_to_dos.json"</span>, <span class="symbol">:query</span> =&gt; params)
+  erb <span class="symbol">:template_to_dos</span>, <span class="symbol">:locals</span> =&gt; template_to_dos
+<span class="keyword">end</span></pre></div></div>
             
         </li>
         
@@ -175,21 +178,6 @@ GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>TODO</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="keyword">end</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <h2 id="post-v1-distributed_to_dos-json">POST /v1/distributed_to_dos.json</h2>
 <p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.  (The work happens in a job queue.)</p>
@@ -270,11 +258,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-uuid-json">GET /v1/distributed_to_dos/:uuid.json</h2>
 <p>Get the current state of a distributed_to_do as found by an <code>uuid</code>.</p>
@@ -338,11 +326,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-10">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-json">GET /v1/distributed_to_dos.json</h2>
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
