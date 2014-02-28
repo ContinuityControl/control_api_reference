@@ -5,8 +5,10 @@ control_api (1.2.0) unstable; urgency=low
   * GET /v1/distributed_to_dos
     * Added "tags[]" parameter to filter DistributedToDo objects
     * Added "tags" to the DistributedToDo objects
+    * Added "metadata" to the DistributedToDo objects
   * GET /v1/distributed_to_dos/:uuid
     * Added "tags" to the DistributedToDo object
+    * Added "metadata" to the DistributedToDo object
 
  -- Continuity Control Engineering  TODO
 

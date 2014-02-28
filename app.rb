@@ -119,7 +119,8 @@ end
 #         "template_to_do_uuid": "12345678-1234-5678-1234-567812345678",
 #         "due_on": "2013-11-29",
 #         "assignee_emails": ["bobama@example.com", "gwbush@example.com", "bclinton@example.com"],
-#         "field_values": {"field1": "value1", "field2": "value2"}
+#         "field_values": {"field1": "value1", "field2": "value2"},
+#         "metadata": {"customer_id": "7676767", "loan_id": "1234-7890"}
 #       }
 #     }
 #
@@ -130,6 +131,7 @@ end
 #     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in UTC.
 #     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `field_values`: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
+#     * `metadata`: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  255 minus stuff we need (the json parts)
 #
 # ### Example responses
 #
@@ -207,6 +209,10 @@ end
 #       "completed_at": "2013-11-07T12:34:56Z",
 #       "due_on": "2013-11-08",
 #       "tags": ["security", "annual", "training"],
+#       "metadata": {
+#         "customer_id": "7676767",
+#         "loan_id": "1234-7890"
+#       },
 #       "assignments": [
 #         {
 #           "email": "bobama@example.com",
@@ -237,6 +243,7 @@ end
 #   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.
 #   * `due_on`: ISO8601 date of when the DistributedToDo is due, in UTC.
 #   * `tags`: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.
+#   * `metadata`: The metadata for this DistributedToDo, as an object. If there are no metadata, it will be an empty object. Values will always be returned as strings.
 #   * `assignments`: Array
 #     * `email`: User email of DistributedToDo assignment
 #     * `completed_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
@@ -268,6 +275,8 @@ end
 #     GET /v1/distributed_to_dos.json?complete=true
 #     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07&late=true&complete=false
 #     GET /v1/distributed_to_dos.json?tags[]=annual&tags[]=security
+#     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767
+#     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&metadata[load_id]=1234-7890
 #
 # ### Request fields
 #
@@ -276,6 +285,7 @@ end
 #   * `late`: When `true`, respond with only "late" DistributedToDos.  When `false`, respond with only "on time" DistributedToDos.  When not present, do not filter on lateness.
 #   * `complete`: When `true`, respond with only "complete" DistributedToDos.  When `false`, respond with only "incomplete" DistributedToDos.  When not present, do not filter on completeness.
 #   * `tags`: Only return DistributedToDos that are tagged with all of the specified tags.
+#   * `metadata`: Only return DistributedToDos that have all the specified metadata.
 #
 # `late` and `complete` can be combined to filter:
 #
