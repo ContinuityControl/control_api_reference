@@ -18,6 +18,7 @@ Filter:
     <th>Due on</th>
     <th>Assignment count</th>
     <th>Tags</th>
+    <th>Metadata Keys</th>
   </thead>
   </tbody>
     <% distributed_to_dos.each do |distributed_to_do| %>
@@ -27,6 +28,7 @@ Filter:
         <td><%= distributed_to_do['due_on'] %></td>
         <td><%= distributed_to_do['assignments'].count %></td>
         <td><%= distributed_to_do['tags'].join(', ') %></td>
+        <td><%= distributed_to_do['metadata'].keys.join(', ') %></td>
       </tr>
     <% end %>
   </tbody>
