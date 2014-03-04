@@ -190,7 +190,8 @@ Content-Type: application/json
     &quot;template_to_do_uuid&quot;: &quot;12345678-1234-5678-1234-567812345678&quot;,
     &quot;due_on&quot;: &quot;2013-11-29&quot;,
     &quot;assignee_emails&quot;: [&quot;bobama@example.com&quot;, &quot;gwbush@example.com&quot;, &quot;bclinton@example.com&quot;],
-    &quot;field_values&quot;: {&quot;field1&quot;: &quot;value1&quot;, &quot;field2&quot;: &quot;value2&quot;}
+    &quot;field_values&quot;: {&quot;field1&quot;: &quot;value1&quot;, &quot;field2&quot;: &quot;value2&quot;},
+    &quot;metadata&quot;: {&quot;customer_id&quot;: &quot;7676767&quot;, &quot;loan_id&quot;: &quot;1234-7890&quot;}
   }
 }</code></pre>
 <h3 id="request-fields">Request fields</h3>
@@ -200,6 +201,7 @@ Content-Type: application/json
 <li><code>due_on</code>: <strong>Required</strong>.  ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>assignee_emails</code>: <strong>Required</strong>.  An Array of email addresses of Users that will receive the DistributedToDos.</li>
 <li><code>field_values</code>: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under &quot;Settings&quot;.</li>
+<li><code>metadata</code>: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  255 minus stuff we need (the json parts)</li>
 </ul>
 </li>
 </ul>
@@ -277,6 +279,10 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
   &quot;completed_at&quot;: &quot;2013-11-07T12:34:56Z&quot;,
   &quot;due_on&quot;: &quot;2013-11-08&quot;,
   &quot;tags&quot;: [&quot;security&quot;, &quot;annual&quot;, &quot;training&quot;],
+  &quot;metadata&quot;: {
+    &quot;customer_id&quot;: &quot;7676767&quot;,
+    &quot;loan_id&quot;: &quot;1234-7890&quot;
+  },
   &quot;assignments&quot;: [
     {
       &quot;email&quot;: &quot;bobama@example.com&quot;,
@@ -301,6 +307,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>tags</code>: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.</li>
+<li><code>metadata</code>: The metadata for this DistributedToDo, as an object. If there are no metadata, it will be an empty object. Values will always be returned as strings.</li>
 <li><code>assignments</code>: Array<ul>
 <li><code>email</code>: User email of DistributedToDo assignment</li>
 <li><code>completed_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
@@ -342,7 +349,9 @@ GET /v1/distributed_to_dos.json?created_before=2013-11-07
 GET /v1/distributed_to_dos.json?late=true
 GET /v1/distributed_to_dos.json?complete=true
 GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false
-GET /v1/distributed_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
+GET /v1/distributed_to_dos.json?tags[]=annual&amp;tags[]=security
+GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767
+GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&amp;metadata[load_id]=1234-7890</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>created_after</code>: ISO8601 date of exclusive lower bound of <code>created_at</code> time.</li>
@@ -350,6 +359,7 @@ GET /v1/distributed_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
 <li><code>late</code>: When <code>true</code>, respond with only &quot;late&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;on time&quot; DistributedToDos.  When not present, do not filter on lateness.</li>
 <li><code>complete</code>: When <code>true</code>, respond with only &quot;complete&quot; DistributedToDos.  When <code>false</code>, respond with only &quot;incomplete&quot; DistributedToDos.  When not present, do not filter on completeness.</li>
 <li><code>tags</code>: Only return DistributedToDos that are tagged with all of the specified tags.</li>
+<li><code>metadata</code>: Only return DistributedToDos that have all the specified metadata.</li>
 </ul>
 <p><code>late</code> and <code>complete</code> can be combined to filter:</p>
 <pre><code>late=false&amp;complete=false  # incomplete and on time
