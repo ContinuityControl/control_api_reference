@@ -131,7 +131,7 @@ end
 #     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in UTC.
 #     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `field_values`: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
-#     * `metadata`: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  255 minus stuff we need (the json parts)
+#     * `metadata`: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  The key and value combined are limited to 247 characters.
 #
 # ### Example responses
 #
