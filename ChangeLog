@@ -1,5 +1,11 @@
+control_api (1.2.1) unstable; urgency=low
+
+  * Added subsecond precision in datetimes (e.g., ".000Z" at the end of the
+    string instead of just "Z")
+
 control_api (1.2.0) unstable; urgency=low
 
+  * NOTICE: an upcoming release will add subsecond precision to datetimes.
   * New TemplateToDo method:
     * GET /v1/template_to_dos
   * POST /v1/distributed_to_dos
