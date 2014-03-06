@@ -276,7 +276,7 @@ end
 #     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07&late=true&complete=false
 #     GET /v1/distributed_to_dos.json?tags[]=annual&tags[]=security
 #     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767
-#     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&metadata[load_id]=1234-7890
+#     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&metadata[loan_id]=1234-7890
 #
 # ### Request fields
 #
