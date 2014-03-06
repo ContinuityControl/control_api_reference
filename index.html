@@ -133,7 +133,7 @@
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
-<p>Get all the TemplateToDos for your organization.</p>
+<p>Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/template_to_dos.json
 GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
@@ -351,7 +351,7 @@ GET /v1/distributed_to_dos.json?complete=true
 GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false
 GET /v1/distributed_to_dos.json?tags[]=annual&amp;tags[]=security
 GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767
-GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&amp;metadata[load_id]=1234-7890</code></pre>
+GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&amp;metadata[loan_id]=1234-7890</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>created_after</code>: ISO8601 date of exclusive lower bound of <code>created_at</code> time.</li>
