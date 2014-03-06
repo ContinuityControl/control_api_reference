@@ -66,7 +66,7 @@ end
 
 # ## GET /v1/template_to_dos.json
 #
-# Get all the TemplateToDos for your organization.
+# Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.
 #
 # ### Example requests
 #

@@ -5,6 +5,7 @@ control_api (1.2.0) stable; urgency=low
 
   * New TemplateToDo method:
     * GET /v1/template_to_dos
+    * NOTE: not filtered by enabled/disabled state.
   * POST /v1/distributed_to_dos
     * Allow "metadata" parameter for DistributedToDo
   * GET /v1/distributed_to_dos
