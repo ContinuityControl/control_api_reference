@@ -201,7 +201,7 @@ Content-Type: application/json
 <li><code>due_on</code>: <strong>Required</strong>.  ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>assignee_emails</code>: <strong>Required</strong>.  An Array of email addresses of Users that will receive the DistributedToDos.</li>
 <li><code>field_values</code>: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under &quot;Settings&quot;.</li>
-<li><code>metadata</code>: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  255 minus stuff we need (the json parts)</li>
+<li><code>metadata</code>: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  The key and value combined are limited to 247 characters.</li>
 </ul>
 </li>
 </ul>
