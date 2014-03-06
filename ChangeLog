@@ -3,6 +3,8 @@ control_api (1.2.1) unstable; urgency=low
   * Added subsecond precision in datetimes (e.g., ".000Z" at the end of the
     string instead of just "Z")
 
+ -- Continuity Control Engineering  TODO
+
 control_api (1.2.0) unstable; urgency=low
 
   * NOTICE: an upcoming release will add subsecond precision to datetimes.
