@@ -75,7 +75,7 @@ end
 #
 # ### Request fields
 #
-#   * `tags`: Only return DistributedToDos that are tagged with all of the specified tags.
+#   * `tags`: Only return TemplateToDos that are tagged with all of the specified tags.
 #
 # ### Example response
 #
