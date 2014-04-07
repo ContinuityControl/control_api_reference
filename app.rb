@@ -205,8 +205,8 @@ end
 #     {
 #       "uuid": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
 #       "name": "Review server logs",
-#       "created_at": "2013-11-02T12:34:46Z",
-#       "completed_at": "2013-11-07T12:34:56Z",
+#       "created_at": "2013-11-02T12:34:46.000Z",
+#       "completed_at": "2013-11-07T12:34:56.000Z",
 #       "due_on": "2013-11-08",
 #       "tags": ["security", "annual", "training"],
 #       "metadata": {

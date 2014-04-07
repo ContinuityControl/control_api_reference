@@ -1,3 +1,9 @@
+control_api (1.2.2) stable; urgency=low
+
+  * Added subsecond precision to datetimes.  This change was previously
+    announced in the changelog for 1.2.0, but the change was deployed in
+    1.2.2.
+
 control_api (1.2.1) stable; urgency=low
 
   * POST /v1/distributed_to_dos
