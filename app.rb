@@ -317,3 +317,7 @@ get '/distributed_to_dos' do
   distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos.json', :query => filter_params)
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
+
+post '/postback' do
+  params.inspect
+end
