@@ -392,6 +392,10 @@ late=true&amp;complete=true    # completed and late</code></pre>
 post <span class="string">'/postback'</span>, <span class="symbol">provides:</span> <span class="string">'json'</span> <span class="keyword">do</span>
   request.body.rewind
   request.body.read
+<span class="keyword">end</span>
+
+post <span class="string">'/postback_with_error'</span> <span class="keyword">do</span>
+  [<span class="number">500</span>, <span class="string">'Failure test'</span>]
 <span class="keyword">end</span></pre></div></div>
             
         </li>
