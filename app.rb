@@ -323,6 +323,7 @@ post '/postback', provides: 'json' do
   request.body.read
 end
 
-post '/postback_with_error' do
-  [500, 'Failure test']
+post '/postback_with_error', provides: 'json' do
+  request.body.rewind
+  [500, request.body.read]
 end
