@@ -394,8 +394,9 @@ post <span class="string">'/postback'</span>, <span class="symbol">provides:</sp
   request.body.read
 <span class="keyword">end</span>
 
-post <span class="string">'/postback_with_error'</span> <span class="keyword">do</span>
-  [<span class="number">500</span>, <span class="string">'Failure test'</span>]
+post <span class="string">'/postback_with_error'</span>, <span class="symbol">provides:</span> <span class="string">'json'</span> <span class="keyword">do</span>
+  request.body.rewind
+  [<span class="number">500</span>, request.body.read]
 <span class="keyword">end</span></pre></div></div>
             
         </li>
