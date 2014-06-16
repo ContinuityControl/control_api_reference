@@ -318,6 +318,7 @@ get '/distributed_to_dos' do
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
 
-post '/postback' do
-  params.inspect
+post '/postback', provides: 'json' do
+  request.body.rewind
+  request.body.read
 end
