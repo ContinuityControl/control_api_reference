@@ -389,8 +389,9 @@ late=true&amp;complete=true    # completed and late</code></pre>
   erb <span class="symbol">:distributed_to_dos</span>, <span class="symbol">:locals</span> =&gt; distributed_to_dos
 <span class="keyword">end</span>
 
-post <span class="string">'/postback'</span> <span class="keyword">do</span>
-  params.inspect
+post <span class="string">'/postback'</span>, <span class="symbol">provides:</span> <span class="string">'json'</span> <span class="keyword">do</span>
+  request.body.rewind
+  request.body.read
 <span class="keyword">end</span></pre></div></div>
             
         </li>
