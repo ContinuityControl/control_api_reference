@@ -398,7 +398,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <h2 id="webhooks">Webhooks</h2>
+              <h2 id="webhooks-currently-in-development-">Webhooks (currently in development)</h2>
 <p>Webhooks provide information about events in near real-time.  You provide a URL, and we&#39;ll POST to it as events take place.</p>
 <h3 id="format">Format</h3>
 <p>Our webhooks have the following format:</p>
@@ -422,7 +422,14 @@ late=true&amp;complete=true    # completed and late</code></pre>
 </li>
 <li><code>data</code>: an Object of data for the given type</li>
 </ul>
-<p>The receiver of a webhook <strong>MUST</strong> check the <code>type</code> and <code>event</code> on each <code>POST</code>.  Unknown <code>type</code>s and <code>event</code>s <strong>MUST</strong> be ignored.</p>
+<h3 id="implementation-requirements">Implementation Requirements</h3>
+<p>The receiver of a webhook <strong>MUST</strong> check both the <code>type</code> and <code>event</code> on each <code>POST</code>.  Unknown <code>type</code>s and <code>event</code>s <strong>MUST</strong> be ignored.</p>
+<p>Examples of why this behavior is required:</p>
+<ul>
+<li>If the <code>type</code> is not checked, and the consumer only looks at the <code>data.name</code> attribute, it could be a user&#39;s name or a ToDo&#39;s name.</li>
+<li>If the <code>event</code> is not checked, the user could have been <code>updated</code> instead of <code>created</code>.  The consumer could then take action on an <code>updated</code> event that was only intended for a <code>created</code> event (e.g. sending a welcome email).</li>
+</ul>
+<h3 id="example">Example</h3>
 <p>For a contrived example, if there were a <code>Vote</code> type, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
 <p>First <code>POST</code>:</p>
 <pre><code>{
@@ -433,8 +440,6 @@ late=true&amp;complete=true    # completed and late</code></pre>
   },
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;Al Gore&quot;,
-    &quot;chad&quot;: &quot;hanging&quot;,
-    &quot;state&quot;: &quot;FL&quot;
   }
 }</code></pre>
 <p>Second <code>POST</code>:</p>
@@ -446,8 +451,6 @@ late=true&amp;complete=true    # completed and late</code></pre>
   },
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;George W Bush&quot;,
-    &quot;chad&quot;: &quot;hanging&quot;,
-    &quot;state&quot;: &quot;FL&quot;
   }
 }</code></pre>
 <h3 id="user">User</h3>
@@ -455,7 +458,15 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <ul>
 <li><code>created</code>: Fires when the user has been created.</li>
 </ul>
-<h4 id="fields">Fields</h4>
+<h4 id="data-example">Data Example</h4>
+<pre><code>{
+  &quot;uuid&quot;: &quot;12345678-1234-5678-1234-567812345678&quot;,
+  &quot;full_name&quot;: &quot;George W. Bush&quot;,
+  &quot;first_name&quot;: &quot;George&quot;,
+  &quot;last_name&quot;: &quot;Bush&quot;,
+  &quot;email&quot;: &quot;gwbush@example.com&quot;
+}</code></pre>
+<h4 id="data-fields">Data Fields</h4>
 <ul>
 <li><code>uuid</code>: ID for this user</li>
 <li><code>full_name</code>: Formatted name</li>
