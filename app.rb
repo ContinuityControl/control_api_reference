@@ -318,12 +318,90 @@ get '/distributed_to_dos' do
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
 
-post '/postback', provides: 'json' do
-  request.body.rewind
-  request.body.read
+# ## Webhooks
+#
+# Webhooks provide information about events in near real-time.  You provide a URL, and we'll POST to it as events take place.
+#
+# ### Format
+#
+# Our webhooks have the following format:
+#
+#     {
+#       "metadata": {
+#         "type": "Thing",
+#         "event": "event_name",
+#         "timestamp": "2014-06-24T15:32:05Z"
+#       },
+#
+#       "data": {
+#       }
+#     }
+#
+# #### Fields
+#
+#   * `metadata`
+#     * `type`: A name for the type of data
+#     * `event`: A named event for the type, as documented below
+#     * `timestamp`: When the named event occurred
+#   * `data`: an Object of data for the given type
+#
+# The receiver of a webhook **MUST** check the `type` and `event` on each `POST`.  Unknown `type`s and `event`s **MUST** be ignored.
+#
+# For a contrived example, if there were a `Vote` type, the webhook would provide data like the following in two separate `POST`s:
+#
+# First `POST`:
+#
+#     {
+#       "metadata": {
+#         "type": "Vote",
+#         "event": "created",
+#         "timestamp": "2000-11-07T15:32:05Z"
+#       },
+#       "data": {
+#         "full_name": "Al Gore",
+#         "chad": "hanging",
+#         "state": "FL"
+#       }
+#     }
+#
+# Second `POST`:
+#
+#     {
+#       "metadata": {
+#         "type": "Vote",
+#         "event": "created",
+#         "timestamp": "2000-11-07T15:42:05Z"
+#       },
+#       "data": {
+#         "full_name": "George W Bush",
+#         "chad": "hanging",
+#         "state": "FL"
+#       }
+#     }
+#
+# ### User
+#
+# #### Events
+#
+#   * `created`: Fires when the user has been created.
+#
+# #### Fields
+#
+#   * `uuid`: ID for this user
+#   * `full_name`: Formatted name
+#   * `first_name`: Personal name
+#   * `last_name`: Surname
+#   * `email`: Primary email
+#
+post '/webhook' do
+  metadata = params['metadata']
+  data = params['data']
+
+  if metadata['type'] == 'User' && metadata['event'] == 'created'
+    "Nice to meet you, #{data['full_name']}!"
+  end
 end
 
-post '/postback_with_error', provides: 'json' do
-  request.body.rewind
-  [500, request.body.read]
+post '/webhook_with_error' do
+  [500, "Your request failed, sorry!"]
 end
