@@ -318,7 +318,7 @@ get '/distributed_to_dos' do
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
 
-# ## Webhooks
+# ## Webhooks (currently in development)
 #
 # Webhooks provide information about events in near real-time.  You provide a URL, and we'll POST to it as events take place.
 #
@@ -345,7 +345,16 @@ end
 #     * `timestamp`: When the named event occurred
 #   * `data`: an Object of data for the given type
 #
-# The receiver of a webhook **MUST** check the `type` and `event` on each `POST`.  Unknown `type`s and `event`s **MUST** be ignored.
+# ### Implementation Requirements
+#
+# The receiver of a webhook **MUST** check both the `type` and `event` on each `POST`.  Unknown `type`s and `event`s **MUST** be ignored.
+#
+# Examples of why this behavior is required:
+#
+# * If the `type` is not checked, and the consumer only looks at the `data.name` attribute, it could be a user's name or a ToDo's name.
+# * If the `event` is not checked, the user could have been `updated` instead of `created`.  The consumer could then take action on an `updated` event that was only intended for a `created` event (e.g. sending a welcome email).
+#
+# ### Example
 #
 # For a contrived example, if there were a `Vote` type, the webhook would provide data like the following in two separate `POST`s:
 #
@@ -359,8 +368,6 @@ end
 #       },
 #       "data": {
 #         "full_name": "Al Gore",
-#         "chad": "hanging",
-#         "state": "FL"
 #       }
 #     }
 #
@@ -374,8 +381,6 @@ end
 #       },
 #       "data": {
 #         "full_name": "George W Bush",
-#         "chad": "hanging",
-#         "state": "FL"
 #       }
 #     }
 #
@@ -385,7 +390,17 @@ end
 #
 #   * `created`: Fires when the user has been created.
 #
-# #### Fields
+# #### Data Example
+#
+#     {
+#       "uuid": "12345678-1234-5678-1234-567812345678",
+#       "full_name": "George W. Bush",
+#       "first_name": "George",
+#       "last_name": "Bush",
+#       "email": "gwbush@example.com"
+#     }
+#
+# #### Data Fields
 #
 #   * `uuid`: ID for this user
 #   * `full_name`: Formatted name
