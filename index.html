@@ -387,16 +387,96 @@ late=true&amp;complete=true    # completed and late</code></pre>
 
   distributed_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/distributed_to_dos.json'</span>, <span class="symbol">:query</span> =&gt; filter_params)
   erb <span class="symbol">:distributed_to_dos</span>, <span class="symbol">:locals</span> =&gt; distributed_to_dos
+<span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h2 id="webhooks">Webhooks</h2>
+<p>Webhooks provide information about events in near real-time.  You provide a URL, and we&#39;ll POST to it as events take place.</p>
+<h3 id="format">Format</h3>
+<p>Our webhooks have the following format:</p>
+<pre><code>{
+  &quot;metadata&quot;: {
+    &quot;type&quot;: &quot;Thing&quot;,
+    &quot;event&quot;: &quot;event_name&quot;,
+    &quot;timestamp&quot;: &quot;2014-06-24T15:32:05Z&quot;
+  },
+
+  &quot;data&quot;: {
+  }
+}</code></pre>
+<h4 id="fields">Fields</h4>
+<ul>
+<li><code>metadata</code><ul>
+<li><code>type</code>: A name for the type of data</li>
+<li><code>event</code>: A named event for the type, as documented below</li>
+<li><code>timestamp</code>: When the named event occurred</li>
+</ul>
+</li>
+<li><code>data</code>: an Object of data for the given type</li>
+</ul>
+<p>The receiver of a webhook <strong>MUST</strong> check the <code>type</code> and <code>event</code> on each <code>POST</code>.  Unknown <code>type</code>s and <code>event</code>s <strong>MUST</strong> be ignored.</p>
+<p>For a contrived example, if there were a <code>Vote</code> type, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
+<p>First <code>POST</code>:</p>
+<pre><code>{
+  &quot;metadata&quot;: {
+    &quot;type&quot;: &quot;Vote&quot;,
+    &quot;event&quot;: &quot;created&quot;,
+    &quot;timestamp&quot;: &quot;2000-11-07T15:32:05Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;full_name&quot;: &quot;Al Gore&quot;,
+    &quot;chad&quot;: &quot;hanging&quot;,
+    &quot;state&quot;: &quot;FL&quot;
+  }
+}</code></pre>
+<p>Second <code>POST</code>:</p>
+<pre><code>{
+  &quot;metadata&quot;: {
+    &quot;type&quot;: &quot;Vote&quot;,
+    &quot;event&quot;: &quot;created&quot;,
+    &quot;timestamp&quot;: &quot;2000-11-07T15:42:05Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;full_name&quot;: &quot;George W Bush&quot;,
+    &quot;chad&quot;: &quot;hanging&quot;,
+    &quot;state&quot;: &quot;FL&quot;
+  }
+}</code></pre>
+<h3 id="user">User</h3>
+<h4 id="events">Events</h4>
+<ul>
+<li><code>created</code>: Fires when the user has been created.</li>
+</ul>
+<h4 id="fields">Fields</h4>
+<ul>
+<li><code>uuid</code>: ID for this user</li>
+<li><code>full_name</code>: Formatted name</li>
+<li><code>first_name</code>: Personal name</li>
+<li><code>last_name</code>: Surname</li>
+<li><code>email</code>: Primary email</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post <span class="string">'/webhook'</span> <span class="keyword">do</span>
+  metadata = params[<span class="string">'metadata'</span>]
+  data = params[<span class="string">'data'</span>]
+
+  <span class="keyword">if</span> metadata[<span class="string">'type'</span>] == <span class="string">'User'</span> &amp;&amp; metadata[<span class="string">'event'</span>] == <span class="string">'created'</span>
+    <span class="string">"Nice to meet you, <span class="subst">#{data[<span class="string">'full_name'</span>]}</span>!"</span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span>
 
-post <span class="string">'/postback'</span>, <span class="symbol">provides:</span> <span class="string">'json'</span> <span class="keyword">do</span>
-  request.body.rewind
-  request.body.read
-<span class="keyword">end</span>
-
-post <span class="string">'/postback_with_error'</span>, <span class="symbol">provides:</span> <span class="string">'json'</span> <span class="keyword">do</span>
-  request.body.rewind
-  [<span class="number">500</span>, request.body.read]
+post <span class="string">'/webhook_with_error'</span> <span class="keyword">do</span>
+  [<span class="number">500</span>, <span class="string">"Your request failed, sorry!"</span>]
 <span class="keyword">end</span></pre></div></div>
             
         </li>
