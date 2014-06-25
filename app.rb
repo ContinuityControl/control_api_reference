@@ -328,46 +328,45 @@ end
 #
 #     {
 #       "metadata": {
-#         "type": "Thing",
-#         "event": "event_name",
+#         "event": "EventName",
 #         "timestamp": "2014-06-24T15:32:05Z"
 #       },
 #
 #       "data": {
+#         // Depends on event, see below
 #       }
 #     }
 #
 # #### Fields
 #
 #   * `metadata`
-#     * `type`: A name for the type of data
 #     * `event`: A named event for the type, as documented below
 #     * `timestamp`: When the named event occurred
 #   * `data`: an Object of data for the given type
 #
 # ### Implementation Requirements
 #
-# The receiver of a webhook **MUST** check both the `type` and `event` on each `POST`.  Unknown `type`s and `event`s **MUST** be ignored.
+# The receiver of a webhook **MUST** check `event` on each `POST`.  Unknown `event`s **MUST** be ignored.
 #
 # Examples of why this behavior is required:
 #
-# * If the `type` is not checked, and the consumer only looks at the `data.name` attribute, it could be a user's name or a ToDo's name.
-# * If the `event` is not checked, the user could have been `updated` instead of `created`.  The consumer could then take action on an `updated` event that was only intended for a `created` event (e.g. sending a welcome email).
+# * If the `event` is not checked, and the consumer only looks at the `data.name` attribute, it could be a user's name or a ToDo's name.
+# * If the `event` is not checked, a user could have been updated instead of created.  The consumer could then take action on an `updated` event that was only intended for a `created` event (e.g. sending a welcome email).
 #
 # ### Example
 #
-# For a contrived example, if there were a `Vote` type, the webhook would provide data like the following in two separate `POST`s:
+# For a contrived example, if there were a `VoteCast` event, the webhook would provide data like the following in two separate `POST`s:
 #
 # First `POST`:
 #
 #     {
 #       "metadata": {
-#         "type": "Vote",
-#         "event": "created",
+#         "type": "VoteCast",
 #         "timestamp": "2000-11-07T15:32:05Z"
 #       },
 #       "data": {
 #         "full_name": "Al Gore",
+#         "party": "Democrat"
 #       }
 #     }
 #
@@ -375,25 +374,20 @@ end
 #
 #     {
 #       "metadata": {
-#         "type": "Vote",
-#         "event": "created",
+#         "type": "VoteCast",
 #         "timestamp": "2000-11-07T15:42:05Z"
 #       },
 #       "data": {
 #         "full_name": "George W Bush",
+#         "party": "Republican"
 #       }
 #     }
 #
-# ### User
-#
-# #### Events
-#
-#   * `created`: Fires when the user has been created.
+# ### Event: UserCreated
 #
 # #### Data Example
 #
 #     {
-#       "uuid": "12345678-1234-5678-1234-567812345678",
 #       "full_name": "George W. Bush",
 #       "first_name": "George",
 #       "last_name": "Bush",
@@ -402,17 +396,16 @@ end
 #
 # #### Data Fields
 #
-#   * `uuid`: ID for this user
-#   * `full_name`: Formatted name
-#   * `first_name`: Personal name
-#   * `last_name`: Surname
+#   * `full_name`: Formatted name, may be blank if the user was invited with email only
+#   * `first_name`: Personal name, may be blank if the user was invited with email only
+#   * `last_name`: Surname, may be blank if the user was invited with email only
 #   * `email`: Primary email
 #
 post '/webhook' do
   metadata = params['metadata']
   data = params['data']
 
-  if metadata['type'] == 'User' && metadata['event'] == 'created'
+  if metadata['event'] == 'UserCreated'
     "Nice to meet you, #{data['full_name']}!"
   end
 end
