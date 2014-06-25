@@ -404,18 +404,17 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <p>Our webhooks have the following format:</p>
 <pre><code>{
   &quot;metadata&quot;: {
-    &quot;type&quot;: &quot;Thing&quot;,
-    &quot;event&quot;: &quot;event_name&quot;,
+    &quot;event&quot;: &quot;EventName&quot;,
     &quot;timestamp&quot;: &quot;2014-06-24T15:32:05Z&quot;
   },
 
   &quot;data&quot;: {
+    // Depends on event, see below
   }
 }</code></pre>
 <h4 id="fields">Fields</h4>
 <ul>
 <li><code>metadata</code><ul>
-<li><code>type</code>: A name for the type of data</li>
 <li><code>event</code>: A named event for the type, as documented below</li>
 <li><code>timestamp</code>: When the named event occurred</li>
 </ul>
@@ -423,44 +422,39 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <li><code>data</code>: an Object of data for the given type</li>
 </ul>
 <h3 id="implementation-requirements">Implementation Requirements</h3>
-<p>The receiver of a webhook <strong>MUST</strong> check both the <code>type</code> and <code>event</code> on each <code>POST</code>.  Unknown <code>type</code>s and <code>event</code>s <strong>MUST</strong> be ignored.</p>
+<p>The receiver of a webhook <strong>MUST</strong> check <code>event</code> on each <code>POST</code>.  Unknown <code>event</code>s <strong>MUST</strong> be ignored.</p>
 <p>Examples of why this behavior is required:</p>
 <ul>
-<li>If the <code>type</code> is not checked, and the consumer only looks at the <code>data.name</code> attribute, it could be a user&#39;s name or a ToDo&#39;s name.</li>
-<li>If the <code>event</code> is not checked, the user could have been <code>updated</code> instead of <code>created</code>.  The consumer could then take action on an <code>updated</code> event that was only intended for a <code>created</code> event (e.g. sending a welcome email).</li>
+<li>If the <code>event</code> is not checked, and the consumer only looks at the <code>data.name</code> attribute, it could be a user&#39;s name or a ToDo&#39;s name.</li>
+<li>If the <code>event</code> is not checked, a user could have been updated instead of created.  The consumer could then take action on an <code>updated</code> event that was only intended for a <code>created</code> event (e.g. sending a welcome email).</li>
 </ul>
 <h3 id="example">Example</h3>
-<p>For a contrived example, if there were a <code>Vote</code> type, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
+<p>For a contrived example, if there were a <code>VoteCast</code> event, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
 <p>First <code>POST</code>:</p>
 <pre><code>{
   &quot;metadata&quot;: {
-    &quot;type&quot;: &quot;Vote&quot;,
-    &quot;event&quot;: &quot;created&quot;,
+    &quot;type&quot;: &quot;VoteCast&quot;,
     &quot;timestamp&quot;: &quot;2000-11-07T15:32:05Z&quot;
   },
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;Al Gore&quot;,
+    &quot;party&quot;: &quot;Democrat&quot;
   }
 }</code></pre>
 <p>Second <code>POST</code>:</p>
 <pre><code>{
   &quot;metadata&quot;: {
-    &quot;type&quot;: &quot;Vote&quot;,
-    &quot;event&quot;: &quot;created&quot;,
+    &quot;type&quot;: &quot;VoteCast&quot;,
     &quot;timestamp&quot;: &quot;2000-11-07T15:42:05Z&quot;
   },
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;George W Bush&quot;,
+    &quot;party&quot;: &quot;Republican&quot;
   }
 }</code></pre>
-<h3 id="user">User</h3>
-<h4 id="events">Events</h4>
-<ul>
-<li><code>created</code>: Fires when the user has been created.</li>
-</ul>
+<h3 id="event-usercreated">Event: UserCreated</h3>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
-  &quot;uuid&quot;: &quot;12345678-1234-5678-1234-567812345678&quot;,
   &quot;full_name&quot;: &quot;George W. Bush&quot;,
   &quot;first_name&quot;: &quot;George&quot;,
   &quot;last_name&quot;: &quot;Bush&quot;,
@@ -468,10 +462,9 @@ late=true&amp;complete=true    # completed and late</code></pre>
 }</code></pre>
 <h4 id="data-fields">Data Fields</h4>
 <ul>
-<li><code>uuid</code>: ID for this user</li>
-<li><code>full_name</code>: Formatted name</li>
-<li><code>first_name</code>: Personal name</li>
-<li><code>last_name</code>: Surname</li>
+<li><code>full_name</code>: Formatted name, may be blank if the user was invited with email only</li>
+<li><code>first_name</code>: Personal name, may be blank if the user was invited with email only</li>
+<li><code>last_name</code>: Surname, may be blank if the user was invited with email only</li>
 <li><code>email</code>: Primary email</li>
 </ul>
 
@@ -481,7 +474,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
   metadata = params[<span class="string">'metadata'</span>]
   data = params[<span class="string">'data'</span>]
 
-  <span class="keyword">if</span> metadata[<span class="string">'type'</span>] == <span class="string">'User'</span> &amp;&amp; metadata[<span class="string">'event'</span>] == <span class="string">'created'</span>
+  <span class="keyword">if</span> metadata[<span class="string">'event'</span>] == <span class="string">'UserCreated'</span>
     <span class="string">"Nice to meet you, <span class="subst">#{data[<span class="string">'full_name'</span>]}</span>!"</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
