@@ -357,8 +357,8 @@ end
 #
 # Examples of why this behavior is required:
 #
-# * If the `event` is not checked, and the consumer only looks at the `data.name` attribute, it could be a user's name or a ToDo's name.
-# * If the `event` is not checked, a user could have been updated instead of created.  The consumer could then take action on an `updated` event that was only intended for a `created` event (e.g. sending a welcome email).
+# * If the `event` is not checked, and the receiver only looks at the `data.name` attribute, it could be a ToDo's name instead of a users's name.
+# * If the `event` is not checked, a user could have been updated instead of created.  The receiver could then take action on an "updated" event that was only intended for a "created" event (e.g., sending a welcome email).
 #
 # ### Example
 #
