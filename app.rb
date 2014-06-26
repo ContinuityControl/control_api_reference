@@ -415,7 +415,7 @@ post '/webhook' do
   data = parsed_body['data']
 
   if metadata['event'] == 'UserCreated'
-    "Nice to meet you, #{data['full_name']}!\n"
+    "Nice to meet you, #{data['full_name']}!"
   end
 end
 
