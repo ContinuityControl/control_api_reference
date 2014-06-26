@@ -357,7 +357,7 @@ end
 #
 # Examples of why this behavior is required:
 #
-# * If the `metadata.event` is not checked, and the receiver only looks at the `data.name` attribute, it could be a ToDo's name instead of a users's name.
+# * If the `metadata.event` is not checked, and the receiver only looks at the `data.name` attribute, it could be a ToDo's name instead of a user's name.
 # * If the `metadata.event` is not checked, a user could have been updated instead of created.  The receiver could then take action on an "updated" event that was only intended for a "created" event (e.g., sending a welcome email).
 #
 # ### Example
@@ -392,7 +392,7 @@ end
 #
 # ## Events
 #
-# ### Event: UserCreated
+# ### UserCreated
 #
 # The `UserCreated` event fires when a new user is created on Control.
 #
