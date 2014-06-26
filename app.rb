@@ -22,6 +22,13 @@ class ControlAPI
   basic_auth ENV['CONTROL_API_KEY'], ENV['CONTROL_API_SECRET']
 end
 
+helpers do
+  def parsed_body
+    request.body.rewind
+    ::JSON.parse(request.body.read)
+  end
+end
+
 # The root path in this application simply provides navigation.
 #
 # `erb :view_name` renders the file in `views/view_name.erb`.  For example, this will end up rendering `views/root.erb`.
@@ -404,11 +411,11 @@ end
 #   * `email`: Primary email
 #
 post '/webhook' do
-  metadata = params[:metadata]
-  data = params[:data]
+  metadata = parsed_body['metadata']
+  data = parsed_body['data']
 
-  if metadata[:event] == 'UserCreated'
-    "Nice to meet you, #{data[:full_name]}!"
+  if metadata['event'] == 'UserCreated'
+    "Nice to meet you, #{data['full_name']}!\n"
   end
 end
 
