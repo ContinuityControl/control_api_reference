@@ -66,6 +66,13 @@
   base_uri <span class="constant">ENV</span>[<span class="string">'CONTROL_API_BASE_URI'</span>]
 
   basic_auth <span class="constant">ENV</span>[<span class="string">'CONTROL_API_KEY'</span>], <span class="constant">ENV</span>[<span class="string">'CONTROL_API_SECRET'</span>]
+<span class="keyword">end</span>
+
+helpers <span class="keyword">do</span>
+  <span class="function"><span class="keyword">def</span> <span class="title">parsed_body</span></span>
+    request.body.rewind
+    <span class="constant">::JSON</span>.parse(request.body.read)
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre></div></div>
             
         </li>
@@ -472,11 +479,11 @@ late=true&amp;complete=true    # completed and late</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>post <span class="string">'/webhook'</span> <span class="keyword">do</span>
-  metadata = params[<span class="symbol">:metadata</span>]
-  data = params[<span class="symbol">:data</span>]
+  metadata = parsed_body[<span class="string">'metadata'</span>]
+  data = parsed_body[<span class="string">'data'</span>]
 
-  <span class="keyword">if</span> metadata[<span class="symbol">:event</span>] == <span class="string">'UserCreated'</span>
-    <span class="string">"Nice to meet you, <span class="subst">#{data[<span class="symbol">:full_name</span>]}</span>!"</span>
+  <span class="keyword">if</span> metadata[<span class="string">'event'</span>] == <span class="string">'UserCreated'</span>
+    <span class="string">"Nice to meet you, <span class="subst">#{data[<span class="string">'full_name'</span>]}</span>!\n"</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 
