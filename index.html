@@ -429,11 +429,11 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <li><code>data</code>: an Object of data for the given event</li>
 </ul>
 <h3 id="implementation-requirements">Implementation Requirements</h3>
-<p>The receiver of a webhook <strong>MUST</strong> check <code>event</code> on each <code>POST</code>.  Unknown <code>event</code>s <strong>MUST</strong> be ignored.</p>
+<p>The receiver of a webhook <strong>MUST</strong> check <code>metadata.event</code> on each <code>POST</code>.  An unknown <code>metadata.event</code> <strong>MUST</strong> be ignored.</p>
 <p>Examples of why this behavior is required:</p>
 <ul>
-<li>If the <code>event</code> is not checked, and the receiver only looks at the <code>data.name</code> attribute, it could be a ToDo&#39;s name instead of a users&#39;s name.</li>
-<li>If the <code>event</code> is not checked, a user could have been updated instead of created.  The receiver could then take action on an &quot;updated&quot; event that was only intended for a &quot;created&quot; event (e.g., sending a welcome email).</li>
+<li>If the <code>metadata.event</code> is not checked, and the receiver only looks at the <code>data.name</code> attribute, it could be a ToDo&#39;s name instead of a users&#39;s name.</li>
+<li>If the <code>metadata.event</code> is not checked, a user could have been updated instead of created.  The receiver could then take action on an &quot;updated&quot; event that was only intended for a &quot;created&quot; event (e.g., sending a welcome email).</li>
 </ul>
 <h3 id="example">Example</h3>
 <p>For a contrived example, if there were a <code>VoteCast</code> event, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
