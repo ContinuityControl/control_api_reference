@@ -405,7 +405,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <pre><code>{
   &quot;metadata&quot;: {
     &quot;event&quot;: &quot;EventName&quot;,
-    &quot;timestamp&quot;: &quot;2014-06-24T15:32:05Z&quot;
+    &quot;fired_at&quot;: &quot;2014-06-24T15:32:05Z&quot;
   },
 
   &quot;data&quot;: {
@@ -415,11 +415,11 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <h4 id="fields">Fields</h4>
 <ul>
 <li><code>metadata</code><ul>
-<li><code>event</code>: A named event for the type, as documented below</li>
-<li><code>timestamp</code>: When the named event occurred</li>
+<li><code>event</code>: A named event, as documented below</li>
+<li><code>fired_at</code>: When the webhook was fired</li>
 </ul>
 </li>
-<li><code>data</code>: an Object of data for the given type</li>
+<li><code>data</code>: an Object of data for the given event</li>
 </ul>
 <h3 id="implementation-requirements">Implementation Requirements</h3>
 <p>The receiver of a webhook <strong>MUST</strong> check <code>event</code> on each <code>POST</code>.  Unknown <code>event</code>s <strong>MUST</strong> be ignored.</p>
@@ -433,8 +433,8 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <p>First <code>POST</code>:</p>
 <pre><code>{
   &quot;metadata&quot;: {
-    &quot;type&quot;: &quot;VoteCast&quot;,
-    &quot;timestamp&quot;: &quot;2000-11-07T15:32:05Z&quot;
+    &quot;event&quot;: &quot;VoteCast&quot;,
+    &quot;fired_at&quot;: &quot;2000-11-07T15:32:05Z&quot;
   },
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;Al Gore&quot;,
@@ -444,21 +444,22 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <p>Second <code>POST</code>:</p>
 <pre><code>{
   &quot;metadata&quot;: {
-    &quot;type&quot;: &quot;VoteCast&quot;,
-    &quot;timestamp&quot;: &quot;2000-11-07T15:42:05Z&quot;
+    &quot;event&quot;: &quot;VoteCast&quot;,
+    &quot;fired_at&quot;: &quot;2000-11-07T15:42:05Z&quot;
   },
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;George W Bush&quot;,
     &quot;party&quot;: &quot;Republican&quot;
   }
 }</code></pre>
+<h2 id="events">Events</h2>
 <h3 id="event-usercreated">Event: UserCreated</h3>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
-  &quot;full_name&quot;: &quot;George W. Bush&quot;,
+  &quot;full_name&quot;: &quot;George Washington&quot;,
   &quot;first_name&quot;: &quot;George&quot;,
-  &quot;last_name&quot;: &quot;Bush&quot;,
-  &quot;email&quot;: &quot;gwbush@example.com&quot;
+  &quot;last_name&quot;: &quot;Washington&quot;,
+  &quot;email&quot;: &quot;gwashington@example.com&quot;
 }</code></pre>
 <h4 id="data-fields">Data Fields</h4>
 <ul>
