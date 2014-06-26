@@ -329,7 +329,7 @@ end
 #     {
 #       "metadata": {
 #         "event": "EventName",
-#         "timestamp": "2014-06-24T15:32:05Z"
+#         "fired_at": "2014-06-24T15:32:05Z"
 #       },
 #
 #       "data": {
@@ -340,9 +340,9 @@ end
 # #### Fields
 #
 #   * `metadata`
-#     * `event`: A named event for the type, as documented below
-#     * `timestamp`: When the named event occurred
-#   * `data`: an Object of data for the given type
+#     * `event`: A named event, as documented below
+#     * `fired_at`: When the webhook was fired
+#   * `data`: an Object of data for the given event
 #
 # ### Implementation Requirements
 #
@@ -361,8 +361,8 @@ end
 #
 #     {
 #       "metadata": {
-#         "type": "VoteCast",
-#         "timestamp": "2000-11-07T15:32:05Z"
+#         "event": "VoteCast",
+#         "fired_at": "2000-11-07T15:32:05Z"
 #       },
 #       "data": {
 #         "full_name": "Al Gore",
@@ -374,8 +374,8 @@ end
 #
 #     {
 #       "metadata": {
-#         "type": "VoteCast",
-#         "timestamp": "2000-11-07T15:42:05Z"
+#         "event": "VoteCast",
+#         "fired_at": "2000-11-07T15:42:05Z"
 #       },
 #       "data": {
 #         "full_name": "George W Bush",
@@ -383,15 +383,17 @@ end
 #       }
 #     }
 #
+# ## Events
+#
 # ### Event: UserCreated
 #
 # #### Data Example
 #
 #     {
-#       "full_name": "George W. Bush",
+#       "full_name": "George Washington",
 #       "first_name": "George",
-#       "last_name": "Bush",
-#       "email": "gwbush@example.com"
+#       "last_name": "Washington",
+#       "email": "gwashington@example.com"
 #     }
 #
 # #### Data Fields
