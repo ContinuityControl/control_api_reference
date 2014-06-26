@@ -432,7 +432,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <p>The receiver of a webhook <strong>MUST</strong> check <code>metadata.event</code> on each <code>POST</code>.  An unknown <code>metadata.event</code> <strong>MUST</strong> be ignored.</p>
 <p>Examples of why this behavior is required:</p>
 <ul>
-<li>If the <code>metadata.event</code> is not checked, and the receiver only looks at the <code>data.name</code> attribute, it could be a ToDo&#39;s name instead of a users&#39;s name.</li>
+<li>If the <code>metadata.event</code> is not checked, and the receiver only looks at the <code>data.name</code> attribute, it could be a ToDo&#39;s name instead of a user&#39;s name.</li>
 <li>If the <code>metadata.event</code> is not checked, a user could have been updated instead of created.  The receiver could then take action on an &quot;updated&quot; event that was only intended for a &quot;created&quot; event (e.g., sending a welcome email).</li>
 </ul>
 <h3 id="example">Example</h3>
@@ -460,7 +460,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
   }
 }</code></pre>
 <h2 id="events">Events</h2>
-<h3 id="event-usercreated">Event: UserCreated</h3>
+<h3 id="usercreated">UserCreated</h3>
 <p>The <code>UserCreated</code> event fires when a new user is created on Control.</p>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
