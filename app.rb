@@ -327,7 +327,7 @@ end
 
 # ## Webhooks (currently in development)
 #
-# Webhooks provide information about events in near real-time.  You provide a URL, and we'll POST to it as events take place.
+# Webhooks provide information about events in near real-time.  You provide a URL, and we'll `POST` to it as events take place.  When a `HTTP 5XX` response occurs, the Webhook is retried with an incremental backoff.
 #
 # ### Format
 #
