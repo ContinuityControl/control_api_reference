@@ -420,7 +420,3 @@ post '/webhook' do
     "Nice to meet you, #{data['full_name']}!"
   end
 end
-
-post '/webhook_with_error' do
-  [500, "Your request failed, sorry!"]
-end
