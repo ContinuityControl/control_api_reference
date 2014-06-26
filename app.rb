@@ -405,9 +405,9 @@ end
 #
 # #### Data Fields
 #
-#   * `full_name`: Formatted name, may be blank if the user was invited with email only
-#   * `first_name`: Personal name, may be blank if the user was invited with email only
-#   * `last_name`: Surname, may be blank if the user was invited with email only
+#   * `full_name`: Formatted name, may be `null`
+#   * `first_name`: Personal name, may be `null`
+#   * `last_name`: Surname, may be `null`
 #   * `email`: Primary email
 #
 post '/webhook' do
