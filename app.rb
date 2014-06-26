@@ -394,7 +394,7 @@ end
 #
 # ### Event: UserCreated
 #
-# Fires when a new user is created on Control.
+# The `UserCreated` event fires when a new user is created on Control.
 #
 # #### Data Example
 #
