@@ -1,3 +1,7 @@
+control_api (1.3.0) unstable; urgency=low
+
+  * Added webhook for "UserCreated" event
+
 control_api (1.2.2) stable; urgency=low
 
   * Added subsecond precision to datetimes.  This change was previously
