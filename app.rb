@@ -404,11 +404,11 @@ end
 #   * `email`: Primary email
 #
 post '/webhook' do
-  metadata = params['metadata']
-  data = params['data']
+  metadata = params[:metadata]
+  data = params[:data]
 
-  if metadata['event'] == 'UserCreated'
-    "Nice to meet you, #{data['full_name']}!"
+  if metadata[:event] == 'UserCreated'
+    "Nice to meet you, #{data[:full_name]}!"
   end
 end
 
