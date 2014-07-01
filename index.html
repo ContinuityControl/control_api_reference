@@ -283,7 +283,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
   &quot;uuid&quot;: &quot;f81d4fae-7dec-11d0-a765-00a0c91e6bf6&quot;,
   &quot;name&quot;: &quot;Review server logs&quot;,
   &quot;created_at&quot;: &quot;2013-11-02T12:34:46.000Z&quot;,
-  &quot;completed_at&quot;: &quot;2013-11-07T12:34:56.000Z&quot;,
+  &quot;completed_at&quot;: null,
   &quot;due_on&quot;: &quot;2013-11-08&quot;,
   &quot;tags&quot;: [&quot;security&quot;, &quot;annual&quot;, &quot;training&quot;],
   &quot;metadata&quot;: {
@@ -311,7 +311,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <li><code>uuid</code>: UUID for this DistributedToDo.</li>
 <li><code>name</code>: The human-readable name for this ToDo.</li>
 <li><code>created_at</code>: ISO8601 datetime of the creation of this DistributedToDo, in UTC.</li>
-<li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.</li>
+<li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.  May be <code>null</code>.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in UTC.</li>
 <li><code>tags</code>: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.</li>
 <li><code>metadata</code>: The metadata for this DistributedToDo, as an object. If there are no metadata, it will be an empty object. Values will always be returned as strings.</li>
@@ -476,6 +476,9 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <li><code>last_name</code>: Surname, may be <code>null</code></li>
 <li><code>email</code>: Primary email</li>
 </ul>
+<h3 id="distributedtodocompleted">DistributedToDoCompleted</h3>
+<p>The <code>DistributedToDoCompleted</code> events fires when all the assignments of a ToDo are completed.  That is, when the ToDo as a whole is completed, rather than an individual user&#39;s assignment.</p>
+<p>The data is the same for <code>GET /v1/distributed_to_dos/:uuid.json</code>.  Please refer to its documentation.</p>
 
             </div>
             
@@ -483,7 +486,10 @@ late=true&amp;complete=true    # completed and late</code></pre>
   metadata = parsed_body[<span class="string">'metadata'</span>]
   data = parsed_body[<span class="string">'data'</span>]
 
-  <span class="keyword">if</span> metadata[<span class="string">'event'</span>] == <span class="string">'UserCreated'</span>
+  <span class="keyword">case</span> metadata[<span class="string">'event'</span>]
+  <span class="keyword">when</span> <span class="string">'DistributedToDoCompleted'</span>
+    <span class="string">"Good job, team!  We completed the <span class="subst">#{data[<span class="string">'name'</span>]}</span> ToDo!"</span>
+  <span class="keyword">when</span> <span class="string">'UserCreated'</span>
     <span class="string">"Nice to meet you, <span class="subst">#{data[<span class="string">'full_name'</span>]}</span>!"</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre></div></div>
