@@ -213,7 +213,7 @@ end
 #       "uuid": "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
 #       "name": "Review server logs",
 #       "created_at": "2013-11-02T12:34:46.000Z",
-#       "completed_at": "2013-11-07T12:34:56.000Z",
+#       "completed_at": null,
 #       "due_on": "2013-11-08",
 #       "tags": ["security", "annual", "training"],
 #       "metadata": {
@@ -247,7 +247,7 @@ end
 #   * `uuid`: UUID for this DistributedToDo.
 #   * `name`: The human-readable name for this ToDo.
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
-#   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.
+#   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.  May be `null`.
 #   * `due_on`: ISO8601 date of when the DistributedToDo is due, in UTC.
 #   * `tags`: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.
 #   * `metadata`: The metadata for this DistributedToDo, as an object. If there are no metadata, it will be an empty object. Values will always be returned as strings.
@@ -412,11 +412,20 @@ end
 #   * `last_name`: Surname, may be `null`
 #   * `email`: Primary email
 #
+# ### DistributedToDoCompleted
+#
+# The `DistributedToDoCompleted` events fires when all the assignments of a ToDo are completed.  That is, when the ToDo as a whole is completed, rather than an individual user's assignment.
+#
+# The data is the same for `GET /v1/distributed_to_dos/:uuid.json`.  Please refer to its documentation.
+#
 post '/webhook' do
   metadata = parsed_body['metadata']
   data = parsed_body['data']
 
-  if metadata['event'] == 'UserCreated'
+  case metadata['event']
+  when 'DistributedToDoCompleted'
+    "Good job, team!  We completed the #{data['name']} ToDo!"
+  when 'UserCreated'
     "Nice to meet you, #{data['full_name']}!"
   end
 end
