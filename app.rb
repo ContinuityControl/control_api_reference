@@ -334,11 +334,9 @@ end
 # Our webhooks have the following format:
 #
 #     {
-#       "metadata": {
-#         "event": "EventName",
-#         "fired_at": "2014-06-24T15:32:05Z"
-#       },
 #
+#       "event": "EventName",
+#       "fired_at": "2014-06-24T15:32:05Z",
 #       "data": {
 #         // Depends on event, see below
 #       }
@@ -346,19 +344,18 @@ end
 #
 # #### Fields
 #
-#   * `metadata`
-#     * `event`: A named event, as documented below
-#     * `fired_at`: When the webhook was fired
+#   * `event`: A named event, as documented below
+#   * `fired_at`: When the webhook was fired
 #   * `data`: an Object of data for the given event
 #
 # ### Implementation Requirements
 #
-# The receiver of a webhook **MUST** check `metadata.event` on each `POST`.  An unknown `metadata.event` **MUST** be ignored.
+# The receiver of a webhook **MUST** check `event` on each `POST`.  An unknown `event` **MUST** be ignored.
 #
 # Examples of why this behavior is required:
 #
-# * If the `metadata.event` is not checked, and the receiver only looks at the `data.name` attribute, it could be a ToDo's name instead of a user's name.
-# * If the `metadata.event` is not checked, a user could have been updated instead of created.  The receiver could then take action on an "updated" event that was only intended for a "created" event (e.g., sending a welcome email).
+# * If the `event` is not checked, and the receiver only looks at the `data.name` attribute, it could be a ToDo's name instead of a user's name.
+# * If the `event` is not checked, a user could have been updated instead of created.  The receiver could then take action on an "updated" event that was only intended for a "created" event (e.g., sending a welcome email).
 #
 # ### Example
 #
@@ -367,10 +364,8 @@ end
 # First `POST`:
 #
 #     {
-#       "metadata": {
-#         "event": "VoteCast",
-#         "fired_at": "2000-11-07T15:32:05Z"
-#       },
+#       "event": "VoteCast",
+#       "fired_at": "2000-11-07T15:32:05Z",
 #       "data": {
 #         "full_name": "Al Gore",
 #         "party": "Democrat"
@@ -380,10 +375,8 @@ end
 # Second `POST`:
 #
 #     {
-#       "metadata": {
-#         "event": "VoteCast",
-#         "fired_at": "2000-11-07T15:42:05Z"
-#       },
+#       "event": "VoteCast",
+#       "fired_at": "2000-11-07T15:42:05Z",
 #       "data": {
 #         "full_name": "George W Bush",
 #         "party": "Republican"
@@ -419,10 +412,10 @@ end
 # The data is the same for `GET /v1/distributed_to_dos/:uuid.json`.  Please refer to its documentation.
 #
 post '/webhook' do
-  metadata = parsed_body['metadata']
+  event = ['event']
   data = parsed_body['data']
 
-  case metadata['event']
+  case event
   when 'DistributedToDoCompleted'
     "Good job, team!  We completed the #{data['name']} ToDo!"
   when 'UserCreated'
