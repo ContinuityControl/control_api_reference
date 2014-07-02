@@ -410,39 +410,32 @@ late=true&amp;complete=true    # completed and late</code></pre>
 <h3 id="format">Format</h3>
 <p>Our webhooks have the following format:</p>
 <pre><code>{
-  &quot;metadata&quot;: {
-    &quot;event&quot;: &quot;EventName&quot;,
-    &quot;fired_at&quot;: &quot;2014-06-24T15:32:05Z&quot;
-  },
 
+  &quot;event&quot;: &quot;EventName&quot;,
+  &quot;fired_at&quot;: &quot;2014-06-24T15:32:05Z&quot;,
   &quot;data&quot;: {
     // Depends on event, see below
   }
 }</code></pre>
 <h4 id="fields">Fields</h4>
 <ul>
-<li><code>metadata</code><ul>
 <li><code>event</code>: A named event, as documented below</li>
 <li><code>fired_at</code>: When the webhook was fired</li>
-</ul>
-</li>
 <li><code>data</code>: an Object of data for the given event</li>
 </ul>
 <h3 id="implementation-requirements">Implementation Requirements</h3>
-<p>The receiver of a webhook <strong>MUST</strong> check <code>metadata.event</code> on each <code>POST</code>.  An unknown <code>metadata.event</code> <strong>MUST</strong> be ignored.</p>
+<p>The receiver of a webhook <strong>MUST</strong> check <code>event</code> on each <code>POST</code>.  An unknown <code>event</code> <strong>MUST</strong> be ignored.</p>
 <p>Examples of why this behavior is required:</p>
 <ul>
-<li>If the <code>metadata.event</code> is not checked, and the receiver only looks at the <code>data.name</code> attribute, it could be a ToDo&#39;s name instead of a user&#39;s name.</li>
-<li>If the <code>metadata.event</code> is not checked, a user could have been updated instead of created.  The receiver could then take action on an &quot;updated&quot; event that was only intended for a &quot;created&quot; event (e.g., sending a welcome email).</li>
+<li>If the <code>event</code> is not checked, and the receiver only looks at the <code>data.name</code> attribute, it could be a ToDo&#39;s name instead of a user&#39;s name.</li>
+<li>If the <code>event</code> is not checked, a user could have been updated instead of created.  The receiver could then take action on an &quot;updated&quot; event that was only intended for a &quot;created&quot; event (e.g., sending a welcome email).</li>
 </ul>
 <h3 id="example">Example</h3>
 <p>For a contrived example, if there were a <code>VoteCast</code> event, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
 <p>First <code>POST</code>:</p>
 <pre><code>{
-  &quot;metadata&quot;: {
-    &quot;event&quot;: &quot;VoteCast&quot;,
-    &quot;fired_at&quot;: &quot;2000-11-07T15:32:05Z&quot;
-  },
+  &quot;event&quot;: &quot;VoteCast&quot;,
+  &quot;fired_at&quot;: &quot;2000-11-07T15:32:05Z&quot;,
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;Al Gore&quot;,
     &quot;party&quot;: &quot;Democrat&quot;
@@ -450,10 +443,8 @@ late=true&amp;complete=true    # completed and late</code></pre>
 }</code></pre>
 <p>Second <code>POST</code>:</p>
 <pre><code>{
-  &quot;metadata&quot;: {
-    &quot;event&quot;: &quot;VoteCast&quot;,
-    &quot;fired_at&quot;: &quot;2000-11-07T15:42:05Z&quot;
-  },
+  &quot;event&quot;: &quot;VoteCast&quot;,
+  &quot;fired_at&quot;: &quot;2000-11-07T15:42:05Z&quot;,
   &quot;data&quot;: {
     &quot;full_name&quot;: &quot;George W Bush&quot;,
     &quot;party&quot;: &quot;Republican&quot;
@@ -483,10 +474,10 @@ late=true&amp;complete=true    # completed and late</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>post <span class="string">'/webhook'</span> <span class="keyword">do</span>
-  metadata = parsed_body[<span class="string">'metadata'</span>]
+  event = [<span class="string">'event'</span>]
   data = parsed_body[<span class="string">'data'</span>]
 
-  <span class="keyword">case</span> metadata[<span class="string">'event'</span>]
+  <span class="keyword">case</span> event
   <span class="keyword">when</span> <span class="string">'DistributedToDoCompleted'</span>
     <span class="string">"Good job, team!  We completed the <span class="subst">#{data[<span class="string">'name'</span>]}</span> ToDo!"</span>
   <span class="keyword">when</span> <span class="string">'UserCreated'</span>
