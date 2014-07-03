@@ -474,7 +474,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>post <span class="string">'/webhook'</span> <span class="keyword">do</span>
-  event = [<span class="string">'event'</span>]
+  event = parsed_body[<span class="string">'event'</span>]
   data = parsed_body[<span class="string">'data'</span>]
 
   <span class="keyword">case</span> event
