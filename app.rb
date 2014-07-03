@@ -412,7 +412,7 @@ end
 # The data is the same for `GET /v1/distributed_to_dos/:uuid.json`.  Please refer to its documentation.
 #
 post '/webhook' do
-  event = ['event']
+  event = parsed_body['event']
   data = parsed_body['data']
 
   case event
