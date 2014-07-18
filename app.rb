@@ -325,7 +325,7 @@ get '/distributed_to_dos' do
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
 
-# ## Webhooks (currently in development)
+# ## Webhooks
 #
 # Webhooks provide information about events in near real-time.  You provide a URL, and we'll `POST` to it as events take place.  When a `HTTP 5XX` response occurs, the Webhook is retried with an incremental backoff.
 #
