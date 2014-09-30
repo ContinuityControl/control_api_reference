@@ -187,10 +187,10 @@ end
 #
 #     {
 #       "user": {
+#         "email": "abe@whitehouse.gov",
+#         "password": "yeeK0ixaey7zaxoh6pee!",
 #         "first_name": "Abraham",
-#         "last_name": "Lincoln",
-#         "enabled": true,
-#         "email": "abe@whitehouse.gov"
+#         "last_name": "Lincoln"
 #       }
 #     }
 #
@@ -198,9 +198,13 @@ end
 #
 # The following fields are allowed:
 #
-#   * `email` **Required**
-#   * `first_name` **Required**
-#   * `last_name` **Required**
+#   * `email`: **Required**
+#   * `password`: **Required.**  Plain-text password.
+#     * Note: requests are only allowed over HTTPS.
+#     * This value is not returned by a `GET` request.
+#     * Password must contain at least 3 of the 4 character groups: Uppercase, Lowercase, Number, Non-Alphanumeric (punctuation, whitespace, etc.)'
+#   * `first_name`: **Required**
+#   * `last_name`: **Required**
 #   * `middle_name`
 #   * `description`
 #   * `time_zone`
