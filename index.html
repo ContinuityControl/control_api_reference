@@ -139,7 +139,129 @@ helpers <span class="keyword">do</span>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
+              <h3 id="users-currently-in-development-">Users (currently in development)</h3>
+<h2 id="get-v1-users-uuid-json">GET /v1/users/:uuid.json</h2>
+<p>Get an individual user by its id</p>
+<h4 id="data-example">Data Example</h4>
+<pre><code>{
+  &quot;full_name&quot;: &quot;George Washington&quot;,
+  &quot;first_name&quot;: &quot;George&quot;,
+  &quot;last_name&quot;: &quot;Washington&quot;,
+  &quot;email&quot;: &quot;gwashington@example.com&quot;,
+  &quot;uuid&quot;: &quot;85a95390-4814-11e4-916c-0800200c9a66&quot;
+}</code></pre>
+<h4 id="data-fields">Data Fields</h4>
+<ul>
+<li><code>uuid</code>: Universally Unique Identifier for this user</li>
+<li><code>email</code>: Primary email</li>
+<li><code>full_name</code>: Formatted name, may be <code>null</code></li>
+<li><code>first_name</code>: Personal name, may be <code>null</code></li>
+<li><code>last_name</code>: Surname, may be <code>null</code></li>
+<li><code>middle_name</code>: Middle name, may be <code>null</code></li>
+<li><code>created_at</code>: ISO8601 datetime of the creation of this user, in UTC</li>
+<li><code>updated_at</code>: ISO8601 datetime of the time at which this user was updated, in UTC</li>
+<li><code>confirmed_at</code>: ISO8601 datetime of the time at which this user was confirmed, in UTC</li>
+<li><code>description</code>: The description of this user, may be <code>null</code></li>
+<li><code>time_zone</code>: The time zone of this user according to the <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of names from the Olson database</a>.</li>
+<li><code>manager_uuid</code>: The uuid of the user&#39;s manager</li>
+<li><code>title</code>: The job title of the user</li>
+<li><code>employee_id</code>: The external employee id of the user</li>
+<li><code>personal_email</code>: The personal email of the user</li>
+<li><code>phone</code>: The user&#39;s primary phone</li>
+<li><code>home_phone</code>: The user&#39;s home phone</li>
+<li><code>mobile_phone</code>: The user&#39;s mobile phone</li>
+<li><code>emergency_contact_name</code>: The user&#39;s emergency contact name</li>
+<li><code>emergency_contact_relationship</code>: The user&#39;s emergency contact relationship</li>
+<li><code>emergency_contact_mobile_phone</code>: The user&#39;s emergency contact&#39;s mobile phone</li>
+<li><code>emergency_contact_work_phone</code>: The user&#39;s emergency contact&#39;s work phone</li>
+<li><code>emergency_contact_home_phone</code>: The user&#39;s emergency contact&#39;s home phone</li>
+<li><code>address_1</code>: The user&#39;s address line 1</li>
+<li><code>address_2</code>: The user&#39;s address line 2</li>
+<li><code>city</code>: The user&#39;s city name</li>
+<li><code>state</code>: The user&#39;s standard state postal code (see <a href="http://en.wikipedia.org/wiki/ISO_3166-2:US">ISO-3166-2 for a list</a>)</li>
+<li><code>zip</code>: The user&#39;s 5 or 9 digit zip code</li>
+<li><code>review_on</code>: The ISO8601 date for the next review of this user</li>
+<li><code>started_on</code>: The ISO8601 date when this user&#39;s employment started</li>
+<li><code>enabled</code>: Whether this user is enabled, as a boolean value</li>
+<li><code>enabled_at</code>: The ISO8601 datetime for when this user was enabled, in UTC</li>
+</ul>
+<h2 id="get-v1-users-json">GET /v1/users.json</h2>
+<p>Get all users, filtering by enabled</p>
+<h3 id="example-requests">Example requests</h3>
+<pre><code>GET /v1/users.json
+GET /v1/users.json?enabled=false</code></pre>
+<h3 id="example-responses">Example responses</h3>
+<h4 id="http-200-ok">HTTP 200 OK</h4>
+<p>   {
+     &quot;users&quot; : [
+       //Content from GET /v1/users/:uuid.json
+     ]
+   }</p>
+<h4 id="http-500-server-error">HTTP 500 Server Error</h4>
+<h2 id="post-v1-users-json">POST /v1/users.json</h2>
+<p>Create a new user</p>
+<h3 id="example-requests">Example requests</h3>
+<pre><code>POST /v1/users.json
+Content-Type: application/json
+
+{
+  &quot;user&quot;: {
+    &quot;first_name&quot;: &quot;Abraham&quot;,
+    &quot;last_name&quot;: &quot;Lincoln&quot;,
+    &quot;enabled&quot;: true,
+    &quot;email&quot;: &quot;abe@whitehouse.gov&quot;
+  }
+}</code></pre>
+<h3 id="request-fields">Request fields</h3>
+<p>The following fields are allowed:</p>
+<ul>
+<li><code>email</code> <strong>Required</strong></li>
+<li><code>first_name</code> <strong>Required</strong></li>
+<li><code>last_name</code> <strong>Required</strong></li>
+<li><code>middle_name</code></li>
+<li><code>description</code></li>
+<li><code>time_zone</code></li>
+<li><code>manager_id</code></li>
+<li><code>title</code></li>
+<li><code>employee_id</code></li>
+<li><code>personal_email</code></li>
+<li><code>phone</code></li>
+<li><code>home_phone</code></li>
+<li><code>mobile_phone</code></li>
+<li><code>emergency_contact_name</code></li>
+<li><code>emergency_contact_relationship</code></li>
+<li><code>emergency_contact_mobile_phone</code></li>
+<li><code>emergency_contact_work_phone</code></li>
+<li><code>emergency_contact_home_phone</code></li>
+<li><code>address_1</code></li>
+<li><code>address_2</code></li>
+<li><code>city</code></li>
+<li><code>state</code></li>
+<li><code>zip</code></li>
+<li><code>review_on</code></li>
+<li><code>started_on</code></li>
+<li><code>enabled</code>, defaults to <code>true</code></li>
+</ul>
+<p>For field descriptions, please see <code>GET /v1/users/:uuid.json</code>.</p>
+<h3 id="example-responses">Example responses</h3>
+<h4 id="http-200-ok">HTTP 200 OK</h4>
+<p> Same as GET /v1/users/:id.json response</p>
+<h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
+<pre><code>{
+  &quot;errors&quot;: {
+    &quot;email&quot;: [
+      &quot;is invalid&quot;,
+    ]
+  }
+}</code></pre>
+<h4 id="http-500-server-error">HTTP 500 Server Error</h4>
+<h2 id="patch-v1-users-json">PATCH /v1/users.json</h2>
+<p>Updates a user</p>
+<h3 id="example-requests">Example requests</h3>
+<p> Refer to POST /v1/users.json example. NB: you can omit keys as necessary</p>
+<h3 id="example-responses">Example responses</h3>
+<p> Same as GET /v1/users/:id.json response</p>
+<h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
 <p>Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/template_to_dos.json
