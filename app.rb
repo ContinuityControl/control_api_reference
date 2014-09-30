@@ -168,7 +168,7 @@ end
 #
 #     {
 #       "users" : [
-#         //Content from GET /v1/users/:uuid.json
+#         // Content from GET /v1/users/:uuid.json
 #       ]
 #     }
 #
