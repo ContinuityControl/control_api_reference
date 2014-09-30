@@ -237,18 +237,24 @@ Content-Type: application/json
 
 {
   &quot;user&quot;: {
+    &quot;email&quot;: &quot;abe@whitehouse.gov&quot;,
+    &quot;password&quot;: &quot;yeeK0ixaey7zaxoh6pee!&quot;,
     &quot;first_name&quot;: &quot;Abraham&quot;,
-    &quot;last_name&quot;: &quot;Lincoln&quot;,
-    &quot;enabled&quot;: true,
-    &quot;email&quot;: &quot;abe@whitehouse.gov&quot;
+    &quot;last_name&quot;: &quot;Lincoln&quot;
   }
 }</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <p>The following fields are allowed:</p>
 <ul>
-<li><code>email</code> <strong>Required</strong></li>
-<li><code>first_name</code> <strong>Required</strong></li>
-<li><code>last_name</code> <strong>Required</strong></li>
+<li><code>email</code>: <strong>Required</strong></li>
+<li><code>password</code>: <strong>Required.</strong>  Plain-text password.<ul>
+<li>Note: requests are only allowed over HTTPS.</li>
+<li>This value is not returned by a <code>GET</code> request.</li>
+<li>Password must contain at least 3 of the 4 character groups: Uppercase, Lowercase, Number, Non-Alphanumeric (punctuation, whitespace, etc.)&#39;</li>
+</ul>
+</li>
+<li><code>first_name</code>: <strong>Required</strong></li>
+<li><code>last_name</code>: <strong>Required</strong></li>
 <li><code>middle_name</code></li>
 <li><code>description</code></li>
 <li><code>time_zone</code></li>
