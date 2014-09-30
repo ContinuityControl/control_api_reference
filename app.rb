@@ -71,6 +71,159 @@ get '/status' do
   end
 end
 
+# ### Users (currently in development)
+#
+# ## GET /v1/users/:uuid.json
+#
+# Get an individual user by its id
+#
+# #### Data Example
+#
+#     {
+#       "full_name": "George Washington",
+#       "first_name": "George",
+#       "last_name": "Washington",
+#       "email": "gwashington@example.com",
+#       "uuid": "85a95390-4814-11e4-916c-0800200c9a66"
+#     }
+#
+# #### Data Fields
+#
+#   * `uuid`: Universally Unique Identifier for this user
+#   * `email`: Primary email
+#   * `full_name`: Formatted name, may be `null`
+#   * `first_name`: Personal name, may be `null`
+#   * `last_name`: Surname, may be `null`
+#   * `middle_name`: Middle name, may be `null`
+#   * `created_at`: ISO8601 datetime of the creation of this user, in UTC
+#   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
+#   * `confirmed_at`: ISO8601 datetime of the time at which this user was confirmed, in UTC
+#   * `description`: The description of this user, may be `null`
+#   * `time_zone`: The time zone of this user according to the [list of names from the Olson database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+#   * `manager_uuid`: The uuid of the user's manager
+#   * `title`: The job title of the user
+#   * `employee_id`: The external employee id of the user
+#   * `personal_email`: The personal email of the user
+#   * `phone`: The user's primary phone
+#   * `home_phone`: The user's home phone
+#   * `mobile_phone`: The user's mobile phone
+#   * `emergency_contact_name`: The user's emergency contact name
+#   * `emergency_contact_relationship`: The user's emergency contact relationship
+#   * `emergency_contact_mobile_phone`: The user's emergency contact's mobile phone
+#   * `emergency_contact_work_phone`: The user's emergency contact's work phone
+#   * `emergency_contact_home_phone`: The user's emergency contact's home phone
+#   * `address_1`: The user's address line 1
+#   * `address_2`: The user's address line 2
+#   * `city`: The user's city name
+#   * `state`: The user's standard state postal code (see [ISO-3166-2 for a list](http://en.wikipedia.org/wiki/ISO_3166-2:US))
+#   * `zip`: The user's 5 or 9 digit zip code
+#   * `review_on`: The ISO8601 date for the next review of this user
+#   * `started_on`: The ISO8601 date when this user's employment started
+#   * `enabled`: Whether this user is enabled, as a boolean value
+#   * `enabled_at`: The ISO8601 datetime for when this user was enabled, in UTC
+#
+# ## GET /v1/users.json
+#
+# Get all users, filtering by enabled
+#
+# ### Example requests
+#
+#     GET /v1/users.json
+#     GET /v1/users.json?enabled=false
+#
+# ### Example responses
+#
+# #### HTTP 200 OK
+#
+#    {
+#      "users" : [
+#        //Content from GET /v1/users/:uuid.json
+#      ]
+#    }
+#
+# #### HTTP 500 Server Error
+#
+# ## POST /v1/users.json
+#
+# Create a new user
+#
+# ### Example requests
+#
+#     POST /v1/users.json
+#     Content-Type: application/json
+#
+#     {
+#       "user": {
+#         "first_name": "Abraham",
+#         "last_name": "Lincoln",
+#         "enabled": true,
+#         "email": "abe@whitehouse.gov"
+#       }
+#     }
+#
+# ### Request fields
+#
+# The following fields are allowed:
+#
+#   * `email` **Required**
+#   * `first_name` **Required**
+#   * `last_name` **Required**
+#   * `middle_name`
+#   * `description`
+#   * `time_zone`
+#   * `manager_id`
+#   * `title`
+#   * `employee_id`
+#   * `personal_email`
+#   * `phone`
+#   * `home_phone`
+#   * `mobile_phone`
+#   * `emergency_contact_name`
+#   * `emergency_contact_relationship`
+#   * `emergency_contact_mobile_phone`
+#   * `emergency_contact_work_phone`
+#   * `emergency_contact_home_phone`
+#   * `address_1`
+#   * `address_2`
+#   * `city`
+#   * `state`
+#   * `zip`
+#   * `review_on`
+#   * `started_on`
+#   * `enabled`, defaults to `true`
+#
+# For field descriptions, please see `GET /v1/users/:uuid.json`.
+#
+# ### Example responses
+#
+# #### HTTP 200 OK
+#
+#  Same as GET /v1/users/:id.json response
+#
+# #### HTTP 422 Unprocessable Entity
+#
+#     {
+#       "errors": {
+#         "email": [
+#           "is invalid",
+#         ]
+#       }
+#     }
+#
+# #### HTTP 500 Server Error
+#
+# ## PATCH /v1/users.json
+#
+# Updates a user
+#
+# ### Example requests
+#
+#  Refer to POST /v1/users.json example. NB: you can omit keys as necessary
+#
+# ### Example responses
+#
+#  Same as GET /v1/users/:id.json response
+#
 # ## GET /v1/template_to_dos.json
 #
 # Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.
