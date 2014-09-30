@@ -80,11 +80,38 @@ end
 # #### Data Example
 #
 #     {
+#       "uuid": "85a95390-4814-11e4-916c-0800200c9a66",
+#       "email": "gwashington@example.com",
 #       "full_name": "George Washington",
 #       "first_name": "George",
 #       "last_name": "Washington",
-#       "email": "gwashington@example.com",
-#       "uuid": "85a95390-4814-11e4-916c-0800200c9a66"
+#       "middle_name": null,
+#       "created_at": "1732-02-22T12:34:56Z",
+#       "updated_at": "1799-12-14T12:34:56Z",
+#       "confirmed_at": "1750-02-22T12:34:56Z",
+#       "description": "First president of the United States",
+#       "time_zone": "US/Eastern",
+#       "manager_uuid": "9282fac0-2afb-0132-efb6-123139105d31",
+#       "title": "President of the United States",
+#       "employee_id": "1",
+#       "personal_email": "woodenteeth@example.com",
+#       "phone": "000-000-0001",
+#       "home_phone": null,
+#       "mobile_phone": null,
+#       "emergency_contact_name": "Martha Washington",
+#       "emergency_contact_relationship": "Wife",
+#       "emergency_contact_mobile_phone": null
+#       "emergency_contact_work_phone": null
+#       "emergency_contact_home_phone": "000-000-0002",
+#       "address_1": "123 Main St",
+#       "address_2": null
+#       "city": "Mount Vernon",
+#       "state": "VA",
+#       "zip": "22121",
+#       "review_on": "2076-07-04",
+#       "started_on": "1789-04-30",
+#       "enabled": false,
+#       "enabled_at": null
 #     }
 #
 # #### Data Fields
@@ -126,13 +153,14 @@ end
 #
 # (currently in development)
 #
-# Get all users, filtering by enabled
+# Get all users, optionally filtering by enabled or external employee ID.
 #
 # ### Example requests
 #
 #     GET /v1/users.json
 #     GET /v1/users.json?enabled=false
 #     GET /v1/users.json?enabled=true
+#     GET /v1/users.json?employee_id=1234
 #
 # ### Example responses
 #
