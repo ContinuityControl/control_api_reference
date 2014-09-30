@@ -139,8 +139,8 @@ helpers <span class="keyword">do</span>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h3 id="users-currently-in-development-">Users (currently in development)</h3>
-<h2 id="get-v1-users-uuid-json">GET /v1/users/:uuid.json</h2>
+              <h2 id="get-v1-users-uuid-json">GET /v1/users/:uuid.json</h2>
+<p>(currently in development)</p>
 <p>Get an individual user by its id</p>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
@@ -186,19 +186,22 @@ helpers <span class="keyword">do</span>
 <li><code>enabled_at</code>: The ISO8601 datetime for when this user was enabled, in UTC</li>
 </ul>
 <h2 id="get-v1-users-json">GET /v1/users.json</h2>
+<p>(currently in development)</p>
 <p>Get all users, filtering by enabled</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/users.json
-GET /v1/users.json?enabled=false</code></pre>
+GET /v1/users.json?enabled=false
+GET /v1/users.json?enabled=true</code></pre>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
-<p>   {
-     &quot;users&quot; : [
-       //Content from GET /v1/users/:uuid.json
-     ]
-   }</p>
+<pre><code>{
+  &quot;users&quot; : [
+    //Content from GET /v1/users/:uuid.json
+  ]
+}</code></pre>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h2 id="post-v1-users-json">POST /v1/users.json</h2>
+<p>(currently in development)</p>
 <p>Create a new user</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>POST /v1/users.json
@@ -245,7 +248,7 @@ Content-Type: application/json
 <p>For field descriptions, please see <code>GET /v1/users/:uuid.json</code>.</p>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
-<p> Same as GET /v1/users/:id.json response</p>
+<p>Refer to <code>GET /v1/users/:id.json</code> response.</p>
 <h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
 <pre><code>{
   &quot;errors&quot;: {
@@ -256,16 +259,45 @@ Content-Type: application/json
 }</code></pre>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h2 id="patch-v1-users-json">PATCH /v1/users.json</h2>
+<p>(currently in development)</p>
 <p>Updates a user</p>
 <h3 id="example-requests">Example requests</h3>
-<p> Refer to POST /v1/users.json example. NB: you can omit keys as necessary</p>
+<p>Refer to <code>POST /v1/users.json</code> request.  NOTE: you can omit keys as necessary</p>
 <h3 id="example-responses">Example responses</h3>
-<p> Same as GET /v1/users/:id.json response</p>
-<h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
+<p>Refer to <code>GET /v1/users/:id.json</code> response</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/users'</span> <span class="keyword">do</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>TODO</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
 <p>Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/template_to_dos.json
-GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
+<pre><code>GET /v1/template_to_dos.json #     GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>tags</code>: Only return TemplateToDos that are tagged with all of the specified tags.</li>
@@ -302,11 +334,11 @@ GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h2 id="post-v1-distributed_to_dos-json">POST /v1/distributed_to_dos.json</h2>
 <p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.  (The work happens in a job queue.)</p>
@@ -389,11 +421,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-8">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-uuid-json">GET /v1/distributed_to_dos/:uuid.json</h2>
 <p>Get the current state of a distributed_to_do as found by an <code>uuid</code>.</p>
@@ -462,11 +494,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-9">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <h2 id="get-v1-distributed_to_dos-json">GET /v1/distributed_to_dos.json</h2>
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
@@ -521,11 +553,11 @@ late=true&amp;complete=true    # completed and late</code></pre>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <h2 id="webhooks">Webhooks</h2>
 <p>Webhooks provide information about events in near real-time.  You provide a URL, and we&#39;ll <code>POST</code> to it as events take place.  When a <code>HTTP 5XX</code> response occurs, the Webhook is retried with an incremental backoff.</p>
