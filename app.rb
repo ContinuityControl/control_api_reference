@@ -90,7 +90,6 @@ end
 #       "updated_at": "1799-12-14T12:34:56Z",
 #       "confirmed_at": "1750-02-22T12:34:56Z",
 #       "description": "First president of the United States",
-#       "time_zone": "US/Eastern",
 #       "manager_uuid": "9282fac0-2afb-0132-efb6-123139105d31",
 #       "title": "President of the United States",
 #       "employee_id": "1",
@@ -126,7 +125,6 @@ end
 #   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
 #   * `confirmed_at`: ISO8601 datetime of the time at which this user was confirmed, in UTC
 #   * `description`: The description of this user, may be `null`
-#   * `time_zone`: The time zone of this user according to the [list of names from the Olson database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 #   * `manager_uuid`: The uuid of the user's manager
 #   * `title`: The job title of the user
 #   * `employee_id`: The external employee id of the user
@@ -207,7 +205,6 @@ end
 #   * `last_name`: **Required**
 #   * `middle_name`
 #   * `description`
-#   * `time_zone`
 #   * `manager_id`
 #   * `title`
 #   * `employee_id`
