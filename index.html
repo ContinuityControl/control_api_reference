@@ -144,11 +144,38 @@ helpers <span class="keyword">do</span>
 <p>Get an individual user by its id</p>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
+  &quot;uuid&quot;: &quot;85a95390-4814-11e4-916c-0800200c9a66&quot;,
+  &quot;email&quot;: &quot;gwashington@example.com&quot;,
   &quot;full_name&quot;: &quot;George Washington&quot;,
   &quot;first_name&quot;: &quot;George&quot;,
   &quot;last_name&quot;: &quot;Washington&quot;,
-  &quot;email&quot;: &quot;gwashington@example.com&quot;,
-  &quot;uuid&quot;: &quot;85a95390-4814-11e4-916c-0800200c9a66&quot;
+  &quot;middle_name&quot;: null,
+  &quot;created_at&quot;: &quot;1732-02-22T12:34:56Z&quot;,
+  &quot;updated_at&quot;: &quot;1799-12-14T12:34:56Z&quot;,
+  &quot;confirmed_at&quot;: &quot;1750-02-22T12:34:56Z&quot;,
+  &quot;description&quot;: &quot;First president of the United States&quot;,
+  &quot;time_zone&quot;: &quot;US/Eastern&quot;,
+  &quot;manager_uuid&quot;: &quot;9282fac0-2afb-0132-efb6-123139105d31&quot;,
+  &quot;title&quot;: &quot;President of the United States&quot;,
+  &quot;employee_id&quot;: &quot;1&quot;,
+  &quot;personal_email&quot;: &quot;woodenteeth@example.com&quot;,
+  &quot;phone&quot;: &quot;000-000-0001&quot;,
+  &quot;home_phone&quot;: null,
+  &quot;mobile_phone&quot;: null,
+  &quot;emergency_contact_name&quot;: &quot;Martha Washington&quot;,
+  &quot;emergency_contact_relationship&quot;: &quot;Wife&quot;,
+  &quot;emergency_contact_mobile_phone&quot;: null
+  &quot;emergency_contact_work_phone&quot;: null
+  &quot;emergency_contact_home_phone&quot;: &quot;000-000-0002&quot;,
+  &quot;address_1&quot;: &quot;123 Main St&quot;,
+  &quot;address_2&quot;: null
+  &quot;city&quot;: &quot;Mount Vernon&quot;,
+  &quot;state&quot;: &quot;VA&quot;,
+  &quot;zip&quot;: &quot;22121&quot;,
+  &quot;review_on&quot;: &quot;2076-07-04&quot;,
+  &quot;started_on&quot;: &quot;1789-04-30&quot;,
+  &quot;enabled&quot;: false,
+  &quot;enabled_at&quot;: null
 }</code></pre>
 <h4 id="data-fields">Data Fields</h4>
 <ul>
@@ -187,11 +214,12 @@ helpers <span class="keyword">do</span>
 </ul>
 <h2 id="get-v1-users-json">GET /v1/users.json</h2>
 <p>(currently in development)</p>
-<p>Get all users, filtering by enabled</p>
+<p>Get all users, optionally filtering by enabled or external employee ID.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/users.json
 GET /v1/users.json?enabled=false
-GET /v1/users.json?enabled=true</code></pre>
+GET /v1/users.json?enabled=true
+GET /v1/users.json?employee_id=1234</code></pre>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
