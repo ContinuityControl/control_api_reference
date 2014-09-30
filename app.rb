@@ -71,9 +71,9 @@ get '/status' do
   end
 end
 
-# ### Users (currently in development)
-#
 # ## GET /v1/users/:uuid.json
+#
+# (currently in development)
 #
 # Get an individual user by its id
 #
@@ -124,26 +124,31 @@ end
 #
 # ## GET /v1/users.json
 #
+# (currently in development)
+#
 # Get all users, filtering by enabled
 #
 # ### Example requests
 #
 #     GET /v1/users.json
 #     GET /v1/users.json?enabled=false
+#     GET /v1/users.json?enabled=true
 #
 # ### Example responses
 #
 # #### HTTP 200 OK
 #
-#    {
-#      "users" : [
-#        //Content from GET /v1/users/:uuid.json
-#      ]
-#    }
+#     {
+#       "users" : [
+#         //Content from GET /v1/users/:uuid.json
+#       ]
+#     }
 #
 # #### HTTP 500 Server Error
 #
 # ## POST /v1/users.json
+#
+# (currently in development)
 #
 # Create a new user
 #
@@ -198,7 +203,7 @@ end
 #
 # #### HTTP 200 OK
 #
-#  Same as GET /v1/users/:id.json response
+# Refer to `GET /v1/users/:id.json` response.
 #
 # #### HTTP 422 Unprocessable Entity
 #
@@ -214,24 +219,28 @@ end
 #
 # ## PATCH /v1/users.json
 #
+# (currently in development)
+#
 # Updates a user
 #
 # ### Example requests
 #
-#  Refer to POST /v1/users.json example. NB: you can omit keys as necessary
+# Refer to `POST /v1/users.json` request.  NOTE: you can omit keys as necessary
 #
 # ### Example responses
 #
-#  Same as GET /v1/users/:id.json response
-#
+# Refer to `GET /v1/users/:id.json` response
+get '/users' do
+  # TODO
+end
+
 # ## GET /v1/template_to_dos.json
 #
 # Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.
 #
 # ### Example requests
 #
-#     GET /v1/template_to_dos.json
-#     GET /v1/template_to_dos.json?tags[]=annual&tags[]=security
+#     GET /v1/template_to_dos.json #     GET /v1/template_to_dos.json?tags[]=annual&tags[]=security
 #
 # ### Request fields
 #
