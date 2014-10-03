@@ -139,12 +139,12 @@ helpers <span class="keyword">do</span>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h2 id="get-v1-users-uuid-json">GET /v1/users/:uuid.json</h2>
+              <h2 id="get-v1-users-email-json">GET /v1/users/:email.json</h2>
 <p>(currently in development)</p>
-<p>Get an individual user by its id</p>
+<p>Get an individual user by their email</p>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
-  &quot;uuid&quot;: &quot;85a95390-4814-11e4-916c-0800200c9a66&quot;,
+  &quot;path&quot;: &quot;/v1/users/gwashington@example.com.json&quot;,
   &quot;email&quot;: &quot;gwashington@example.com&quot;,
   &quot;full_name&quot;: &quot;George Washington&quot;,
   &quot;first_name&quot;: &quot;George&quot;,
@@ -152,33 +152,17 @@ helpers <span class="keyword">do</span>
   &quot;middle_name&quot;: null,
   &quot;created_at&quot;: &quot;1732-02-22T12:34:56Z&quot;,
   &quot;updated_at&quot;: &quot;1799-12-14T12:34:56Z&quot;,
-  &quot;confirmed_at&quot;: &quot;1750-02-22T12:34:56Z&quot;,
   &quot;description&quot;: &quot;First president of the United States&quot;,
-  &quot;manager_uuid&quot;: &quot;9282fac0-2afb-0132-efb6-123139105d31&quot;,
+  &quot;manager_path&quot;: &quot;/v1/users/mwashington@example.com.json&quot;,
   &quot;title&quot;: &quot;President of the United States&quot;,
+  &quot;administrator&quot;: true,
   &quot;employee_id&quot;: &quot;1&quot;,
-  &quot;personal_email&quot;: &quot;woodenteeth@example.com&quot;,
-  &quot;phone&quot;: &quot;000-000-0001&quot;,
-  &quot;home_phone&quot;: null,
-  &quot;mobile_phone&quot;: null,
-  &quot;emergency_contact_name&quot;: &quot;Martha Washington&quot;,
-  &quot;emergency_contact_relationship&quot;: &quot;Wife&quot;,
-  &quot;emergency_contact_mobile_phone&quot;: null
-  &quot;emergency_contact_work_phone&quot;: null
-  &quot;emergency_contact_home_phone&quot;: &quot;000-000-0002&quot;,
-  &quot;address_1&quot;: &quot;123 Main St&quot;,
-  &quot;address_2&quot;: null
-  &quot;city&quot;: &quot;Mount Vernon&quot;,
-  &quot;state&quot;: &quot;VA&quot;,
-  &quot;zip&quot;: &quot;22121&quot;,
   &quot;review_on&quot;: &quot;2076-07-04&quot;,
   &quot;started_on&quot;: &quot;1789-04-30&quot;,
-  &quot;enabled&quot;: false,
-  &quot;enabled_at&quot;: null
+  &quot;enabled&quot;: true
 }</code></pre>
 <h4 id="data-fields">Data Fields</h4>
 <ul>
-<li><code>uuid</code>: Universally Unique Identifier for this user</li>
 <li><code>email</code>: Primary email</li>
 <li><code>full_name</code>: Formatted name, may be <code>null</code></li>
 <li><code>first_name</code>: Personal name, may be <code>null</code></li>
@@ -186,49 +170,34 @@ helpers <span class="keyword">do</span>
 <li><code>middle_name</code>: Middle name, may be <code>null</code></li>
 <li><code>created_at</code>: ISO8601 datetime of the creation of this user, in UTC</li>
 <li><code>updated_at</code>: ISO8601 datetime of the time at which this user was updated, in UTC</li>
-<li><code>confirmed_at</code>: ISO8601 datetime of the time at which this user was confirmed, in UTC</li>
 <li><code>description</code>: The description of this user, may be <code>null</code></li>
-<li><code>manager_uuid</code>: The uuid of the user&#39;s manager</li>
+<li><code>manager_path</code>: The path of the user&#39;s manager</li>
+<li><code>administrator</code>: Whether or not the user has administrator access for their organization.</li>
 <li><code>title</code>: The job title of the user</li>
-<li><code>employee_id</code>: The external employee id of the user</li>
-<li><code>personal_email</code>: The personal email of the user</li>
-<li><code>phone</code>: The user&#39;s primary phone</li>
-<li><code>home_phone</code>: The user&#39;s home phone</li>
-<li><code>mobile_phone</code>: The user&#39;s mobile phone</li>
-<li><code>emergency_contact_name</code>: The user&#39;s emergency contact name</li>
-<li><code>emergency_contact_relationship</code>: The user&#39;s emergency contact relationship</li>
-<li><code>emergency_contact_mobile_phone</code>: The user&#39;s emergency contact&#39;s mobile phone</li>
-<li><code>emergency_contact_work_phone</code>: The user&#39;s emergency contact&#39;s work phone</li>
-<li><code>emergency_contact_home_phone</code>: The user&#39;s emergency contact&#39;s home phone</li>
-<li><code>address_1</code>: The user&#39;s address line 1</li>
-<li><code>address_2</code>: The user&#39;s address line 2</li>
-<li><code>city</code>: The user&#39;s city name</li>
-<li><code>state</code>: The user&#39;s standard state postal code (see <a href="http://en.wikipedia.org/wiki/ISO_3166-2:US">ISO-3166-2 for a list</a>)</li>
-<li><code>zip</code>: The user&#39;s 5 or 9 digit zip code</li>
+<li><code>employee_id</code>: (string) The external employee ID of the user. This value is arbitrary and is assigned by their organization.  However, it must be unique to their organization.</li>
 <li><code>review_on</code>: The ISO8601 date for the next review of this user</li>
 <li><code>started_on</code>: The ISO8601 date when this user&#39;s employment started</li>
-<li><code>enabled</code>: Whether this user is enabled, as a boolean value</li>
-<li><code>enabled_at</code>: The ISO8601 datetime for when this user was enabled, in UTC</li>
+<li><code>enabled</code>: Whether or not the user is enabled.  The <code>DELETE</code> call does a &quot;soft delete&quot; which changes this value to false.</li>
 </ul>
 <h2 id="get-v1-users-json">GET /v1/users.json</h2>
 <p>(currently in development)</p>
-<p>Get all users, optionally filtering by enabled or external employee ID.</p>
+<p>Get all users, optionally filtering by emails, external employee IDs, or manager emails.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>GET /v1/users.json
-GET /v1/users.json?enabled=false
-GET /v1/users.json?enabled=true
-GET /v1/users.json?employee_id=1234</code></pre>
+GET /v1/users.json?email[]=gwashington@example.com
+GET /v1/users.json?employee_id[]=1234
+GET /v1/users.json?manager_email[]=mwashington@example.com</code></pre>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
-  &quot;users&quot; : [
-    // Content from GET /v1/users/:uuid.json
+  &quot;users&quot;: [
+    // Content from GET /v1/users/:email.json
   ]
 }</code></pre>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h2 id="post-v1-users-json">POST /v1/users.json</h2>
 <p>(currently in development)</p>
-<p>Create a new user</p>
+<p>Create a new user and send an invitation for setting password, etc.</p>
 <h3 id="example-requests">Example requests</h3>
 <pre><code>POST /v1/users.json
 Content-Type: application/json
@@ -236,7 +205,6 @@ Content-Type: application/json
 {
   &quot;user&quot;: {
     &quot;email&quot;: &quot;abe@whitehouse.gov&quot;,
-    &quot;password&quot;: &quot;yeeK0ixaey7zaxoh6pee!&quot;,
     &quot;first_name&quot;: &quot;Abraham&quot;,
     &quot;last_name&quot;: &quot;Lincoln&quot;
   }
@@ -245,38 +213,17 @@ Content-Type: application/json
 <p>The following fields are allowed:</p>
 <ul>
 <li><code>email</code>: <strong>Required</strong></li>
-<li><code>password</code>: <strong>Required.</strong>  Plain-text password.<ul>
-<li>Note: requests are only allowed over HTTPS.</li>
-<li>This value is not returned by a <code>GET</code> request.</li>
-<li>Password must contain at least 3 of the 4 character groups: Uppercase, Lowercase, Number, Non-Alphanumeric (punctuation, whitespace, etc.)&#39;</li>
-</ul>
-</li>
 <li><code>first_name</code>: <strong>Required</strong></li>
 <li><code>last_name</code>: <strong>Required</strong></li>
 <li><code>middle_name</code></li>
 <li><code>description</code></li>
-<li><code>manager_id</code></li>
+<li><code>manager_path</code></li>
 <li><code>title</code></li>
 <li><code>employee_id</code></li>
-<li><code>personal_email</code></li>
-<li><code>phone</code></li>
-<li><code>home_phone</code></li>
-<li><code>mobile_phone</code></li>
-<li><code>emergency_contact_name</code></li>
-<li><code>emergency_contact_relationship</code></li>
-<li><code>emergency_contact_mobile_phone</code></li>
-<li><code>emergency_contact_work_phone</code></li>
-<li><code>emergency_contact_home_phone</code></li>
-<li><code>address_1</code></li>
-<li><code>address_2</code></li>
-<li><code>city</code></li>
-<li><code>state</code></li>
-<li><code>zip</code></li>
 <li><code>review_on</code></li>
 <li><code>started_on</code></li>
-<li><code>enabled</code>, defaults to <code>true</code></li>
 </ul>
-<p>For field descriptions, please see <code>GET /v1/users/:uuid.json</code>.</p>
+<p>For field descriptions, please see <code>GET /v1/users/:email.json</code>.</p>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <p>Refer to <code>GET /v1/users/:id.json</code> response.</p>
@@ -291,11 +238,20 @@ Content-Type: application/json
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h2 id="patch-v1-users-json">PATCH /v1/users.json</h2>
 <p>(currently in development)</p>
-<p>Updates a user</p>
+<p>Updates a user.  Note that changing a user&#39;s email address will affect their identification in other API calls, as well as the email they use to log in.</p>
 <h3 id="example-requests">Example requests</h3>
 <p>Refer to <code>POST /v1/users.json</code> request.  NOTE: you can omit keys as necessary</p>
 <h3 id="example-responses">Example responses</h3>
-<p>Refer to <code>GET /v1/users/:id.json</code> response</p>
+<p>Refer to <code>GET /v1/users/:email.json</code> response</p>
+<h2 id="delete-v1-users-email-json">DELETE /v1/users/:email.json</h2>
+<p>(currently in development)</p>
+<p>&quot;Soft delete&quot; the user by disabling them.  Associated records, such as completed ToDos are not deleted.</p>
+<h3 id="example-responses">Example responses</h3>
+<p>Refer to <code>GET /v1/users/:email.json</code> response</p>
+<pre><code>{
+  // ...
+  &quot;enabled&quot;: false
+}</code></pre>
 
             </div>
             
