@@ -71,16 +71,16 @@ get '/status' do
   end
 end
 
-# ## GET /v1/users/:uuid.json
+# ## GET /v1/users/:email.json
 #
 # (currently in development)
 #
-# Get an individual user by its id
+# Get an individual user by their email
 #
 # #### Data Example
 #
 #     {
-#       "uuid": "85a95390-4814-11e4-916c-0800200c9a66",
+#       "path": "/v1/users/gwashington@example.com.json",
 #       "email": "gwashington@example.com",
 #       "full_name": "George Washington",
 #       "first_name": "George",
@@ -88,34 +88,18 @@ end
 #       "middle_name": null,
 #       "created_at": "1732-02-22T12:34:56Z",
 #       "updated_at": "1799-12-14T12:34:56Z",
-#       "confirmed_at": "1750-02-22T12:34:56Z",
 #       "description": "First president of the United States",
-#       "manager_uuid": "9282fac0-2afb-0132-efb6-123139105d31",
+#       "manager_path": "/v1/users/mwashington@example.com.json",
 #       "title": "President of the United States",
+#       "administrator": true,
 #       "employee_id": "1",
-#       "personal_email": "woodenteeth@example.com",
-#       "phone": "000-000-0001",
-#       "home_phone": null,
-#       "mobile_phone": null,
-#       "emergency_contact_name": "Martha Washington",
-#       "emergency_contact_relationship": "Wife",
-#       "emergency_contact_mobile_phone": null
-#       "emergency_contact_work_phone": null
-#       "emergency_contact_home_phone": "000-000-0002",
-#       "address_1": "123 Main St",
-#       "address_2": null
-#       "city": "Mount Vernon",
-#       "state": "VA",
-#       "zip": "22121",
 #       "review_on": "2076-07-04",
 #       "started_on": "1789-04-30",
-#       "enabled": false,
-#       "enabled_at": null
+#       "enabled": true
 #     }
 #
 # #### Data Fields
 #
-#   * `uuid`: Universally Unique Identifier for this user
 #   * `email`: Primary email
 #   * `full_name`: Formatted name, may be `null`
 #   * `first_name`: Personal name, may be `null`
@@ -123,50 +107,35 @@ end
 #   * `middle_name`: Middle name, may be `null`
 #   * `created_at`: ISO8601 datetime of the creation of this user, in UTC
 #   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
-#   * `confirmed_at`: ISO8601 datetime of the time at which this user was confirmed, in UTC
 #   * `description`: The description of this user, may be `null`
-#   * `manager_uuid`: The uuid of the user's manager
+#   * `manager_path`: The path of the user's manager
+#   * `administrator`: Whether or not the user has administrator access for their organization.
 #   * `title`: The job title of the user
-#   * `employee_id`: The external employee id of the user
-#   * `personal_email`: The personal email of the user
-#   * `phone`: The user's primary phone
-#   * `home_phone`: The user's home phone
-#   * `mobile_phone`: The user's mobile phone
-#   * `emergency_contact_name`: The user's emergency contact name
-#   * `emergency_contact_relationship`: The user's emergency contact relationship
-#   * `emergency_contact_mobile_phone`: The user's emergency contact's mobile phone
-#   * `emergency_contact_work_phone`: The user's emergency contact's work phone
-#   * `emergency_contact_home_phone`: The user's emergency contact's home phone
-#   * `address_1`: The user's address line 1
-#   * `address_2`: The user's address line 2
-#   * `city`: The user's city name
-#   * `state`: The user's standard state postal code (see [ISO-3166-2 for a list](http://en.wikipedia.org/wiki/ISO_3166-2:US))
-#   * `zip`: The user's 5 or 9 digit zip code
+#   * `employee_id`: (string) The external employee ID of the user. This value is arbitrary and is assigned by their organization.  However, it must be unique to their organization.
 #   * `review_on`: The ISO8601 date for the next review of this user
 #   * `started_on`: The ISO8601 date when this user's employment started
-#   * `enabled`: Whether this user is enabled, as a boolean value
-#   * `enabled_at`: The ISO8601 datetime for when this user was enabled, in UTC
+#   * `enabled`: Whether or not the user is enabled.  The `DELETE` call does a "soft delete" which changes this value to false.
 #
 # ## GET /v1/users.json
 #
 # (currently in development)
 #
-# Get all users, optionally filtering by enabled or external employee ID.
+# Get all users, optionally filtering by emails, external employee IDs, or manager emails.
 #
 # ### Example requests
 #
 #     GET /v1/users.json
-#     GET /v1/users.json?enabled=false
-#     GET /v1/users.json?enabled=true
-#     GET /v1/users.json?employee_id=1234
+#     GET /v1/users.json?email[]=gwashington@example.com
+#     GET /v1/users.json?employee_id[]=1234
+#     GET /v1/users.json?manager_email[]=mwashington@example.com
 #
 # ### Example responses
 #
 # #### HTTP 200 OK
 #
 #     {
-#       "users" : [
-#         // Content from GET /v1/users/:uuid.json
+#       "users": [
+#         // Content from GET /v1/users/:email.json
 #       ]
 #     }
 #
@@ -176,7 +145,7 @@ end
 #
 # (currently in development)
 #
-# Create a new user
+# Create a new user and send an invitation for setting password, etc.
 #
 # ### Example requests
 #
@@ -186,7 +155,6 @@ end
 #     {
 #       "user": {
 #         "email": "abe@whitehouse.gov",
-#         "password": "yeeK0ixaey7zaxoh6pee!",
 #         "first_name": "Abraham",
 #         "last_name": "Lincoln"
 #       }
@@ -197,36 +165,17 @@ end
 # The following fields are allowed:
 #
 #   * `email`: **Required**
-#   * `password`: **Required.**  Plain-text password.
-#     * Note: requests are only allowed over HTTPS.
-#     * This value is not returned by a `GET` request.
-#     * Password must contain at least 3 of the 4 character groups: Uppercase, Lowercase, Number, Non-Alphanumeric (punctuation, whitespace, etc.)'
 #   * `first_name`: **Required**
 #   * `last_name`: **Required**
 #   * `middle_name`
 #   * `description`
-#   * `manager_id`
+#   * `manager_path`
 #   * `title`
 #   * `employee_id`
-#   * `personal_email`
-#   * `phone`
-#   * `home_phone`
-#   * `mobile_phone`
-#   * `emergency_contact_name`
-#   * `emergency_contact_relationship`
-#   * `emergency_contact_mobile_phone`
-#   * `emergency_contact_work_phone`
-#   * `emergency_contact_home_phone`
-#   * `address_1`
-#   * `address_2`
-#   * `city`
-#   * `state`
-#   * `zip`
 #   * `review_on`
 #   * `started_on`
-#   * `enabled`, defaults to `true`
 #
-# For field descriptions, please see `GET /v1/users/:uuid.json`.
+# For field descriptions, please see `GET /v1/users/:email.json`.
 #
 # ### Example responses
 #
@@ -250,7 +199,7 @@ end
 #
 # (currently in development)
 #
-# Updates a user
+# Updates a user.  Note that changing a user's email address will affect their identification in other API calls, as well as the email they use to log in.
 #
 # ### Example requests
 #
@@ -258,7 +207,23 @@ end
 #
 # ### Example responses
 #
-# Refer to `GET /v1/users/:id.json` response
+# Refer to `GET /v1/users/:email.json` response
+#
+# ## DELETE /v1/users/:email.json
+#
+# (currently in development)
+#
+# "Soft delete" the user by disabling them.  Associated records, such as completed ToDos are not deleted.
+#
+# ### Example responses
+#
+# Refer to `GET /v1/users/:email.json` response
+#
+#     {
+#       // ...
+#       "enabled": false
+#     }
+#
 get '/users' do
   # TODO
 end
