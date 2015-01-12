@@ -82,40 +82,46 @@ end
 #     {
 #       "path": "/v1/users/gwashington@example.com",
 #       "email": "gwashington@example.com",
-#       "full_name": "George Washington",
 #       "first_name": "George",
 #       "last_name": "Washington",
-#       "middle_name": null,
 #       "created_at": "1732-02-22T12:34:56Z",
 #       "updated_at": "1799-12-14T12:34:56Z",
-#       "description": "First president of the United States",
+#       "review_on": "2076-07-04",
+#       "started_on": "1789-04-30",
 #       "manager_path": "/v1/users/mwashington@example.com",
 #       "title": "President of the United States",
 #       "administrator": true,
 #       "employee_id": "1",
-#       "review_on": "2076-07-04",
-#       "started_on": "1789-04-30",
-#       "enabled": true
 #     }
 #
 # #### Data Fields
 #
+#   * `path`: API path for this user
 #   * `email`: Primary email
-#   * `full_name`: Formatted name, may be `null`
 #   * `first_name`: Personal name, may be `null`
 #   * `last_name`: Surname, may be `null`
-#   * `middle_name`: Middle name, may be `null`
 #   * `created_at`: ISO8601 datetime of the creation of this user, in UTC
 #   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
-#   * `description`: The description of this user, may be `null`
-#   * `manager_path`: The path of the user's manager
-#   * `administrator`: Whether or not the user has administrator access for their organization.
-#   * `title`: The job title of the user
-#   * `employee_id`: (string) The external employee ID of the user. This value is arbitrary and is assigned by their organization.  However, it must be unique to their organization.
 #   * `review_on`: The ISO8601 date for the next review of this user
 #   * `started_on`: The ISO8601 date when this user's employment started
-#   * `enabled`: Whether or not the user is enabled.  The `DELETE` call does a "soft delete" which changes this value to false.
-#
+#   * `manager_path`: The API path for the user's manager
+#   * `title`: The job title of the user
+#   * `administrator`: Whether or not the user has administrator access for their organization
+#   * `employee_id`: (string) This is the external employee ID of the user. The value is arbitrary and is assigned by their organization. However, it must be unique to their organization.
+
+get '/users/:email' do
+  user = ControlAPI.get("/v1/users/#{params[:email]}")
+
+  case user.response.code
+  when '200'
+    erb :user, locals: { user: user }
+  when '404'
+    [404, 'Not found']
+  else
+    [500, 'There was an error while processing your request']
+  end
+end
+
 # ## GET /v1/users
 #
 # (currently in development)
