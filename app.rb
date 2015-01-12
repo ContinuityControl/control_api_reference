@@ -10,6 +10,7 @@ require 'sinatra/reloader' if development?
 require 'httparty'
 require 'json'
 require 'dotenv'
+require 'byebug'
 Dotenv.load
 
 # This class uses a library called HTTParty to connect to the Control API.  All API responses are JSON.  `HTTParty` automatically detects this and parses into a Ruby object.
