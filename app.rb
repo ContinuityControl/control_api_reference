@@ -71,7 +71,7 @@ get '/status' do
   end
 end
 
-# ## GET /v1/users/:email.json
+# ## GET /v1/users/:email
 #
 # (currently in development)
 #
@@ -80,7 +80,7 @@ end
 # #### Data Example
 #
 #     {
-#       "path": "/v1/users/gwashington@example.com.json",
+#       "path": "/v1/users/gwashington@example.com",
 #       "email": "gwashington@example.com",
 #       "full_name": "George Washington",
 #       "first_name": "George",
@@ -89,7 +89,7 @@ end
 #       "created_at": "1732-02-22T12:34:56Z",
 #       "updated_at": "1799-12-14T12:34:56Z",
 #       "description": "First president of the United States",
-#       "manager_path": "/v1/users/mwashington@example.com.json",
+#       "manager_path": "/v1/users/mwashington@example.com",
 #       "title": "President of the United States",
 #       "administrator": true,
 #       "employee_id": "1",
@@ -116,7 +116,7 @@ end
 #   * `started_on`: The ISO8601 date when this user's employment started
 #   * `enabled`: Whether or not the user is enabled.  The `DELETE` call does a "soft delete" which changes this value to false.
 #
-# ## GET /v1/users.json
+# ## GET /v1/users
 #
 # (currently in development)
 #
@@ -124,10 +124,10 @@ end
 #
 # ### Example requests
 #
-#     GET /v1/users.json
-#     GET /v1/users.json?email[]=gwashington@example.com
-#     GET /v1/users.json?employee_id[]=1234
-#     GET /v1/users.json?manager_email[]=mwashington@example.com
+#     GET /v1/users
+#     GET /v1/users?email[]=gwashington@example.com
+#     GET /v1/users?employee_id[]=1234
+#     GET /v1/users?manager_email[]=mwashington@example.com
 #
 # ### Example responses
 #
@@ -135,13 +135,13 @@ end
 #
 #     {
 #       "users": [
-#         // Content from GET /v1/users/:email.json
+#         // Content from GET /v1/users/:email
 #       ]
 #     }
 #
 # #### HTTP 500 Server Error
 #
-# ## POST /v1/users.json
+# ## POST /v1/users
 #
 # (currently in development)
 #
@@ -149,7 +149,7 @@ end
 #
 # ### Example requests
 #
-#     POST /v1/users.json
+#     POST /v1/users
 #     Content-Type: application/json
 #
 #     {
@@ -175,13 +175,13 @@ end
 #   * `review_on`
 #   * `started_on`
 #
-# For field descriptions, please see `GET /v1/users/:email.json`.
+# For field descriptions, please see `GET /v1/users/:email`.
 #
 # ### Example responses
 #
 # #### HTTP 200 OK
 #
-# Refer to `GET /v1/users/:id.json` response.
+# Refer to `GET /v1/users/:id` response.
 #
 # #### HTTP 422 Unprocessable Entity
 #
@@ -195,7 +195,7 @@ end
 #
 # #### HTTP 500 Server Error
 #
-# ## PATCH /v1/users.json
+# ## PATCH /v1/users
 #
 # (currently in development)
 #
@@ -203,13 +203,13 @@ end
 #
 # ### Example requests
 #
-# Refer to `POST /v1/users.json` request.  NOTE: you can omit keys as necessary
+# Refer to `POST /v1/users` request.  NOTE: you can omit keys as necessary
 #
 # ### Example responses
 #
-# Refer to `GET /v1/users/:email.json` response
+# Refer to `GET /v1/users/:email` response
 #
-# ## DELETE /v1/users/:email.json
+# ## DELETE /v1/users/:email
 #
 # (currently in development)
 #
@@ -217,7 +217,7 @@ end
 #
 # ### Example responses
 #
-# Refer to `GET /v1/users/:email.json` response
+# Refer to `GET /v1/users/:email` response
 #
 #     {
 #       // ...
