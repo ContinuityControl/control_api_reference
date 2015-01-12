@@ -1,0 +1,28 @@
+<h2>Users</h2>
+
+
+<p>
+Filter:
+<a href="/users?email[]=gwashington@example.com&gbush@example.com">Email</a>
+<a href="/users?employee_id[]=1234">Employee ID</a>
+<a href="/users?manager_email[]=unclesam@example.com">Manager Email</a>
+</p>
+
+<table>
+  <thead>
+    <th>Email</th>
+    <th>Path</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+  </thead>
+  <tbody>
+    <% users.each do |user| %>
+      <tr>
+        <td><a href="/users/<%= user["email"] %>"><%= user["email"] %></a></td>
+        <td><%= user["path"] %></td>
+        <td><%= user["first_name"] %></td>
+        <td><%= user["last_name"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

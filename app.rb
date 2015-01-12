@@ -127,12 +127,12 @@ end
 #
 # (currently in development)
 #
-# Get all users, optionally filtering by emails, external employee IDs, or manager emails.
+# Get all users, optionally filtering by emails, external employee IDs, or manager emails
 #
 # ### Example requests
 #
 #     GET /v1/users
-#     GET /v1/users?email[]=gwashington@example.com
+#     GET /v1/users?email[]=gwashington@example.com&gbush@example.com
 #     GET /v1/users?employee_id[]=1234
 #     GET /v1/users?manager_email[]=mwashington@example.com
 #
@@ -142,12 +142,26 @@ end
 #
 #     {
 #       "users": [
-#         // Content from GET /v1/users/:email
+#         {
+#           // Content from GET /v1/users/:email
+#           'email': 'gwashington@example.com',
+#           ...
+#         },
+#         {
+#           'email': gbush@example.com',
+#           ...
+#         }
 #       ]
 #     }
 #
 # #### HTTP 500 Server Error
-#
+
+get '/users' do
+  users = ControlAPI.get('/v1/users', query: params)
+
+  erb :users, locals: users.to_h
+end
+
 # ## POST /v1/users
 #
 # (currently in development)
@@ -231,9 +245,6 @@ end
 #       "enabled": false
 #     }
 #
-get '/users' do
-  # TODO
-end
 
 # ## GET /v1/template_to_dos.json
 #
