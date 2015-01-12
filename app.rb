@@ -72,57 +72,6 @@ get '/status' do
   end
 end
 
-# ## GET /v1/users/:email
-#
-# (currently in development)
-#
-# Get an individual user by their email
-#
-# #### Data Example
-#
-#     {
-#       "path": "/v1/users/gwashington@example.com",
-#       "email": "gwashington@example.com",
-#       "first_name": "George",
-#       "last_name": "Washington",
-#       "created_at": "1732-02-22T12:34:56Z",
-#       "updated_at": "1799-12-14T12:34:56Z",
-#       "review_on": "2076-07-04",
-#       "started_on": "1789-04-30",
-#       "manager_path": "/v1/users/mwashington@example.com",
-#       "title": "President of the United States",
-#       "administrator": true,
-#       "employee_id": "1",
-#     }
-#
-# #### Data Fields
-#
-#   * `path`: API path for this user
-#   * `email`: Primary email
-#   * `first_name`: Personal name, may be `null`
-#   * `last_name`: Surname, may be `null`
-#   * `created_at`: ISO8601 datetime of the creation of this user, in UTC
-#   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
-#   * `review_on`: The ISO8601 date for the next review of this user
-#   * `started_on`: The ISO8601 date when this user's employment started
-#   * `manager_path`: The API path for the user's manager
-#   * `title`: The job title of the user
-#   * `administrator`: Whether or not the user has administrator access for their organization
-#   * `employee_id`: (string) This is the external employee ID of the user. The value is arbitrary and is assigned by their organization. However, it must be unique to their organization.
-
-get '/users/:email' do
-  user = ControlAPI.get("/v1/users/#{params[:email]}")
-
-  case user.response.code
-  when '200'
-    erb :user, locals: { user: user }
-  when '404'
-    [404, 'Not found']
-  else
-    [500, 'There was an error while processing your request']
-  end
-end
-
 # ## GET /v1/users
 #
 # (currently in development)
@@ -215,6 +164,59 @@ end
 #     }
 #
 # #### HTTP 500 Server Error
+
+# ## GET /v1/users/:email
+#
+# (currently in development)
+#
+# Get an individual user by their email
+#
+# #### Data Example
+#
+#     {
+#       "path": "/v1/users/gwashington@example.com",
+#       "email": "gwashington@example.com",
+#       "first_name": "George",
+#       "last_name": "Washington",
+#       "created_at": "1732-02-22T12:34:56Z",
+#       "updated_at": "1799-12-14T12:34:56Z",
+#       "review_on": "2076-07-04",
+#       "started_on": "1789-04-30",
+#       "manager_path": "/v1/users/mwashington@example.com",
+#       "title": "President of the United States",
+#       "administrator": true,
+#       "employee_id": "1",
+#     }
+#
+# #### Data Fields
+#
+#   * `path`: API path for this user
+#   * `email`: Primary email
+#   * `first_name`: Personal name, may be `null`
+#   * `last_name`: Surname, may be `null`
+#   * `created_at`: ISO8601 datetime of the creation of this user, in UTC
+#   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
+#   * `review_on`: The ISO8601 date for the next review of this user
+#   * `started_on`: The ISO8601 date when this user's employment started
+#   * `manager_path`: The API path for the user's manager
+#   * `title`: The job title of the user
+#   * `administrator`: Whether or not the user has administrator access for their organization
+#   * `employee_id`: (string) This is the external employee ID of the user. The value is arbitrary and is assigned by their organization. However, it must be unique to their organization.
+
+
+get '/users/:email' do
+  user = ControlAPI.get("/v1/users/#{params[:email]}")
+
+  case user.response.code
+  when '200'
+    erb :user, locals: { user: user }
+  when '404'
+    [404, 'Not found']
+  else
+    [500, 'There was an error while processing your request']
+  end
+end
+
 #
 # ## PATCH /v1/users
 #
