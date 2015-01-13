@@ -149,7 +149,7 @@ end
 #
 # #### HTTP 200 OK
 #
-# Refer to `GET /v1/users/:id` response.
+# Refer to `GET /v1/users/:email` response.
 #
 # #### HTTP 422 Unprocessable Entity
 #
