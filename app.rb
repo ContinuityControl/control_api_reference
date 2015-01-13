@@ -453,7 +453,7 @@ get '/distributed_to_dos/:uuid' do
 
   case distributed_to_do.response.code
   when '200'
-    erb :distributed_to_do, :locals => distributed_to_do
+    erb :distributed_to_do, :locals => distributed_to_do.to_h # NOTE: this gives us locals that are keys in the distributed_to_do response
   when '404'
     [404, 'Not found']
   else
