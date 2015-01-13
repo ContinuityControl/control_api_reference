@@ -137,9 +137,7 @@ end
 #   * `email`: **Required**
 #   * `first_name`: **Required**
 #   * `last_name`: **Required**
-#   * `middle_name`
-#   * `description`
-#   * `manager_path`
+#   * `manager_email`
 #   * `title`
 #   * `employee_id`
 #   * `review_on`
