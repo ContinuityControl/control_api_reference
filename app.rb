@@ -163,6 +163,25 @@ end
 #
 # #### HTTP 500 Server Error
 
+get '/users/new' do
+  erb :users_new
+end
+
+post '/users' do
+  user = ControlAPI.post('/v1/users',
+                         body: params.to_json,
+                         headers: { 'Content-Type' => 'application/json' })
+
+  case user.response.code
+  when '201'
+    [200, erb(:users_post, locals: { email: user['email'] })]
+  when '422'
+    [422, erb(:users_errors, locals: { errors: user['errors'] })]
+  else
+    [500, 'There was an error while processing your request']
+  end
+end
+
 # ## GET /v1/users/:email
 #
 # (currently in development)
