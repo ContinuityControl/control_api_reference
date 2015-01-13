@@ -209,8 +209,8 @@ end
 #
 #   * `path`: API path for this user
 #   * `email`: Primary email
-#   * `first_name`: Personal name, may be `null`
-#   * `last_name`: Surname, may be `null`
+#   * `first_name`: Personal name
+#   * `last_name`: Surname
 #   * `created_at`: ISO8601 datetime of the creation of this user, in UTC
 #   * `updated_at`: ISO8601 datetime of the time at which this user was updated, in UTC
 #   * `review_on`: The ISO8601 date for the next review of this user
