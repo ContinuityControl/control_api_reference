@@ -37,7 +37,7 @@ To get started:
 
     gem install bundler
     bundle
-    bundle exec rackup
+    bundle exec rackup --port 9292
 
 The default port is `9292`, so you can test your connection like so:
 
