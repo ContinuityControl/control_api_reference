@@ -226,7 +226,7 @@ get '/users/:email' do
 
   case user.response.code
   when '200'
-    erb :user, locals: { user: user }
+    erb :user, locals: user.to_h
   when '404'
     [404, 'Not found']
   else
