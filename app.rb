@@ -248,6 +248,29 @@ end
 # ### Example responses
 #
 # Refer to `GET /v1/users/:email` response
+
+get '/users/:email/edit' do
+  user = ControlAPI.get("/v1/users/#{params[:email]}")
+  erb :user_edit, locals: user.to_h
+end
+
+post '/users/:email' do
+  user = ControlAPI.patch("/v1/users/#{params[:email]}",
+                          body: params.to_json,
+                          headers: { 'Content-Type' => 'application/json' })
+
+  case user.response.code
+  when '200'
+    erb :user, locals: user.to_h
+  when '422'
+    [422, erb(:users_errors, locals: { errors: user['errors'] })]
+  when '404'
+    [404, 'Not found']
+  else
+    [500, 'There was an error while processing your request']
+  end
+end
+
 #
 # ## DELETE /v1/users/:email
 #

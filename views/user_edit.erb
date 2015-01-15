@@ -1,0 +1,37 @@
+<h2>Edit User</h2>
+
+<form method="post" action="/users/<%= email %>">
+  <label for="email">Email</label>
+  <input name="user[email]" id="email" type="text" value="<%= email %>" />
+  <br />
+
+  <label for="first_name">First Name</label>
+  <input name="user[first_name]" id="first_name" type="text" value="<%= first_name %>" />
+  <br />
+
+  <label for="last_name">Last Name</label>
+  <input name="user[last_name]" id="last_name" type="text" value="<%= last_name %>" />
+  <br />
+
+  <label for="manager_email">Manager Email</label>
+  <input name="user[manager_email]" id="manager_email" type="text" value="<%= manager_email %>" />
+  <br />
+
+  <label for="title">Title</label>
+  <input name="user[title]" id="title" type="text" value="<%= title %>" />
+  <br />
+
+  <label for="started_on">Started On (ISO8601 Date)</label>
+  <input name="user[started_on]" id="started_on" type="text" value="<%= started_on %>" />
+  <br />
+
+  <label for="review_on">Review On (ISO8601 Date)</label>
+  <input name="user[review_on]" id="review_on" type="text" value="<%= review_on %>" />
+  <br />
+
+  <label for="employee_id">Employee ID</label>
+  <input name="user[employee_id]" id="employee_id" type="text" value="<%= employee_id %>" />
+  <br />
+
+  <input type="submit" value="Submit" />
+</form>

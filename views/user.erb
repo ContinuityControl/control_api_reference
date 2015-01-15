@@ -1,5 +1,7 @@
 <h2><a href="/users">Users</a> &gt; User <%= email %></h2>
 
+<a href="/users/<%= email %>/edit">Edit this user</a>
+
 <table>
   <tbody>
     <tr>
@@ -33,6 +35,10 @@
     <tr>
       <th>Started On</th>
       <td><%= started_on %></td>
+    </tr>
+    <tr>
+      <th>Manager Email</th>
+      <td><%= manager_email %></td>
     </tr>
     <tr>
       <th>Manager Path</th>
