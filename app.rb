@@ -21,6 +21,9 @@ class ControlAPI
   base_uri ENV['CONTROL_API_BASE_URI']
 
   basic_auth ENV['CONTROL_API_KEY'], ENV['CONTROL_API_SECRET']
+
+# Set the 'Content-Type' header to 'application/json' to ensure that the API accepts and returns JSON. This is currently the only supported format, but this will ensure you still get JSON if the API supports XML in the future.
+  headers 'Content-Type' => 'application/json'
 end
 
 helpers do
@@ -168,9 +171,7 @@ get '/users/new' do
 end
 
 post '/users' do
-  user = ControlAPI.post('/v1/users',
-                         body: params.to_json,
-                         headers: { 'Content-Type' => 'application/json' })
+  user = ControlAPI.post('/v1/users', body: params.to_json)
 
   case user.response.code
   when '201'
@@ -255,9 +256,7 @@ get '/users/:email/edit' do
 end
 
 post '/users/:email' do
-  user = ControlAPI.patch("/v1/users/#{params[:email]}",
-                          body: params.to_json,
-                          headers: { 'Content-Type' => 'application/json' })
+  user = ControlAPI.patch("/v1/users/#{params[:email]}", body: params.to_json)
 
   case user.response.code
   when '200'
@@ -283,8 +282,7 @@ end
 # #### HTTP 204 No Content
 #
 post '/users/:email/delete' do
-  user = ControlAPI.delete("/v1/users/#{params[:email]}",
-                           headers: { 'Content-Type' => 'application/json' })
+  user = ControlAPI.delete("/v1/users/#{params[:email]}")
 
   case user.response.code
   when '204'
@@ -410,8 +408,7 @@ end
 
 post '/distributed_to_dos' do
   distributed_to_do = ControlAPI.post('/v1/distributed_to_dos.json',
-                                      :body => params.to_json,
-                                      :headers => { 'Content-Type' => 'application/json' })
+                                      :body => params.to_json)
 
   case distributed_to_do.response.code
   when '202'
