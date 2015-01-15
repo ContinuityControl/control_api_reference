@@ -40,13 +40,13 @@ get '/' do
   erb :root
 end
 
-# ## GET /v1/status.json
+# ## GET /v1/status
 #
 # Check the API status.  Useful for testing authentication without knowing other information.
 #
 # ### Example request
 #
-#     GET /v1/status.json
+#     GET /v1/status
 #
 # ### Example response
 #
@@ -66,7 +66,7 @@ end
 #   * `error`: A text description of any error in the API call.
 #
 get '/status' do
-  status = ControlAPI.get('/v1/status.json').parsed_response
+  status = ControlAPI.get('/v1/status').parsed_response
 
   if status['error']
     "API error: #{status['error']}"
@@ -296,13 +296,13 @@ post '/users/:email/delete' do
   end
 end
 
-# ## GET /v1/template_to_dos.json
+# ## GET /v1/template_to_dos
 #
 # Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.
 #
 # ### Example requests
 #
-#     GET /v1/template_to_dos.json #     GET /v1/template_to_dos.json?tags[]=annual&tags[]=security
+#     GET /v1/template_to_dos #     GET /v1/template_to_dos?tags[]=annual&tags[]=security
 #
 # ### Request fields
 #
@@ -332,17 +332,17 @@ end
 #     * `tags`: The tags for each TemplateToDo, as an array of strings. If there are no tags, it will be an empty array.
 #
 get '/template_to_dos' do
-  template_to_dos = ControlAPI.get("/v1/template_to_dos.json", :query => params)
+  template_to_dos = ControlAPI.get("/v1/template_to_dos", :query => params)
   erb :template_to_dos, :locals => template_to_dos
 end
 
-# ## POST /v1/distributed_to_dos.json
+# ## POST /v1/distributed_to_dos
 #
 # **Asynchronously** distribute a ToDo to the given assignees.  (The work happens in a job queue.)
 #
 # ### Example request
 #
-#     POST /v1/distributed_to_dos.json
+#     POST /v1/distributed_to_dos
 #     Content-Type: application/json
 #
 #     {
@@ -407,7 +407,7 @@ get '/distributed_to_dos/new' do
 end
 
 post '/distributed_to_dos' do
-  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos.json',
+  distributed_to_do = ControlAPI.post('/v1/distributed_to_dos',
                                       :body => params.to_json)
 
   case distributed_to_do.response.code
@@ -420,13 +420,13 @@ post '/distributed_to_dos' do
   end
 end
 
-# ## GET /v1/distributed_to_dos/:uuid.json
+# ## GET /v1/distributed_to_dos/:uuid
 #
 # Get the current state of a distributed_to_do as found by an `uuid`.
 #
 # ### Example requests
 #
-#     GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6.json
+#     GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 #
 # ### Example response
 #
@@ -461,7 +461,7 @@ end
 #
 # #### HTTP 404 Not Found
 #
-# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos.json` that gives a `202`, `/v1/distributed_to_dos/:uuid.json` would return a `404` until the resource is **asynchronously** created.
+# Returned when the resource does not exist.  Note that after a `POST` to `/v1/distributed_to_dos` that gives a `202`, `/v1/distributed_to_dos/:uuid` would return a `404` until the resource is **asynchronously** created.
 #
 # #### HTTP 500 Server Error
 #
@@ -479,7 +479,7 @@ end
 #     * `completed_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
 #
 get '/distributed_to_dos/:uuid' do
-  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:uuid]}.json")
+  distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:uuid]}")
 
   case distributed_to_do.response.code
   when '200'
@@ -491,22 +491,22 @@ get '/distributed_to_dos/:uuid' do
   end
 end
 
-# ## GET /v1/distributed_to_dos.json
+# ## GET /v1/distributed_to_dos
 #
 # Get all the DistributedToDos for your organization.  Each DistributedToDo in this "collection" GET request is in the same format as the "member" GET request.
 #
 # ### Example requests
 #
-#     GET /v1/distributed_to_dos.json
-#     GET /v1/distributed_to_dos.json?created_after=2013-11-02
-#     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07
-#     GET /v1/distributed_to_dos.json?created_before=2013-11-07
-#     GET /v1/distributed_to_dos.json?late=true
-#     GET /v1/distributed_to_dos.json?complete=true
-#     GET /v1/distributed_to_dos.json?created_after=2013-11-02&created_before=2013-11-07&late=true&complete=false
-#     GET /v1/distributed_to_dos.json?tags[]=annual&tags[]=security
-#     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767
-#     GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&metadata[loan_id]=1234-7890
+#     GET /v1/distributed_to_dos
+#     GET /v1/distributed_to_dos?created_after=2013-11-02
+#     GET /v1/distributed_to_dos?created_after=2013-11-02&created_before=2013-11-07
+#     GET /v1/distributed_to_dos?created_before=2013-11-07
+#     GET /v1/distributed_to_dos?late=true
+#     GET /v1/distributed_to_dos?complete=true
+#     GET /v1/distributed_to_dos?created_after=2013-11-02&created_before=2013-11-07&late=true&complete=false
+#     GET /v1/distributed_to_dos?tags[]=annual&tags[]=security
+#     GET /v1/distributed_to_dos?metadata[customer_id]=7676767
+#     GET /v1/distributed_to_dos?metadata[customer_id]=7676767&metadata[loan_id]=1234-7890
 #
 # ### Request fields
 #
@@ -544,7 +544,7 @@ get '/distributed_to_dos' do
   one_week_ago_params = { :created_after => Date.today - 7 }
   filter_params = params.empty? ? one_week_ago_params : params
 
-  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos.json', :query => filter_params)
+  distributed_to_dos = ControlAPI.get('/v1/distributed_to_dos', :query => filter_params)
   erb :distributed_to_dos, :locals => distributed_to_dos
 end
 
@@ -632,7 +632,7 @@ end
 #
 # The `DistributedToDoCompleted` events fires when all the assignments of a ToDo are completed.  That is, when the ToDo as a whole is completed, rather than an individual user's assignment.
 #
-# The data is the same for `GET /v1/distributed_to_dos/:uuid.json`.  Please refer to its documentation.
+# The data is the same for `GET /v1/distributed_to_dos/:uuid`.  Please refer to its documentation.
 #
 post '/webhook' do
   event = parsed_body['event']
