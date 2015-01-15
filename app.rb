@@ -108,7 +108,7 @@ end
 get '/users' do
   users = ControlAPI.get('/v1/users', query: params)
 
-  erb :users, locals: users.to_h
+  erb :'users/index', locals: users.to_h
 end
 
 # ## POST /v1/users
@@ -164,7 +164,7 @@ end
 # #### HTTP 500 Server Error
 
 get '/users/new' do
-  erb :users_new
+  erb :'users/new'
 end
 
 post '/users' do
@@ -174,9 +174,9 @@ post '/users' do
 
   case user.response.code
   when '201'
-    [200, erb(:users_post, locals: { email: user['email'] })]
+    [200, erb(:'users/created', locals: { email: user['email'] })]
   when '422'
-    [422, erb(:users_errors, locals: { errors: user['errors'] })]
+    [422, erb(:errors, locals: { errors: user['errors'] })]
   else
     [500, 'There was an error while processing your request']
   end
@@ -226,7 +226,7 @@ get '/users/:email' do
 
   case user.response.code
   when '200'
-    erb :user, locals: user.to_h
+    erb :'users/show', locals: user.to_h
   when '404'
     [404, 'Not found']
   else
@@ -251,7 +251,7 @@ end
 
 get '/users/:email/edit' do
   user = ControlAPI.get("/v1/users/#{params[:email]}")
-  erb :user_edit, locals: user.to_h
+  erb :'users/edit', locals: user.to_h
 end
 
 post '/users/:email' do
@@ -261,9 +261,9 @@ post '/users/:email' do
 
   case user.response.code
   when '200'
-    erb :user, locals: user.to_h
+    erb :'users/show', locals: user.to_h
   when '422'
-    [422, erb(:users_errors, locals: { errors: user['errors'] })]
+    [422, erb(:errors, locals: { errors: user['errors'] })]
   when '404'
     [404, 'Not found']
   else
@@ -288,9 +288,9 @@ post '/users/:email/delete' do
 
   case user.response.code
   when '204'
-    [200, erb(:user_deleted)]
+    [200, erb(:'users/deleted')]
   when '422'
-    [422, erb(:users_errors, locals: { errors: user['errors'] })]
+    [422, erb(:errors, locals: { errors: user['errors'] })]
   when '404'
     [404, 'Not found']
   else
@@ -417,7 +417,7 @@ post '/distributed_to_dos' do
   when '202'
     [200, erb(:distributed_to_dos_post, :locals => distributed_to_do)]
   when '422'
-    [422, erb(:distributed_to_dos_errors, :locals => distributed_to_do)]
+    [422, erb(:errors, :locals => distributed_to_do)]
   else
     [500, 'There was an error while processing your request']
   end
