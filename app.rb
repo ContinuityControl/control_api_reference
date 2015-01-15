@@ -77,8 +77,6 @@ end
 
 # ## GET /v1/users
 #
-# (currently in development)
-#
 # Get all users, optionally filtering by emails, external employee IDs, or manager emails
 #
 # ### Example requests
@@ -115,8 +113,6 @@ get '/users' do
 end
 
 # ## POST /v1/users
-#
-# (currently in development)
 #
 # Create a new user and send an invitation for setting password, etc.
 #
@@ -185,8 +181,6 @@ end
 
 # ## GET /v1/users/:email
 #
-# (currently in development)
-#
 # Get an individual user by their email
 #
 # #### Data Example
@@ -238,8 +232,6 @@ end
 #
 # ## PATCH /v1/users
 #
-# (currently in development)
-#
 # Updates a user.  Note that changing a user's email address will affect their identification in other API calls, as well as the email they use to log in.
 #
 # ### Example requests
@@ -272,8 +264,6 @@ end
 
 #
 # ## DELETE /v1/users/:email
-#
-# (currently in development)
 #
 # "Soft delete" the user by disabling them.  Associated records, such as completed ToDos, are not deleted.
 #
