@@ -1,6 +1,9 @@
 <h2><a href="/users">Users</a> &gt; User <%= email %></h2>
 
 <a href="/users/<%= email %>/edit">Edit this user</a>
+<form action="/users/<%= email %>/delete" method="POST">
+  <input type='submit' value='Delete this user'>
+</form>
 
 <table>
   <tbody>

@@ -276,16 +276,27 @@ end
 #
 # (currently in development)
 #
-# "Soft delete" the user by disabling them.  Associated records, such as completed ToDos are not deleted.
+# "Soft delete" the user by disabling them.  Associated records, such as completed ToDos, are not deleted.
 #
 # ### Example responses
 #
-# Refer to `GET /v1/users/:email` response
+# #### HTTP 204 No Content
 #
-#     {
-#       // ...
-#     }
-#
+post '/users/:email/delete' do
+  user = ControlAPI.delete("/v1/users/#{params[:email]}",
+                           headers: { 'Content-Type' => 'application/json' })
+
+  case user.response.code
+  when '204'
+    [200, erb(:user_deleted)]
+  when '422'
+    [422, erb(:users_errors, locals: { errors: user['errors'] })]
+  when '404'
+    [404, 'Not found']
+  else
+    [500, 'There was an error while processing your request']
+  end
+end
 
 # ## GET /v1/template_to_dos.json
 #
