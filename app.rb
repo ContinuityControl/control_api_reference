@@ -284,7 +284,6 @@ end
 #
 #     {
 #       // ...
-#       "enabled": false
 #     }
 #
 
