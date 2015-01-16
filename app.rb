@@ -195,6 +195,7 @@ end
 #       "review_on": "2076-07-04",
 #       "started_on": "1789-04-30",
 #       "manager_path": "/v1/users/mwashington@example.com",
+#       "manager_email": "mwashington@example.com",
 #       "title": "President of the United States",
 #       "administrator": true,
 #       "employee_id": "1",
@@ -211,6 +212,7 @@ end
 #   * `review_on`: The ISO8601 date for the next review of this user
 #   * `started_on`: The ISO8601 date when this user's employment started
 #   * `manager_path`: The API path for the user's manager
+#   * `manager_email`: The email address of the user's manager
 #   * `title`: The job title of the user
 #   * `administrator`: Whether or not the user has administrator access for their organization
 #   * `employee_id`: (string) This is the external employee ID of the user. The value is arbitrary and is assigned by their organization. However, it must be unique to their organization.
