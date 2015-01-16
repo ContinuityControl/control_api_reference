@@ -1,3 +1,12 @@
+control_api (1.4.0) stable; urgency=low
+
+  * New User methods:
+    * POST   /v1/users
+    * GET    /v1/users
+    * GET    /v1/users/:email
+    * PATCH  /v1/users/:email
+    * DELETE /v1/users/:email
+
 control_api (1.3.1) stable; urgency=low
 
   * Fixed an issue that caused the "DistributedToDoCompleted" webhook to fire
