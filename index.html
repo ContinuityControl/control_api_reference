@@ -45,6 +45,7 @@
 <span class="keyword">require</span> <span class="string">'httparty'</span>
 <span class="keyword">require</span> <span class="string">'json'</span>
 <span class="keyword">require</span> <span class="string">'dotenv'</span>
+<span class="keyword">require</span> <span class="string">'byebug'</span>
 <span class="constant">Dotenv</span>.load</pre></div></div>
             
         </li>
@@ -65,7 +66,22 @@
   <span class="keyword">include</span> <span class="constant">HTTParty</span>
   base_uri <span class="constant">ENV</span>[<span class="string">'CONTROL_API_BASE_URI'</span>]
 
-  basic_auth <span class="constant">ENV</span>[<span class="string">'CONTROL_API_KEY'</span>], <span class="constant">ENV</span>[<span class="string">'CONTROL_API_SECRET'</span>]
+  basic_auth <span class="constant">ENV</span>[<span class="string">'CONTROL_API_KEY'</span>], <span class="constant">ENV</span>[<span class="string">'CONTROL_API_SECRET'</span>]</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Set the &#39;Content-Type&#39; header to &#39;application/json&#39; to ensure that the API accepts and returns JSON. This is currently the only supported format, but this will ensure you still get JSON if the API supports XML in the future.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  headers <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/json'</span>
 <span class="keyword">end</span>
 
 helpers <span class="keyword">do</span>
@@ -78,11 +94,11 @@ helpers <span class="keyword">do</span>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>The root path in this application simply provides navigation.</p>
 <p><code>erb :view_name</code> renders the file in <code>views/view_name.erb</code>.  For example, this will end up rendering <code>views/root.erb</code>.</p>
@@ -96,16 +112,16 @@ helpers <span class="keyword">do</span>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h2 id="get-v1-status-json">GET /v1/status.json</h2>
+              <h2 id="get-v1-status">GET /v1/status</h2>
 <p>Check the API status.  Useful for testing authentication without knowing other information.</p>
 <h3 id="example-request">Example request</h3>
-<pre><code>GET /v1/status.json</code></pre>
+<pre><code>GET /v1/status</code></pre>
 <h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{&quot;description&quot;:&quot;up&quot;}</code></pre>
@@ -121,7 +137,7 @@ helpers <span class="keyword">do</span>
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="string">'/status'</span> <span class="keyword">do</span>
-  status = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/status.json'</span>).parsed_response
+  status = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/status'</span>).parsed_response
 
   <span class="keyword">if</span> status[<span class="string">'error'</span>]
     <span class="string">"API error: <span class="subst">#{status[<span class="string">'error'</span>]}</span>"</span>
@@ -133,73 +149,57 @@ helpers <span class="keyword">do</span>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <h2 id="get-v1-users-email-json">GET /v1/users/:email.json</h2>
-<p>(currently in development)</p>
-<p>Get an individual user by their email</p>
-<h4 id="data-example">Data Example</h4>
-<pre><code>{
-  &quot;path&quot;: &quot;/v1/users/gwashington@example.com.json&quot;,
-  &quot;email&quot;: &quot;gwashington@example.com&quot;,
-  &quot;full_name&quot;: &quot;George Washington&quot;,
-  &quot;first_name&quot;: &quot;George&quot;,
-  &quot;last_name&quot;: &quot;Washington&quot;,
-  &quot;middle_name&quot;: null,
-  &quot;created_at&quot;: &quot;1732-02-22T12:34:56Z&quot;,
-  &quot;updated_at&quot;: &quot;1799-12-14T12:34:56Z&quot;,
-  &quot;description&quot;: &quot;First president of the United States&quot;,
-  &quot;manager_path&quot;: &quot;/v1/users/mwashington@example.com.json&quot;,
-  &quot;title&quot;: &quot;President of the United States&quot;,
-  &quot;administrator&quot;: true,
-  &quot;employee_id&quot;: &quot;1&quot;,
-  &quot;review_on&quot;: &quot;2076-07-04&quot;,
-  &quot;started_on&quot;: &quot;1789-04-30&quot;,
-  &quot;enabled&quot;: true
-}</code></pre>
-<h4 id="data-fields">Data Fields</h4>
-<ul>
-<li><code>email</code>: Primary email</li>
-<li><code>full_name</code>: Formatted name, may be <code>null</code></li>
-<li><code>first_name</code>: Personal name, may be <code>null</code></li>
-<li><code>last_name</code>: Surname, may be <code>null</code></li>
-<li><code>middle_name</code>: Middle name, may be <code>null</code></li>
-<li><code>created_at</code>: ISO8601 datetime of the creation of this user, in UTC</li>
-<li><code>updated_at</code>: ISO8601 datetime of the time at which this user was updated, in UTC</li>
-<li><code>description</code>: The description of this user, may be <code>null</code></li>
-<li><code>manager_path</code>: The path of the user&#39;s manager</li>
-<li><code>administrator</code>: Whether or not the user has administrator access for their organization.</li>
-<li><code>title</code>: The job title of the user</li>
-<li><code>employee_id</code>: (string) The external employee ID of the user. This value is arbitrary and is assigned by their organization.  However, it must be unique to their organization.</li>
-<li><code>review_on</code>: The ISO8601 date for the next review of this user</li>
-<li><code>started_on</code>: The ISO8601 date when this user&#39;s employment started</li>
-<li><code>enabled</code>: Whether or not the user is enabled.  The <code>DELETE</code> call does a &quot;soft delete&quot; which changes this value to false.</li>
-</ul>
-<h2 id="get-v1-users-json">GET /v1/users.json</h2>
-<p>(currently in development)</p>
-<p>Get all users, optionally filtering by emails, external employee IDs, or manager emails.</p>
+              <h2 id="get-v1-users">GET /v1/users</h2>
+<p>Get all users, optionally filtering by emails, external employee IDs, or manager emails</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/users.json
-GET /v1/users.json?email[]=gwashington@example.com
-GET /v1/users.json?employee_id[]=1234
-GET /v1/users.json?manager_email[]=mwashington@example.com</code></pre>
+<pre><code>GET /v1/users
+GET /v1/users?email[]=gwashington@example.com&amp;gbush@example.com
+GET /v1/users?employee_id[]=1234
+GET /v1/users?manager_email[]=mwashington@example.com</code></pre>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
   &quot;users&quot;: [
-    // Content from GET /v1/users/:email.json
+    {
+      // Content from GET /v1/users/:email
+      &#39;email&#39;: &#39;gwashington@example.com&#39;,
+      ...
+    },
+    {
+      &#39;email&#39;: gbush@example.com&#39;,
+      ...
+    }
   ]
 }</code></pre>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
-<h2 id="post-v1-users-json">POST /v1/users.json</h2>
-<p>(currently in development)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/users'</span> <span class="keyword">do</span>
+  users = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/users'</span>, <span class="symbol">query:</span> params)
+
+  erb <span class="symbol">:<span class="string">'users/index'</span></span>, <span class="symbol">locals:</span> users.to_h
+<span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="post-v1-users">POST /v1/users</h2>
 <p>Create a new user and send an invitation for setting password, etc.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>POST /v1/users.json
+<pre><code>POST /v1/users
 Content-Type: application/json
 
 {
@@ -215,18 +215,16 @@ Content-Type: application/json
 <li><code>email</code>: <strong>Required</strong></li>
 <li><code>first_name</code>: <strong>Required</strong></li>
 <li><code>last_name</code>: <strong>Required</strong></li>
-<li><code>middle_name</code></li>
-<li><code>description</code></li>
-<li><code>manager_path</code></li>
+<li><code>manager_email</code></li>
 <li><code>title</code></li>
 <li><code>employee_id</code></li>
 <li><code>review_on</code></li>
 <li><code>started_on</code></li>
 </ul>
-<p>For field descriptions, please see <code>GET /v1/users/:email.json</code>.</p>
+<p>For field descriptions, please see <code>GET /v1/users/:email</code>.</p>
 <h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
-<p>Refer to <code>GET /v1/users/:id.json</code> response.</p>
+<p>Refer to <code>GET /v1/users/:email</code> response.</p>
 <h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
 <pre><code>{
   &quot;errors&quot;: {
@@ -236,55 +234,165 @@ Content-Type: application/json
   }
 }</code></pre>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
-<h2 id="patch-v1-users-json">PATCH /v1/users.json</h2>
-<p>(currently in development)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/users/new'</span> <span class="keyword">do</span>
+  erb <span class="symbol">:<span class="string">'users/new'</span></span>
+<span class="keyword">end</span>
+
+post <span class="string">'/users'</span> <span class="keyword">do</span>
+  user = <span class="constant">ControlAPI</span>.post(<span class="string">'/v1/users'</span>, <span class="symbol">body:</span> params.to_json)
+
+  <span class="keyword">case</span> user.response.code
+  <span class="keyword">when</span> <span class="string">'201'</span>
+    [<span class="number">200</span>, erb(<span class="symbol">:<span class="string">'users/created'</span></span>, <span class="symbol">locals:</span> { <span class="symbol">email:</span> user[<span class="string">'email'</span>] })]
+  <span class="keyword">when</span> <span class="string">'422'</span>
+    [<span class="number">422</span>, erb(<span class="symbol">:errors</span>, <span class="symbol">locals:</span> { <span class="symbol">errors:</span> user[<span class="string">'errors'</span>] })]
+  <span class="keyword">else</span>
+    [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h2 id="get-v1-users-email">GET /v1/users/:email</h2>
+<p>Get an individual user by their email</p>
+<h4 id="data-example">Data Example</h4>
+<pre><code>{
+  &quot;path&quot;: &quot;/v1/users/gwashington@example.com&quot;,
+  &quot;email&quot;: &quot;gwashington@example.com&quot;,
+  &quot;first_name&quot;: &quot;George&quot;,
+  &quot;last_name&quot;: &quot;Washington&quot;,
+  &quot;created_at&quot;: &quot;1732-02-22T12:34:56Z&quot;,
+  &quot;updated_at&quot;: &quot;1799-12-14T12:34:56Z&quot;,
+  &quot;review_on&quot;: &quot;2076-07-04&quot;,
+  &quot;started_on&quot;: &quot;1789-04-30&quot;,
+  &quot;manager_path&quot;: &quot;/v1/users/mwashington@example.com&quot;,
+  &quot;title&quot;: &quot;President of the United States&quot;,
+  &quot;administrator&quot;: true,
+  &quot;employee_id&quot;: &quot;1&quot;,
+}</code></pre>
+<h4 id="data-fields">Data Fields</h4>
+<ul>
+<li><code>path</code>: API path for this user</li>
+<li><code>email</code>: Primary email</li>
+<li><code>first_name</code>: Personal name</li>
+<li><code>last_name</code>: Surname</li>
+<li><code>created_at</code>: ISO8601 datetime of the creation of this user, in UTC</li>
+<li><code>updated_at</code>: ISO8601 datetime of the time at which this user was updated, in UTC</li>
+<li><code>review_on</code>: The ISO8601 date for the next review of this user</li>
+<li><code>started_on</code>: The ISO8601 date when this user&#39;s employment started</li>
+<li><code>manager_path</code>: The API path for the user&#39;s manager</li>
+<li><code>title</code>: The job title of the user</li>
+<li><code>administrator</code>: Whether or not the user has administrator access for their organization</li>
+<li><code>employee_id</code>: (string) This is the external employee ID of the user. The value is arbitrary and is assigned by their organization. However, it must be unique to their organization.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/users/:email'</span> <span class="keyword">do</span>
+  user = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/users/<span class="subst">#{params[<span class="symbol">:email</span>]}</span>"</span>)
+
+  <span class="keyword">case</span> user.response.code
+  <span class="keyword">when</span> <span class="string">'200'</span>
+    erb <span class="symbol">:<span class="string">'users/show'</span></span>, <span class="symbol">locals:</span> user.to_h
+  <span class="keyword">when</span> <span class="string">'404'</span>
+    [<span class="number">404</span>, <span class="string">'Not found'</span>]
+  <span class="keyword">else</span>
+    [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h2 id="patch-v1-users">PATCH /v1/users</h2>
 <p>Updates a user.  Note that changing a user&#39;s email address will affect their identification in other API calls, as well as the email they use to log in.</p>
 <h3 id="example-requests">Example requests</h3>
-<p>Refer to <code>POST /v1/users.json</code> request.  NOTE: you can omit keys as necessary</p>
+<p>Refer to <code>POST /v1/users</code> request.  NOTE: you can omit keys as necessary</p>
 <h3 id="example-responses">Example responses</h3>
-<p>Refer to <code>GET /v1/users/:email.json</code> response</p>
-<h2 id="delete-v1-users-email-json">DELETE /v1/users/:email.json</h2>
-<p>(currently in development)</p>
-<p>&quot;Soft delete&quot; the user by disabling them.  Associated records, such as completed ToDos are not deleted.</p>
-<h3 id="example-responses">Example responses</h3>
-<p>Refer to <code>GET /v1/users/:email.json</code> response</p>
-<pre><code>{
-  // ...
-  &quot;enabled&quot;: false
-}</code></pre>
+<p>Refer to <code>GET /v1/users/:email</code> response</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>get <span class="string">'/users'</span> <span class="keyword">do</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>get <span class="string">'/users/:email/edit'</span> <span class="keyword">do</span>
+  user = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/users/<span class="subst">#{params[<span class="symbol">:email</span>]}</span>"</span>)
+  erb <span class="symbol">:<span class="string">'users/edit'</span></span>, <span class="symbol">locals:</span> user.to_h
+<span class="keyword">end</span>
+
+post <span class="string">'/users/:email'</span> <span class="keyword">do</span>
+  user = <span class="constant">ControlAPI</span>.patch(<span class="string">"/v1/users/<span class="subst">#{params[<span class="symbol">:email</span>]}</span>"</span>, <span class="symbol">body:</span> params.to_json)
+
+  <span class="keyword">case</span> user.response.code
+  <span class="keyword">when</span> <span class="string">'200'</span>
+    erb <span class="symbol">:<span class="string">'users/show'</span></span>, <span class="symbol">locals:</span> user.to_h
+  <span class="keyword">when</span> <span class="string">'422'</span>
+    [<span class="number">422</span>, erb(<span class="symbol">:errors</span>, <span class="symbol">locals:</span> { <span class="symbol">errors:</span> user[<span class="string">'errors'</span>] })]
+  <span class="keyword">when</span> <span class="string">'404'</span>
+    [<span class="number">404</span>, <span class="string">'Not found'</span>]
+  <span class="keyword">else</span>
+    [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-7">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>TODO</p>
+              <h2 id="delete-v1-users-email">DELETE /v1/users/:email</h2>
+<p>&quot;Soft delete&quot; the user by disabling them.  Associated records, such as completed ToDos, are not deleted.</p>
+<h3 id="example-responses">Example responses</h3>
+<h4 id="http-204-no-content">HTTP 204 No Content</h4>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">end</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>post <span class="string">'/users/:email/delete'</span> <span class="keyword">do</span>
+  user = <span class="constant">ControlAPI</span>.delete(<span class="string">"/v1/users/<span class="subst">#{params[<span class="symbol">:email</span>]}</span>"</span>)
+
+  <span class="keyword">case</span> user.response.code
+  <span class="keyword">when</span> <span class="string">'204'</span>
+    [<span class="number">200</span>, erb(<span class="symbol">:<span class="string">'users/deleted'</span></span>)]
+  <span class="keyword">when</span> <span class="string">'422'</span>
+    [<span class="number">422</span>, erb(<span class="symbol">:errors</span>, <span class="symbol">locals:</span> { <span class="symbol">errors:</span> user[<span class="string">'errors'</span>] })]
+  <span class="keyword">when</span> <span class="string">'404'</span>
+    [<span class="number">404</span>, <span class="string">'Not found'</span>]
+  <span class="keyword">else</span>
+    [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-8">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <h2 id="get-v1-template_to_dos-json">GET /v1/template_to_dos.json</h2>
+              <h2 id="get-v1-template_to_dos">GET /v1/template_to_dos</h2>
 <p>Get all the TemplateToDos for your organization.  NOTE: not filtered by enabled/disabled state.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/template_to_dos.json #     GET /v1/template_to_dos.json?tags[]=annual&amp;tags[]=security</code></pre>
+<pre><code>GET /v1/template_to_dos #     GET /v1/template_to_dos?tags[]=annual&amp;tags[]=security</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>tags</code>: Only return TemplateToDos that are tagged with all of the specified tags.</li>
@@ -314,23 +422,23 @@ Content-Type: application/json
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="string">'/template_to_dos'</span> <span class="keyword">do</span>
-  template_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/template_to_dos.json"</span>, <span class="symbol">:query</span> =&gt; params)
+  template_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/template_to_dos"</span>, <span class="symbol">:query</span> =&gt; params)
   erb <span class="symbol">:template_to_dos</span>, <span class="symbol">:locals</span> =&gt; template_to_dos
 <span class="keyword">end</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-9">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <h2 id="post-v1-distributed_to_dos-json">POST /v1/distributed_to_dos.json</h2>
+              <h2 id="post-v1-distributed_to_dos">POST /v1/distributed_to_dos</h2>
 <p><strong>Asynchronously</strong> distribute a ToDo to the given assignees.  (The work happens in a job queue.)</p>
 <h3 id="example-request">Example request</h3>
-<pre><code>POST /v1/distributed_to_dos.json
+<pre><code>POST /v1/distributed_to_dos
 Content-Type: application/json
 
 {
@@ -391,15 +499,14 @@ Content-Type: application/json
 <span class="keyword">end</span>
 
 post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do</span>
-  distributed_to_do = <span class="constant">ControlAPI</span>.post(<span class="string">'/v1/distributed_to_dos.json'</span>,
-                                      <span class="symbol">:body</span> =&gt; params.to_json,
-                                      <span class="symbol">:headers</span> =&gt; { <span class="string">'Content-Type'</span> =&gt; <span class="string">'application/json'</span> })
+  distributed_to_do = <span class="constant">ControlAPI</span>.post(<span class="string">'/v1/distributed_to_dos'</span>,
+                                      <span class="symbol">:body</span> =&gt; params.to_json)
 
   <span class="keyword">case</span> distributed_to_do.response.code
   <span class="keyword">when</span> <span class="string">'202'</span>
     [<span class="number">200</span>, erb(<span class="symbol">:distributed_to_dos_post</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do)]
   <span class="keyword">when</span> <span class="string">'422'</span>
-    [<span class="number">422</span>, erb(<span class="symbol">:distributed_to_dos_errors</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do)]
+    [<span class="number">422</span>, erb(<span class="symbol">:errors</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do)]
   <span class="keyword">else</span>
     [<span class="number">500</span>, <span class="string">'There was an error while processing your request'</span>]
   <span class="keyword">end</span>
@@ -408,16 +515,16 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-10">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <h2 id="get-v1-distributed_to_dos-uuid-json">GET /v1/distributed_to_dos/:uuid.json</h2>
+              <h2 id="get-v1-distributed_to_dos-uuid">GET /v1/distributed_to_dos/:uuid</h2>
 <p>Get the current state of a distributed_to_do as found by an <code>uuid</code>.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6.json</code></pre>
+<pre><code>GET /v1/distributed_to_dos/f81d4fae-7dec-11d0-a765-00a0c91e6bf6</code></pre>
 <h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
@@ -445,7 +552,7 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
 <h4 id="http-401-unauthorized">HTTP 401 Unauthorized</h4>
 <p>The request was not properly authenticated.</p>
 <h4 id="http-404-not-found">HTTP 404 Not Found</h4>
-<p>Returned when the resource does not exist.  Note that after a <code>POST</code> to <code>/v1/distributed_to_dos.json</code> that gives a <code>202</code>, <code>/v1/distributed_to_dos/:uuid.json</code> would return a <code>404</code> until the resource is <strong>asynchronously</strong> created.</p>
+<p>Returned when the resource does not exist.  Note that after a <code>POST</code> to <code>/v1/distributed_to_dos</code> that gives a <code>202</code>, <code>/v1/distributed_to_dos/:uuid</code> would return a <code>404</code> until the resource is <strong>asynchronously</strong> created.</p>
 <h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 <h3 id="response-fields">Response fields</h3>
 <ul>
@@ -466,11 +573,11 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="string">'/distributed_to_dos/:uuid'</span> <span class="keyword">do</span>
-  distributed_to_do = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/distributed_to_dos/<span class="subst">#{params[<span class="symbol">:uuid</span>]}</span>.json"</span>)
+  distributed_to_do = <span class="constant">ControlAPI</span>.get(<span class="string">"/v1/distributed_to_dos/<span class="subst">#{params[<span class="symbol">:uuid</span>]}</span>"</span>)
 
   <span class="keyword">case</span> distributed_to_do.response.code
   <span class="keyword">when</span> <span class="string">'200'</span>
-    erb <span class="symbol">:distributed_to_do</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do
+    erb <span class="symbol">:distributed_to_do</span>, <span class="symbol">:locals</span> =&gt; distributed_to_do.to_h <span class="comment"># NOTE: this gives us locals that are keys in the distributed_to_do response</span>
   <span class="keyword">when</span> <span class="string">'404'</span>
     [<span class="number">404</span>, <span class="string">'Not found'</span>]
   <span class="keyword">else</span>
@@ -481,25 +588,25 @@ post <span class="string">'/distributed_to_dos'</span> <span class="keyword">do<
         </li>
         
         
-        <li id="section-11">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <h2 id="get-v1-distributed_to_dos-json">GET /v1/distributed_to_dos.json</h2>
+              <h2 id="get-v1-distributed_to_dos">GET /v1/distributed_to_dos</h2>
 <p>Get all the DistributedToDos for your organization.  Each DistributedToDo in this &quot;collection&quot; GET request is in the same format as the &quot;member&quot; GET request.</p>
 <h3 id="example-requests">Example requests</h3>
-<pre><code>GET /v1/distributed_to_dos.json
-GET /v1/distributed_to_dos.json?created_after=2013-11-02
-GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07
-GET /v1/distributed_to_dos.json?created_before=2013-11-07
-GET /v1/distributed_to_dos.json?late=true
-GET /v1/distributed_to_dos.json?complete=true
-GET /v1/distributed_to_dos.json?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false
-GET /v1/distributed_to_dos.json?tags[]=annual&amp;tags[]=security
-GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767
-GET /v1/distributed_to_dos.json?metadata[customer_id]=7676767&amp;metadata[loan_id]=1234-7890</code></pre>
+<pre><code>GET /v1/distributed_to_dos
+GET /v1/distributed_to_dos?created_after=2013-11-02
+GET /v1/distributed_to_dos?created_after=2013-11-02&amp;created_before=2013-11-07
+GET /v1/distributed_to_dos?created_before=2013-11-07
+GET /v1/distributed_to_dos?late=true
+GET /v1/distributed_to_dos?complete=true
+GET /v1/distributed_to_dos?created_after=2013-11-02&amp;created_before=2013-11-07&amp;late=true&amp;complete=false
+GET /v1/distributed_to_dos?tags[]=annual&amp;tags[]=security
+GET /v1/distributed_to_dos?metadata[customer_id]=7676767
+GET /v1/distributed_to_dos?metadata[customer_id]=7676767&amp;metadata[loan_id]=1234-7890</code></pre>
 <h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>created_after</code>: ISO8601 date of exclusive lower bound of <code>created_at</code> time.</li>
@@ -533,18 +640,18 @@ late=true&amp;complete=true    # completed and late</code></pre>
   one_week_ago_params = { <span class="symbol">:created_after</span> =&gt; <span class="constant">Date</span>.today - <span class="number">7</span> }
   filter_params = params.empty? ? one_week_ago_params <span class="symbol">:</span> params
 
-  distributed_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/distributed_to_dos.json'</span>, <span class="symbol">:query</span> =&gt; filter_params)
+  distributed_to_dos = <span class="constant">ControlAPI</span>.get(<span class="string">'/v1/distributed_to_dos'</span>, <span class="symbol">:query</span> =&gt; filter_params)
   erb <span class="symbol">:distributed_to_dos</span>, <span class="symbol">:locals</span> =&gt; distributed_to_dos
 <span class="keyword">end</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-12">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h2 id="webhooks">Webhooks</h2>
 <p>Webhooks provide information about events in near real-time.  You provide a URL, and we&#39;ll <code>POST</code> to it as events take place.  When a <code>HTTP 5XX</code> response occurs, the Webhook is retried with an incremental backoff.</p>
@@ -610,7 +717,7 @@ late=true&amp;complete=true    # completed and late</code></pre>
 </ul>
 <h3 id="distributedtodocompleted">DistributedToDoCompleted</h3>
 <p>The <code>DistributedToDoCompleted</code> events fires when all the assignments of a ToDo are completed.  That is, when the ToDo as a whole is completed, rather than an individual user&#39;s assignment.</p>
-<p>The data is the same for <code>GET /v1/distributed_to_dos/:uuid.json</code>.  Please refer to its documentation.</p>
+<p>The data is the same for <code>GET /v1/distributed_to_dos/:uuid</code>.  Please refer to its documentation.</p>
 
             </div>
             
