@@ -351,7 +351,7 @@ end
 #
 #   * `distributed_to_do`: **Required**.  Holds parameters for the DistributedToDo.
 #     * `template_to_do_uuid`: **Required**.  The UUID for the TemplateToDo that will be distributed.  This can be found via `GET /v1/template_to_dos`, or in Continuity Control under "Settings".
-#     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in UTC.
+#     * `due_on`: **Required**.  ISO8601 date of when the DistributedToDo is due, in your configured Time Zone.
 #     * `assignee_emails`: **Required**.  An Array of email addresses of Users that will receive the DistributedToDos.
 #     * `field_values`: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under "Settings".
 #     * `metadata`: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  The key and value combined are limited to 247 characters.
@@ -463,7 +463,7 @@ end
 #   * `name`: The human-readable name for this ToDo.
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
 #   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.  May be `null`.
-#   * `due_on`: ISO8601 date of when the DistributedToDo is due, in UTC.
+#   * `due_on`: ISO8601 date of when the DistributedToDo is due, in your configured Time Zone.
 #   * `tags`: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.
 #   * `metadata`: The metadata for this DistributedToDo, as an object. If there are no metadata, it will be an empty object. Values will always be returned as strings.
 #   * `assignments`: Array
