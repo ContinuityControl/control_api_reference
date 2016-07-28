@@ -137,7 +137,7 @@ helpers <span class="hljs-keyword">do</span>
             </div>
             
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/status'</span> <span class="hljs-keyword">do</span>
-  status = ControlAPI.get(<span class="hljs-string">'/v1/status'</span>).parsed_response
+  status = ControlAPI.get(<span class="hljs-string">'/v1/status.json'</span>).parsed_response
 
   <span class="hljs-keyword">if</span> status[<span class="hljs-string">'error'</span>]
     <span class="hljs-string">"API error: <span class="hljs-subst">#{status[<span class="hljs-string">'error'</span>]}</span>"</span>
@@ -165,14 +165,14 @@ GET /v1/users?manager_email[]=mwashington@example.com
 </code></pre><h3 id="example-responses">Example responses</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
-  <span class="hljs-string">"users"</span><span class="hljs-symbol">:</span> [
+  <span class="hljs-string">"users"</span>: [
     {
       <span class="hljs-regexp">//</span> Content from GET /v1/users/<span class="hljs-symbol">:email</span>
-      <span class="hljs-string">'email'</span><span class="hljs-symbol">:</span> <span class="hljs-string">'gwashington@example.com'</span>,
+      <span class="hljs-string">'email'</span>: <span class="hljs-string">'gwashington@example.com'</span>,
       ...
     },
     {
-      <span class="hljs-string">'email'</span><span class="hljs-symbol">:</span> gbush@example.com<span class="hljs-string">',
+      <span class="hljs-string">'email'</span>: gbush@example.com<span class="hljs-string">',
       ...
     }
   ]
@@ -204,10 +204,10 @@ get <span class="hljs-string">'/users'</span> <span class="hljs-keyword">do</spa
 Content-<span class="hljs-symbol">Type:</span> application/json
 
 {
-  <span class="hljs-string">"user"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"email"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"abe@whitehouse.gov"</span>,
-    <span class="hljs-string">"first_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Abraham"</span>,
-    <span class="hljs-string">"last_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Lincoln"</span>
+  <span class="hljs-string">"user"</span>: {
+    <span class="hljs-string">"email"</span>: <span class="hljs-string">"abe@whitehouse.gov"</span>,
+    <span class="hljs-string">"first_name"</span>: <span class="hljs-string">"Abraham"</span>,
+    <span class="hljs-string">"last_name"</span>: <span class="hljs-string">"Lincoln"</span>
   }
 }
 </code></pre><h3 id="request-fields">Request fields</h3>
@@ -228,8 +228,8 @@ Content-<span class="hljs-symbol">Type:</span> application/json
 <p>Refer to <code>GET /v1/users/:email</code> response.</p>
 <h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
 <pre><code>{
-  <span class="hljs-string">"errors"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"email"</span><span class="hljs-symbol">:</span> [
+  <span class="hljs-string">"errors"</span>: {
+    <span class="hljs-string">"email"</span>: [
       <span class="hljs-string">"is invalid"</span>,
     ]
   }
@@ -269,19 +269,19 @@ post <span class="hljs-string">'/users'</span> <span class="hljs-keyword">do</sp
 <p>Get an individual user by their email</p>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
-  <span class="hljs-string">"path"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"/v1/users/gwashington@example.com"</span>,
-  <span class="hljs-string">"email"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"gwashington@example.com"</span>,
-  <span class="hljs-string">"first_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"George"</span>,
-  <span class="hljs-string">"last_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Washington"</span>,
-  <span class="hljs-string">"created_at"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"1732-02-22T12:34:56Z"</span>,
-  <span class="hljs-string">"updated_at"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"1799-12-14T12:34:56Z"</span>,
-  <span class="hljs-string">"review_on"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2076-07-04"</span>,
-  <span class="hljs-string">"started_on"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"1789-04-30"</span>,
-  <span class="hljs-string">"manager_path"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"/v1/users/mwashington@example.com"</span>,
-  <span class="hljs-string">"manager_email"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"mwashington@example.com"</span>,
-  <span class="hljs-string">"title"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"President of the United States"</span>,
-  <span class="hljs-string">"administrator"</span><span class="hljs-symbol">:</span> <span class="hljs-keyword">true</span>,
-  <span class="hljs-string">"employee_id"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"1"</span>,
+  <span class="hljs-string">"path"</span>: <span class="hljs-string">"/v1/users/gwashington@example.com"</span>,
+  <span class="hljs-string">"email"</span>: <span class="hljs-string">"gwashington@example.com"</span>,
+  <span class="hljs-string">"first_name"</span>: <span class="hljs-string">"George"</span>,
+  <span class="hljs-string">"last_name"</span>: <span class="hljs-string">"Washington"</span>,
+  <span class="hljs-string">"created_at"</span>: <span class="hljs-string">"1732-02-22T12:34:56Z"</span>,
+  <span class="hljs-string">"updated_at"</span>: <span class="hljs-string">"1799-12-14T12:34:56Z"</span>,
+  <span class="hljs-string">"review_on"</span>: <span class="hljs-string">"2076-07-04"</span>,
+  <span class="hljs-string">"started_on"</span>: <span class="hljs-string">"1789-04-30"</span>,
+  <span class="hljs-string">"manager_path"</span>: <span class="hljs-string">"/v1/users/mwashington@example.com"</span>,
+  <span class="hljs-string">"manager_email"</span>: <span class="hljs-string">"mwashington@example.com"</span>,
+  <span class="hljs-string">"title"</span>: <span class="hljs-string">"President of the United States"</span>,
+  <span class="hljs-string">"administrator"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"employee_id"</span>: <span class="hljs-string">"1"</span>,
 }
 </code></pre><h4 id="data-fields">Data Fields</h4>
 <ul>
@@ -407,11 +407,11 @@ post <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword"
 <h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
-  <span class="hljs-string">"template_to_dos"</span><span class="hljs-symbol">:</span> [
+  <span class="hljs-string">"template_to_dos"</span>: [
     {
-      <span class="hljs-string">"uuid"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"12345678-1234-5678-1234-567812345678"</span>,
-      <span class="hljs-string">"name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Review server logs"</span>,
-      <span class="hljs-string">"tags"</span><span class="hljs-symbol">:</span> [<span class="hljs-string">"security"</span>, <span class="hljs-string">"annual"</span>, <span class="hljs-string">"training"</span>]
+      <span class="hljs-string">"uuid"</span>: <span class="hljs-string">"12345678-1234-5678-1234-567812345678"</span>,
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"Review server logs"</span>,
+      <span class="hljs-string">"tags"</span>: [<span class="hljs-string">"security"</span>, <span class="hljs-string">"annual"</span>, <span class="hljs-string">"training"</span>]
     }
   ]
 }
@@ -449,12 +449,11 @@ post <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword"
 Content-<span class="hljs-symbol">Type:</span> application/json
 
 {
-  <span class="hljs-string">"distributed_to_do"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"template_to_do_uuid"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"12345678-1234-5678-1234-567812345678"</span>,
-    <span class="hljs-string">"due_on"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2013-11-29"</span>,
-    <span class="hljs-string">"assignee_emails"</span><span class="hljs-symbol">:</span> [<span class="hljs-string">"bobama@example.com"</span>, <span class="hljs-string">"gwbush@example.com"</span>, <span class="hljs-string">"bclinton@example.com"</span>],
-    <span class="hljs-string">"field_values"</span><span class="hljs-symbol">:</span> {<span class="hljs-string">"field1"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"value1"</span>, <span class="hljs-string">"field2"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"value2"</span>},
-    <span class="hljs-string">"metadata"</span><span class="hljs-symbol">:</span> {<span class="hljs-string">"customer_id"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"7676767"</span>, <span class="hljs-string">"loan_id"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"1234-7890"</span>}
+  <span class="hljs-string">"distributed_to_do"</span>: {
+    <span class="hljs-string">"template_to_do_uuid"</span>: <span class="hljs-string">"12345678-1234-5678-1234-567812345678"</span>,
+    <span class="hljs-string">"due_on"</span>: <span class="hljs-string">"2013-11-29"</span>,
+    <span class="hljs-string">"assignee_emails"</span>: [<span class="hljs-string">"bobama@example.com"</span>, <span class="hljs-string">"gwbush@example.com"</span>, <span class="hljs-string">"bclinton@example.com"</span>],
+    <span class="hljs-string">"field_values"</span>: {<span class="hljs-string">"field1"</span>: <span class="hljs-string">"value1"</span>, <span class="hljs-string">"field2"</span>: <span class="hljs-string">"value2"</span>},
   }
 }
 </code></pre><h3 id="request-fields">Request fields</h3>
@@ -464,7 +463,6 @@ Content-<span class="hljs-symbol">Type:</span> application/json
 <li><code>due_on</code>: <strong>Required</strong>.  ISO8601 date of when the DistributedToDo is due, in your configured Time Zone.</li>
 <li><code>assignee_emails</code>: <strong>Required</strong>.  An Array of email addresses of Users that will receive the DistributedToDos.</li>
 <li><code>field_values</code>: Dictionary (Object) of values to pre-fill in the DistributedToDo.  Field names are available in Continuity Control under “Settings”.</li>
-<li><code>metadata</code>: Dictionary (Object) of additional key-value pairs. Values must be strings. Metadata can be used to hold any extra related data, and can be used in querying.  The key and value combined are limited to 247 characters.</li>
 </ul>
 </li>
 </ul>
@@ -478,15 +476,15 @@ Content-<span class="hljs-symbol">Type:</span> application/json
 <p>The request was not properly authenticated.</p>
 <h4 id="http-422-unprocessable-entity">HTTP 422 Unprocessable Entity</h4>
 <pre><code>{
-  <span class="hljs-string">"errors"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"template_to_do_uuid"</span><span class="hljs-symbol">:</span> [
+  <span class="hljs-string">"errors"</span>: {
+    <span class="hljs-string">"template_to_do_uuid"</span>: [
       <span class="hljs-string">"does not exist"</span>,
     ],
-    <span class="hljs-string">"assignee_emails"</span><span class="hljs-symbol">:</span> [
+    <span class="hljs-string">"assignee_emails"</span>: [
       <span class="hljs-string">"has email alice@example.com which does not exist for this organization"</span>,
       <span class="hljs-string">"has email bob@example.com which does not exist for this organization"</span>
     ],
-    <span class="hljs-string">"due_on"</span><span class="hljs-symbol">:</span> [
+    <span class="hljs-string">"due_on"</span>: [
       <span class="hljs-string">"could not be parsed"</span>
     ]
   }
@@ -535,24 +533,20 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
 </code></pre><h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
-  <span class="hljs-string">"uuid"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"f81d4fae-7dec-11d0-a765-00a0c91e6bf6"</span>,
-  <span class="hljs-string">"name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Review server logs"</span>,
-  <span class="hljs-string">"created_at"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2013-11-02T12:34:46.000Z"</span>,
-  <span class="hljs-string">"completed_at"</span><span class="hljs-symbol">:</span> null,
-  <span class="hljs-string">"due_on"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2013-11-08"</span>,
-  <span class="hljs-string">"tags"</span><span class="hljs-symbol">:</span> [<span class="hljs-string">"security"</span>, <span class="hljs-string">"annual"</span>, <span class="hljs-string">"training"</span>],
-  <span class="hljs-string">"metadata"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"customer_id"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"7676767"</span>,
-    <span class="hljs-string">"loan_id"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"1234-7890"</span>
-  },
-  <span class="hljs-string">"assignments"</span><span class="hljs-symbol">:</span> [
+  <span class="hljs-string">"uuid"</span>: <span class="hljs-string">"f81d4fae-7dec-11d0-a765-00a0c91e6bf6"</span>,
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"Review server logs"</span>,
+  <span class="hljs-string">"created_at"</span>: <span class="hljs-string">"2013-11-02T12:34:46.000Z"</span>,
+  <span class="hljs-string">"completed_at"</span>: null,
+  <span class="hljs-string">"due_on"</span>: <span class="hljs-string">"2013-11-08"</span>,
+  <span class="hljs-string">"tags"</span>: [<span class="hljs-string">"security"</span>, <span class="hljs-string">"annual"</span>, <span class="hljs-string">"training"</span>],
+  <span class="hljs-string">"assignments"</span>: [
     {
-      <span class="hljs-string">"email"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"bobama@example.com"</span>,
-      <span class="hljs-string">"finished_on"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2013-11-07"</span>
+      <span class="hljs-string">"email"</span>: <span class="hljs-string">"bobama@example.com"</span>,
+      <span class="hljs-string">"finished_on"</span>: <span class="hljs-string">"2013-11-07"</span>
     },
     {
-      <span class="hljs-string">"email"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"bclinton@example.com"</span>,
-      <span class="hljs-string">"finished_on"</span><span class="hljs-symbol">:</span> null
+      <span class="hljs-string">"email"</span>: <span class="hljs-string">"bclinton@example.com"</span>,
+      <span class="hljs-string">"finished_on"</span>: null
     }
   ]
 }
@@ -569,7 +563,6 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
 <li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.  May be <code>null</code>.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in your configured Time Zone.</li>
 <li><code>tags</code>: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.</li>
-<li><code>metadata</code>: The metadata for this DistributedToDo, as an object. If there are no metadata, it will be an empty object. Values will always be returned as strings.</li>
 <li><code>assignments</code>: Array<ul>
 <li><code>email</code>: User email of DistributedToDo assignment</li>
 <li><code>completed_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
@@ -608,12 +601,10 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
 GET /v1/distributed_to_dos?created_after=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">02</span>
 GET /v1/distributed_to_dos?created_after=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">02</span>&amp;created_before=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">07</span>
 GET /v1/distributed_to_dos?created_before=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">07</span>
-GET /v1/distributed_to_dos?late=<span class="hljs-keyword">true</span>
-GET /v1/distributed_to_dos?complete=<span class="hljs-keyword">true</span>
-GET /v1/distributed_to_dos?created_after=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">02</span>&amp;created_before=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">07</span>&amp;late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keyword">false</span>
+GET /v1/distributed_to_dos?late=<span class="hljs-literal">true</span>
+GET /v1/distributed_to_dos?complete=<span class="hljs-literal">true</span>
+GET /v1/distributed_to_dos?created_after=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">02</span>&amp;created_before=<span class="hljs-number">2013</span>-<span class="hljs-number">11</span>-<span class="hljs-number">07</span>&amp;late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-literal">false</span>
 GET /v1/distributed_to_dos?tags[]=annual&amp;tags[]=security
-GET /v1/distributed_to_dos?metadata[customer_id]=<span class="hljs-number">7676767</span>
-GET /v1/distributed_to_dos?metadata[customer_id]=<span class="hljs-number">7676767</span>&amp;metadata[loan_id]=<span class="hljs-number">1234</span>-<span class="hljs-number">7890</span>
 </code></pre><h3 id="request-fields">Request fields</h3>
 <ul>
 <li><code>created_after</code>: ISO8601 date of exclusive lower bound of <code>created_at</code> time.</li>
@@ -621,17 +612,16 @@ GET /v1/distributed_to_dos?metadata[customer_id]=<span class="hljs-number">76767
 <li><code>late</code>: When <code>true</code>, respond with only “late” DistributedToDos.  When <code>false</code>, respond with only “on time” DistributedToDos.  When not present, do not filter on lateness.</li>
 <li><code>complete</code>: When <code>true</code>, respond with only “complete” DistributedToDos.  When <code>false</code>, respond with only “incomplete” DistributedToDos.  When not present, do not filter on completeness.</li>
 <li><code>tags</code>: Only return DistributedToDos that are tagged with all of the specified tags.</li>
-<li><code>metadata</code>: Only return DistributedToDos that have all the specified metadata.</li>
 </ul>
 <p><code>late</code> and <code>complete</code> can be combined to filter:</p>
-<pre><code>late=<span class="hljs-keyword">false</span>&amp;complete=<span class="hljs-keyword">false</span>  <span class="hljs-comment"># incomplete and on time</span>
-late=<span class="hljs-keyword">false</span>&amp;complete=<span class="hljs-keyword">true</span>   <span class="hljs-comment"># completed and on time</span>
-late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keyword">false</span>   <span class="hljs-comment"># incomplete and late (what most users will want)</span>
-late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keyword">true</span>    <span class="hljs-comment"># completed and late</span>
+<pre><code>late=<span class="hljs-literal">false</span>&amp;complete=<span class="hljs-literal">false</span>  <span class="hljs-comment"># incomplete and on time</span>
+late=<span class="hljs-literal">false</span>&amp;complete=<span class="hljs-literal">true</span>   <span class="hljs-comment"># completed and on time</span>
+late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-literal">false</span>   <span class="hljs-comment"># incomplete and late (what most users will want)</span>
+late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-literal">true</span>    <span class="hljs-comment"># completed and late</span>
 </code></pre><h3 id="example-response">Example response</h3>
 <h4 id="http-200-ok">HTTP 200 OK</h4>
 <pre><code>{
-  <span class="hljs-string">"distributed_to_dos"</span><span class="hljs-symbol">:</span> [
+  <span class="hljs-string">"distributed_to_dos"</span>: [
     <span class="hljs-regexp">//</span> Content from GET /v1/distributed_to_dos/<span class="hljs-symbol">:uuid</span>
   ]
 }
@@ -645,7 +635,7 @@ late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keywo
             
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-keyword">do</span>
   one_week_ago_params = { <span class="hljs-symbol">:created_after</span> =&gt; Date.today - <span class="hljs-number">7</span> }
-  filter_params = params.empty? ? one_week_ago_params <span class="hljs-symbol">:</span> params
+  filter_params = params.empty? ? one_week_ago_params : params
 
   distributed_to_dos = ControlAPI.get(<span class="hljs-string">'/v1/distributed_to_dos'</span>, <span class="hljs-symbol">:query</span> =&gt; filter_params)
   erb <span class="hljs-symbol">:distributed_to_dos</span>, <span class="hljs-symbol">:locals</span> =&gt; distributed_to_dos
@@ -666,9 +656,9 @@ late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keywo
 <p>Our webhooks have the following format:</p>
 <pre><code>{
 
-  <span class="hljs-string">"event"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"EventName"</span>,
-  <span class="hljs-string">"fired_at"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2014-06-24T15:32:05Z"</span>,
-  <span class="hljs-string">"data"</span><span class="hljs-symbol">:</span> {
+  <span class="hljs-string">"event"</span>: <span class="hljs-string">"EventName"</span>,
+  <span class="hljs-string">"fired_at"</span>: <span class="hljs-string">"2014-06-24T15:32:05Z"</span>,
+  <span class="hljs-string">"data"</span>: {
     <span class="hljs-regexp">//</span> Depends on event, see below
   }
 }
@@ -689,20 +679,20 @@ late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keywo
 <p>For a contrived example, if there were a <code>VoteCast</code> event, the webhook would provide data like the following in two separate <code>POST</code>s:</p>
 <p>First <code>POST</code>:</p>
 <pre><code>{
-  <span class="hljs-string">"event"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"VoteCast"</span>,
-  <span class="hljs-string">"fired_at"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2000-11-07T15:32:05Z"</span>,
-  <span class="hljs-string">"data"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"full_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Al Gore"</span>,
-    <span class="hljs-string">"party"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Democrat"</span>
+  <span class="hljs-string">"event"</span>: <span class="hljs-string">"VoteCast"</span>,
+  <span class="hljs-string">"fired_at"</span>: <span class="hljs-string">"2000-11-07T15:32:05Z"</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"full_name"</span>: <span class="hljs-string">"Al Gore"</span>,
+    <span class="hljs-string">"party"</span>: <span class="hljs-string">"Democrat"</span>
   }
 }
 </code></pre><p>Second <code>POST</code>:</p>
 <pre><code>{
-  <span class="hljs-string">"event"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"VoteCast"</span>,
-  <span class="hljs-string">"fired_at"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"2000-11-07T15:42:05Z"</span>,
-  <span class="hljs-string">"data"</span><span class="hljs-symbol">:</span> {
-    <span class="hljs-string">"full_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"George W Bush"</span>,
-    <span class="hljs-string">"party"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Republican"</span>
+  <span class="hljs-string">"event"</span>: <span class="hljs-string">"VoteCast"</span>,
+  <span class="hljs-string">"fired_at"</span>: <span class="hljs-string">"2000-11-07T15:42:05Z"</span>,
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"full_name"</span>: <span class="hljs-string">"George W Bush"</span>,
+    <span class="hljs-string">"party"</span>: <span class="hljs-string">"Republican"</span>
   }
 }
 </code></pre><h2 id="events">Events</h2>
@@ -710,10 +700,10 @@ late=<span class="hljs-keyword">true</span>&amp;complete=<span class="hljs-keywo
 <p>The <code>UserCreated</code> event fires when a new user is created on Control.</p>
 <h4 id="data-example">Data Example</h4>
 <pre><code>{
-  <span class="hljs-string">"full_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"George Washington"</span>,
-  <span class="hljs-string">"first_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"George"</span>,
-  <span class="hljs-string">"last_name"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"Washington"</span>,
-  <span class="hljs-string">"email"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"gwashington@example.com"</span>
+  <span class="hljs-string">"full_name"</span>: <span class="hljs-string">"George Washington"</span>,
+  <span class="hljs-string">"first_name"</span>: <span class="hljs-string">"George"</span>,
+  <span class="hljs-string">"last_name"</span>: <span class="hljs-string">"Washington"</span>,
+  <span class="hljs-string">"email"</span>: <span class="hljs-string">"gwashington@example.com"</span>
 }
 </code></pre><h4 id="data-fields">Data Fields</h4>
 <ul>
