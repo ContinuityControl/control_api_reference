@@ -66,7 +66,7 @@ end
 #   * `error`: A text description of any error in the API call.
 #
 get '/status' do
-  status = ControlAPI.get('/v1/status').parsed_response
+  status = ControlAPI.get('/v1/status.json').parsed_response
 
   if status['error']
     "API error: #{status['error']}"
