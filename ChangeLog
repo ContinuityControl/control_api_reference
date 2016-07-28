@@ -1,3 +1,13 @@
+control_api (2.0.0) stable; urgency=low
+
+  * POST /v1/distributed_to_dos
+    * Removed "metadata" parameter for DistributedToDo
+  * GET /v1/distributed_to_dos
+    * Removed "metadata" from the DistributedToDo objects
+    * Removed "metadata[:key]" parameter to filter DistributedToDo objects
+  * GET /v1/distributed_to_dos/:uuid
+    * Removed "metadata" from the DistributedToDo object
+
 control_api (1.4.0) stable; urgency=low
 
   * New User methods:

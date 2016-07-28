@@ -9,7 +9,6 @@ Filter:
 <a href="/distributed_to_dos?complete=false&amp;late=true">Late and Incomplete</a>
 <a href="/distributed_to_dos?tags[]=security">Tagged "security"</a>
 <a href="/distributed_to_dos?tags[]=security&tags[]=annual">Tagged "security" and "annual"</a>
-<a href="/distributed_to_dos?metadata[key1]=val1">With key1=val1 metadata</a>
 
 </p>
 
@@ -20,7 +19,6 @@ Filter:
     <th>Due on</th>
     <th>Assignment count</th>
     <th>Tags</th>
-    <th>Metadata Keys</th>
   </thead>
   </tbody>
     <% distributed_to_dos.each do |distributed_to_do| %>
@@ -30,7 +28,6 @@ Filter:
         <td><%= distributed_to_do['due_on'] %></td>
         <td><%= distributed_to_do['assignments'].count %></td>
         <td><%= distributed_to_do['tags'].join(', ') %></td>
-        <td><%= distributed_to_do['metadata'].keys.join(', ') %></td>
       </tr>
     <% end %>
   </tbody>
