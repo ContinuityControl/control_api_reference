@@ -10,14 +10,14 @@
 <body>
   <div id="container">
     <div id="background"></div>
-    
+
     <ul class="sections">
-        
-        
-        
+
+
+
         <li id="section-1">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
@@ -26,20 +26,20 @@
 <hr>
 
             </div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-2">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>This is a <a href="http://www.sinatrarb.com/">Sinatra</a> application that integrates with the Control API.  Sinatra is a small Ruby web application framework that provides a DSL (domain specific language) for handling HTTP requests like <code>get</code> and <code>post</code>.  It should be easy to read even if you don’t read Sinatra’s documentation.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require</span> <span class="hljs-string">'sinatra'</span>
 <span class="hljs-keyword">require</span> <span class="hljs-string">'sinatra/reloader'</span> <span class="hljs-keyword">if</span> development?
 <span class="hljs-keyword">require</span> <span class="hljs-string">'httparty'</span>
@@ -47,13 +47,13 @@
 <span class="hljs-keyword">require</span> <span class="hljs-string">'dotenv'</span>
 <span class="hljs-keyword">require</span> <span class="hljs-string">'byebug'</span>
 Dotenv.load</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-3">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
@@ -61,26 +61,26 @@ Dotenv.load</pre></div></div>
 <p>For more information, see the <a href="http://johnnunemaker.com/httparty/">HTTParty</a> website.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ControlAPI</span></span>
   <span class="hljs-keyword">include</span> HTTParty
   base_uri ENV[<span class="hljs-string">'CONTROL_API_BASE_URI'</span>]
 
   basic_auth ENV[<span class="hljs-string">'CONTROL_API_KEY'</span>], ENV[<span class="hljs-string">'CONTROL_API_SECRET'</span>]</pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-4">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Set the ‘Content-Type’ header to ‘application/json’ to ensure that the API accepts and returns JSON. This is currently the only supported format, but this will ensure you still get JSON if the API supports XML in the future.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>  headers <span class="hljs-string">'Content-Type'</span> =&gt; <span class="hljs-string">'application/json'</span>
 <span class="hljs-keyword">end</span>
 
@@ -90,13 +90,13 @@ helpers <span class="hljs-keyword">do</span>
     <span class="hljs-symbol">:</span><span class="hljs-symbol">:JSON</span>.parse(request.body.read)
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-5">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
@@ -104,17 +104,17 @@ helpers <span class="hljs-keyword">do</span>
 <p><code>erb :view_name</code> renders the file in <code>views/view_name.erb</code>.  For example, this will end up rendering <code>views/root.erb</code>.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/'</span> <span class="hljs-keyword">do</span>
   erb <span class="hljs-symbol">:root</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-6">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
@@ -135,7 +135,7 @@ helpers <span class="hljs-keyword">do</span>
 </ul>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/status'</span> <span class="hljs-keyword">do</span>
   status = ControlAPI.get(<span class="hljs-string">'/v1/status.json'</span>).parsed_response
 
@@ -145,13 +145,13 @@ helpers <span class="hljs-keyword">do</span>
     <span class="hljs-string">"API status: <span class="hljs-subst">#{status[<span class="hljs-string">'description'</span>]}</span>"</span>
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-7">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
@@ -180,20 +180,20 @@ GET /v1/users?manager_email[]=mwashington@example.com
 </code></pre><h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>
 get <span class="hljs-string">'/users'</span> <span class="hljs-keyword">do</span>
   users = ControlAPI.get(<span class="hljs-string">'/v1/users'</span>, <span class="hljs-symbol">query:</span> params)
 
   erb <span class="hljs-symbol">:<span class="hljs-string">'users/index'</span></span>, <span class="hljs-symbol">locals:</span> users.to_h
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-8">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
@@ -237,7 +237,7 @@ Content-<span class="hljs-symbol">Type:</span> application/json
 </code></pre><h4 id="http-500-server-error">HTTP 500 Server Error</h4>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>
 get <span class="hljs-string">'/users/new'</span> <span class="hljs-keyword">do</span>
   erb <span class="hljs-symbol">:<span class="hljs-string">'users/new'</span></span>
@@ -255,13 +255,13 @@ post <span class="hljs-string">'/users'</span> <span class="hljs-keyword">do</sp
     [<span class="hljs-number">500</span>, <span class="hljs-string">'There was an error while processing your request'</span>]
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-9">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
@@ -301,7 +301,7 @@ post <span class="hljs-string">'/users'</span> <span class="hljs-keyword">do</sp
 </ul>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>
 
 get <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword">do</span>
@@ -316,13 +316,13 @@ get <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword">
     [<span class="hljs-number">500</span>, <span class="hljs-string">'There was an error while processing your request'</span>]
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-10">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
@@ -334,7 +334,7 @@ get <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword">
 <p>Refer to <code>GET /v1/users/:email</code> response</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>
 get <span class="hljs-string">'/users/:email/edit'</span> <span class="hljs-keyword">do</span>
   user = ControlAPI.get(<span class="hljs-string">"/v1/users/<span class="hljs-subst">#{params[<span class="hljs-symbol">:email</span>]}</span>"</span>)
@@ -355,13 +355,13 @@ post <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword"
     [<span class="hljs-number">500</span>, <span class="hljs-string">'There was an error while processing your request'</span>]
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-11">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
@@ -371,7 +371,7 @@ post <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword"
 <h4 id="http-204-no-content">HTTP 204 No Content</h4>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>post <span class="hljs-string">'/users/:email/delete'</span> <span class="hljs-keyword">do</span>
   user = ControlAPI.delete(<span class="hljs-string">"/v1/users/<span class="hljs-subst">#{params[<span class="hljs-symbol">:email</span>]}</span>"</span>)
 
@@ -386,13 +386,13 @@ post <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword"
     [<span class="hljs-number">500</span>, <span class="hljs-string">'There was an error while processing your request'</span>]
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-12">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
@@ -427,18 +427,18 @@ post <span class="hljs-string">'/users/:email'</span> <span class="hljs-keyword"
 </ul>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/template_to_dos'</span> <span class="hljs-keyword">do</span>
   template_to_dos = ControlAPI.get(<span class="hljs-string">"/v1/template_to_dos"</span>, <span class="hljs-symbol">:query</span> =&gt; params)
   erb <span class="hljs-symbol">:template_to_dos</span>, <span class="hljs-symbol">:locals</span> =&gt; template_to_dos
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-13">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
@@ -498,7 +498,7 @@ Content-<span class="hljs-symbol">Type:</span> application/json
 </ul>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/distributed_to_dos/new'</span> <span class="hljs-keyword">do</span>
   erb <span class="hljs-symbol">:distributed_to_dos_new</span>
 <span class="hljs-keyword">end</span>
@@ -516,13 +516,13 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
     [<span class="hljs-number">500</span>, <span class="hljs-string">'There was an error while processing your request'</span>]
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-14">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
@@ -571,7 +571,7 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
 </ul>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/distributed_to_dos/:uuid'</span> <span class="hljs-keyword">do</span>
   distributed_to_do = ControlAPI.get(<span class="hljs-string">"/v1/distributed_to_dos/<span class="hljs-subst">#{params[<span class="hljs-symbol">:uuid</span>]}</span>"</span>)
 
@@ -584,13 +584,13 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
     [<span class="hljs-number">500</span>, <span class="hljs-string">'There was an error while processing your request'</span>]
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-15">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
@@ -632,7 +632,7 @@ late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-liter
 </ul>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>get <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-keyword">do</span>
   one_week_ago_params = { <span class="hljs-symbol">:created_after</span> =&gt; Date.today - <span class="hljs-number">7</span> }
   filter_params = params.empty? ? one_week_ago_params : params
@@ -640,13 +640,13 @@ late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-liter
   distributed_to_dos = ControlAPI.get(<span class="hljs-string">'/v1/distributed_to_dos'</span>, <span class="hljs-symbol">:query</span> =&gt; filter_params)
   erb <span class="hljs-symbol">:distributed_to_dos</span>, <span class="hljs-symbol">:locals</span> =&gt; distributed_to_dos
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
-        
+
+
         <li id="section-16">
             <div class="annotation">
-              
+
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
@@ -717,7 +717,7 @@ late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-liter
 <p>The data is the same for <code>GET /v1/distributed_to_dos/:uuid</code>.  Please refer to its documentation.</p>
 
             </div>
-            
+
             <div class="content"><div class='highlight'><pre>post <span class="hljs-string">'/webhook'</span> <span class="hljs-keyword">do</span>
   event = parsed_body[<span class="hljs-string">'event'</span>]
   data = parsed_body[<span class="hljs-string">'data'</span>]
@@ -729,9 +729,9 @@ late=<span class="hljs-literal">true</span>&amp;complete=<span class="hljs-liter
     <span class="hljs-string">"Nice to meet you, <span class="hljs-subst">#{data[<span class="hljs-string">'full_name'</span>]}</span>!"</span>
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></pre></div></div>
-            
+
         </li>
-        
+
     </ul>
   </div>
 </body>
