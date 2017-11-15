@@ -1,0 +1,9 @@
+{
+  "name": "control_api_reference",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ContinuityControl/control_api_reference.git",
+  "author": "Joel Nimety <jnimety@continuity.net>",
+  "license": "Copyright (C) Continuity Engine, Inc. - All Rights Reserved",
+  "private": true
+}
