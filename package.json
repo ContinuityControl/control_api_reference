@@ -5,5 +5,8 @@
   "repository": "git@github.com:ContinuityControl/control_api_reference.git",
   "author": "Joel Nimety <jnimety@continuity.net>",
   "license": "Copyright (C) Continuity Engine, Inc. - All Rights Reserved",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "docco": "^0.7.0"
+  }
 }
