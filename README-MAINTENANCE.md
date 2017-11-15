@@ -11,8 +11,7 @@ This repo has two branches:
 Initial Setup:
 
 ```
-cd ~
-npm install docco
+yarn
 ```
 
 Deploy:
