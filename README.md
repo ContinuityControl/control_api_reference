@@ -21,7 +21,7 @@ In order to use the Continuity Control API you will need to follow the steps bel
 
 ## Running this reference implementation
 
-You'll need Ruby 2.3.0 installed. Please see [the Ruby installation guide for more information](https://www.ruby-lang.org/en/downloads/).
+You'll need Ruby 2.4.2 installed. Please see [the Ruby installation guide for more information](https://www.ruby-lang.org/en/downloads/).
 
 You need to configure a git-ignored file called `.env` that points to the API server you're using.
 
