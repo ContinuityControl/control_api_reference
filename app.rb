@@ -481,11 +481,11 @@ end
 #     * `email`: User email of DistributedToDo assignment
 #     * `finished_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
 #     * `fields`: Array
-#       * "uuid": UUID for the Field
-#       * "todo_script_id": Friendly reference id for the Field,
-#       * "label": The human-readable name for the Field
-#       * "value": The value submitted by the assignee
-#       * "disabled": Boolean, if the Field is disabled it is not visible to the assignee
+#       * `uuid`: UUID for the Field
+#       * `todo_script_id`: Friendly reference id for the Field,
+#       * `label`: The human-readable name for the Field
+#       * `value`: The value submitted by the assignee
+#       * `disabled`: Boolean, if the Field is disabled it is not visible to the assignee
 #
 get '/distributed_to_dos/:uuid' do
   distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:uuid]}")
