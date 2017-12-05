@@ -432,11 +432,29 @@ end
 #       "assignments": [
 #         {
 #           "email": "bobama@example.com",
-#           "finished_on": "2013-11-07"
+#           "finished_on": "2013-11-07",
+#           "fields": [
+#             {
+#               "uuid": "8edfc480-a174-0135-509d-1e3560338d6d",
+#               "todo_script_id": null,
+#               "label": "I was able to generate this report.",
+#               "value": true,
+#               "disabled": false
+#             }
+#           ]
 #         },
 #         {
 #           "email": "bclinton@example.com",
-#           "finished_on": null
+#           "finished_on": null,
+#           "fields": [
+#             {
+#               "uuid": "7fcfc480-a174-0135-509d-1e3560338d6d",
+#               "todo_script_id": null,
+#               "label": "I was able to generate this report.",
+#               "value": null,
+#               "disabled": false
+#             }
+#           ]
 #         }
 #       ]
 #     }
@@ -454,14 +472,20 @@ end
 # ### Response fields
 #
 #   * `uuid`: UUID for this DistributedToDo.
-#   * `name`: The human-readable name for this ToDo.
+#   * `name`: The human-readable name for this DistributedToDo.
 #   * `created_at`: ISO8601 datetime of the creation of this DistributedToDo, in UTC.
 #   * `completed_at`: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.  May be `null`.
 #   * `due_on`: ISO8601 date of when the DistributedToDo is due, in your configured Time Zone.
 #   * `tags`: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.
 #   * `assignments`: Array
 #     * `email`: User email of DistributedToDo assignment
-#     * `completed_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
+#     * `finished_on`: ISO8601 date on which the assignment was completed (in UTC), or `null` if not completed
+#     * `fields`: Array
+#       * "uuid": UUID for the Field
+#       * "todo_script_id": Friendly reference id for the Field,
+#       * "label": The human-readable name for the Field
+#       * "value": The value submitted by the assignee
+#       * "disabled": Boolean, if the Field is disabled it is not visible to the assignee
 #
 get '/distributed_to_dos/:uuid' do
   distributed_to_do = ControlAPI.get("/v1/distributed_to_dos/#{params[:uuid]}")
