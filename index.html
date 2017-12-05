@@ -542,11 +542,29 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
   <span class="hljs-string">"assignments"</span>: [
     {
       <span class="hljs-string">"email"</span>: <span class="hljs-string">"bobama@example.com"</span>,
-      <span class="hljs-string">"finished_on"</span>: <span class="hljs-string">"2013-11-07"</span>
+      <span class="hljs-string">"finished_on"</span>: <span class="hljs-string">"2013-11-07"</span>,
+      <span class="hljs-string">"fields"</span>: [
+        {
+          <span class="hljs-string">"uuid"</span>: <span class="hljs-string">"8edfc480-a174-0135-509d-1e3560338d6d"</span>,
+          <span class="hljs-string">"todo_script_id"</span>: null,
+          <span class="hljs-string">"label"</span>: <span class="hljs-string">"I was able to generate this report."</span>,
+          <span class="hljs-string">"value"</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-string">"disabled"</span>: <span class="hljs-literal">false</span>
+        }
+      ]
     },
     {
       <span class="hljs-string">"email"</span>: <span class="hljs-string">"bclinton@example.com"</span>,
-      <span class="hljs-string">"finished_on"</span>: null
+      <span class="hljs-string">"finished_on"</span>: null,
+      <span class="hljs-string">"fields"</span>: [
+        {
+          <span class="hljs-string">"uuid"</span>: <span class="hljs-string">"7fcfc480-a174-0135-509d-1e3560338d6d"</span>,
+          <span class="hljs-string">"todo_script_id"</span>: null,
+          <span class="hljs-string">"label"</span>: <span class="hljs-string">"I was able to generate this report."</span>,
+          <span class="hljs-string">"value"</span>: null,
+          <span class="hljs-string">"disabled"</span>: <span class="hljs-literal">false</span>
+        }
+      ]
     }
   ]
 }
@@ -558,14 +576,22 @@ post <span class="hljs-string">'/distributed_to_dos'</span> <span class="hljs-ke
 <h3 id="response-fields">Response fields</h3>
 <ul>
 <li><code>uuid</code>: UUID for this DistributedToDo.</li>
-<li><code>name</code>: The human-readable name for this ToDo.</li>
+<li><code>name</code>: The human-readable name for this DistributedToDo.</li>
 <li><code>created_at</code>: ISO8601 datetime of the creation of this DistributedToDo, in UTC.</li>
 <li><code>completed_at</code>: ISO8601 datetime of when the DistributedToDo was completed, in UTC.  This is when all the assignments have been finished.  May be <code>null</code>.</li>
 <li><code>due_on</code>: ISO8601 date of when the DistributedToDo is due, in your configured Time Zone.</li>
 <li><code>tags</code>: The tags for this DistributedToDo, as an array of strings. If there are no tags, it will be an empty array.</li>
 <li><code>assignments</code>: Array<ul>
 <li><code>email</code>: User email of DistributedToDo assignment</li>
-<li><code>completed_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
+<li><code>finished_on</code>: ISO8601 date on which the assignment was completed (in UTC), or <code>null</code> if not completed</li>
+<li><code>fields</code>: Array<ul>
+<li>“uuid”: UUID for the Field</li>
+<li>“todo_script_id”: Friendly reference id for the Field,</li>
+<li>“label”: The human-readable name for the Field</li>
+<li>“value”: The value submitted by the assignee</li>
+<li>“disabled”: Boolean, if the Field is disabled it is not visible to the assignee</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
